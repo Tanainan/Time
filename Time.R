@@ -7,6 +7,7 @@ library(memisc)
 summary(Time$age) # age
 percent(Time$gender == 1) #male
 percent(Time$gender == 2) #female
+
 #Risk preferences
 #count #positive and #negative
 #create new columns
@@ -348,7 +349,7 @@ Time$dd7 <- NA
 Time$dd8 <- NA
 
 for(i in 1:nrow(Time)){
-  if(Time$d[i] < 0) {if(Time$v10[i] == 1){Time$dd1[i] <- -1} else {Time$dd1[i] <- -2}}
+  if(Time$d[i] < 0) {if(Time$d10[i] == 1){Time$dd1[i] <- -1} else {Time$dd1[i] <- -2}}
   else{Time$dd1[i] <- 0}}
 for(i in 1:nrow(Time)){
   if(Time$d[i] < 0) {if(Time$d20[i] == 1){Time$dd2[i] <- -1} else {Time$dd2[i] <- -2}}
@@ -374,7 +375,7 @@ for(i in 1:nrow(Time)){
 options(digits=8)
 Time$da <- (Time$dd8*.0001 + Time$dd7*.001 + Time$dd6*.01 + Time$dd5*.1 + Time$dd4*1 + Time$dd3*10 + Time$dd2*100 + Time$dd1*1000); Time$da
 barplot(table(Time$da), main = "Risk Behavior Patterns for Washing Dishes", col = "brown", las = 2, 
-        names = c("2221.1122", "2122.2222", "2111.2222", "2111.1222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
+        names = c("2222.2222", "2221.1122", "2122.2222", "2111.2222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
 
 
@@ -541,3 +542,517 @@ percent(Time$m89)
 percent(Time$t89)
 percent(Time$v89)
 percent(Time$d89)
+
+#monotonicity************************************************
+Time$gg0 <- NA
+Time$ss0 <- NA
+Time$mm0 <- NA
+Time$tt0 <- NA
+Time$dd0 <- NA
+Time$vv0 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2){Time$gg0[i] <- 1}
+  else {Time$gg0[i] <- 0}
+}
+print(Time$gg0)
+
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2){Time$ss0[i] <- 1}
+  else {Time$ss0[i] <- 0}
+}
+print(Time$ss0)
+
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2){Time$mm0[i] <- 1}
+  else {Time$mm0[i] <- 0}
+}
+print(Time$mm0)
+
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1){Time$tt0[i] <- 1}
+  else {Time$tt0[i] <- 0}
+}
+print(Time$tt0)
+
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1){Time$vv0[i] <- 1}
+  else {Time$vv0[i] <- 0}
+}
+print(Time$vv0)
+
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1){Time$dd0[i] <- 1}
+  else {Time$dd0[i] <- 0}
+}
+print(Time$dd0)
+
+Time$posi0 <- rowSums(Time[,c("gg0","mm0","ss0")])
+print(Time$posi0)
+Time$neg0 <- rowSums(Time[,c("vv0","tt0","dd0")])
+print(Time$neg0)
+
+#Look at responses (1 = sure and 2 = gamble) change to (1 = sure and 0 = gamble) -- including negative activities because some people might rate positive activity as negative
+Time$g45[Time$g45 == 2] <- "0"
+Time$m45[Time$m45 == 2] <- "0"
+Time$s45[Time$s45 == 2] <- "0"
+Time$v45[Time$v45 == 2] <- "0"
+Time$t45[Time$t45 == 2] <- "0"
+Time$d45[Time$d45 == 2] <- "0"
+print(Time$g45)
+
+#create result of countings
+Time$gr0 <- NA
+Time$sr0 <- NA
+Time$mr0 <- NA
+Time$tr0 <- NA
+Time$dr0 <- NA
+Time$vr0 <- NA
+
+#if evaluate positive activity as positive and answer sure option == 1
+for(i in 1:nrow(Time)){
+  if(Time$gg0[i] == 1 & Time$g45[i] == 1){Time$gr0[i] <- 1}
+  else {Time$gr0[i] <- 0}
+}
+
+for(i in 1:nrow(Time)){
+  if(Time$mm0[i] == 1 & Time$m45[i] == 1){Time$mr0[i] <- 1}
+  else {Time$mr0[i] <- 0}
+}
+print(Time$mr0)
+
+for(i in 1:nrow(Time)){
+  if(Time$ss0[i] == 1 & Time$s45[i] == 1){Time$sr0[i] <- 1}
+  else {Time$sr0[i] <- 0}
+}
+print(Time$sr0)
+
+#if evaluate negative activities as negative and answer gamble option == 1
+for(i in 1:nrow(Time)){
+  if(Time$vv0[i] == 1 & Time$v45[i] == 0){Time$vr0[i] <- 1}
+  else {Time$vr0[i] <- 0}
+}
+print(Time$vr0)
+
+for(i in 1:nrow(Time)){
+  if(Time$dd0[i] == 1 & Time$d45[i] == 0){Time$dr0[i] <- 1}
+  else {Time$dr0[i] <- 0}
+}
+print(Time$dr0)
+
+for(i in 1:nrow(Time)){
+  if(Time$tt0[i] == 1 & Time$t45[i] == 0){Time$tr0[i] <- 1}
+  else {Time$tr0[i] <- 0}
+}
+print(Time$tr0)
+
+#sum up the # of responses for each individual. If chose gamble for all 3 rated negative activities == 3. If only rated 2 negative activities as negative, and chose gamble only one of the two == 1
+Time$posiresponse0 <- rowSums(Time[,c("gr0","mr0","sr0")])
+print(Time$posiresponse0)
+Time$negresponse0 <- rowSums(Time[,c("vr0","tr0","dr0")])
+print(Time$negresponse0)
+
+
+#calculate percentages of gain, loss, total
+#positive -- predicting risk-aversion -- choosing sure option
+Time$pst0 <- 100*Time$posiresponse0/Time$posi0; Time$pst0
+Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
+Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
+hist(Time$pst0, main = "Time Gain and Risk-Aversion", xlab = "Participants' Percentages of Choosing a Certain Option for Time Gain")
+hist(Time$ngt0, main = "Time Loss and Risk-Seeking", xlab = "Participants' Percentages of Choosing a Gamble Option for Time Loss")
+hist(Time$total0, main = "Time and Reflection Effect", xlab = "Percentages of Correct Predictions of the Reflection Effect")
+
+t.test(Time$pst0, y = NULL, mu = 50)
+t.test(Time$ngt0, y = NULL, mu = 50) # not significant
+t.test(Time$total0, y = NULL, mu = 50)
+
+
+# calculate the average of answers for each activity
+# possible values are 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 << 1 means people chose 1 for all questions, 1.125 means people chose 1 for 7 questions and 2 for 1 question
+
+#consistency for g
+Time$gg01 <- NA
+Time$gg02 <- NA
+Time$gg03 <- NA
+Time$gg04 <- NA
+Time$gg05 <- NA
+Time$gg06 <- NA
+Time$gg07 <- NA
+Time$gg08 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g10[i] == 1){Time$gg01[i] <- 1} else {Time$gg01[i] <- 2}}
+  else{Time$gg01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g20[i] == 1){Time$gg02[i] <- 1} else {Time$gg02[i] <- 2}}
+  else{Time$gg02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g30[i] == 1){Time$gg03[i] <- 1} else {Time$gg03[i] <- 2}}
+  else{Time$gg03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g40[i] == 1){Time$gg04[i] <- 1} else {Time$gg04[i] <- 2}}
+  else{Time$gg04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g50[i] == 1){Time$gg05[i] <- 1} else {Time$gg05[i] <- 2}}
+  else{Time$gg05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g60[i] == 1){Time$gg06[i] <- 1} else {Time$gg06[i] <- 2}}
+  else{Time$gg06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g70[i] == 1){Time$gg07[i] <- 1} else {Time$gg07[i] <- 2}}
+  else{Time$gg07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$g01[i] == 2 & Time$g89[i] == 2) {if(Time$g80[i] == 1){Time$gg08[i] <- 1} else {Time$gg08[i] <- 2}}
+  else{Time$gg08[i] <- 0}}
+Time$ga00 <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg04*1 + Time$gg03*10 + Time$gg02*100 + Time$gg01*1000)
+options(digits=8)
+barplot(table(Time$ga00), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
+        names = c("NA", "1111.1111", "1111.1221", "1111.1222", "2111.1111", "2111.1122", "2211.1111", "2211.2111", "2221.1111", "2222.1111", "2222.2111", "2222.2222"))
+legend("topright", legend = c("NA = Rated This Activity Negatively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+# consistency for s
+Time$ss01 <- NA
+Time$ss02 <- NA
+Time$ss03 <- NA
+Time$ss04 <- NA
+Time$ss05 <- NA
+Time$ss06 <- NA
+Time$ss07 <- NA
+Time$ss08 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s10[i] == 1){Time$ss01[i] <- 1} else {Time$ss01[i] <- 2}}
+  else{Time$ss01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s20[i] == 1){Time$ss02[i] <- 1} else {Time$ss02[i] <- 2}}
+  else{Time$ss02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s30[i] == 1){Time$ss03[i] <- 1} else {Time$ss03[i] <- 2}}
+  else{Time$ss03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s40[i] == 1){Time$ss04[i] <- 1} else {Time$ss04[i] <- 2}}
+  else{Time$ss04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s50[i] == 1){Time$ss05[i] <- 1} else {Time$ss05[i] <- 2}}
+  else{Time$ss05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s60[i] == 1){Time$ss06[i] <- 1} else {Time$ss06[i] <- 2}}
+  else{Time$ss06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s70[i] == 1){Time$ss07[i] <- 1} else {Time$ss07[i] <- 2}}
+  else{Time$ss07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$s01[i] == 2 & Time$s89[i] == 2) {if(Time$s80[i] == 1){Time$ss08[i] <- 1} else {Time$ss08[i] <- 2}}
+  else{Time$ss08[i] <- 0}}
+Time$sa00 <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss04*1 + Time$ss03*10 + Time$ss02*100 + Time$ss01*1000)
+options(digits=8)
+barplot(table(Time$sa00), main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
+        names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.2222", "2111.1111", "2111.1122", "2211.1111", "2211.1122", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
+legend("topright", legend = c("NA = Rated This Activity Negatively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+# consistency for m
+Time$mm01 <- NA
+Time$mm02 <- NA
+Time$mm03 <- NA
+Time$mm04 <- NA
+Time$mm05 <- NA
+Time$mm06 <- NA
+Time$mm07 <- NA
+Time$mm08 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m10[i] == 1){Time$mm01[i] <- 1} else {Time$mm01[i] <- 2}}
+  else{Time$mm01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m20[i] == 1){Time$mm02[i] <- 1} else {Time$mm02[i] <- 2}}
+  else{Time$mm02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m30[i] == 1){Time$mm03[i] <- 1} else {Time$mm03[i] <- 2}}
+  else{Time$mm03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m40[i] == 1){Time$mm04[i] <- 1} else {Time$mm04[i] <- 2}}
+  else{Time$mm04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m50[i] == 1){Time$mm05[i] <- 1} else {Time$mm05[i] <- 2}}
+  else{Time$mm05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m60[i] == 1){Time$mm06[i] <- 1} else {Time$mm06[i] <- 2}}
+  else{Time$mm06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m70[i] == 1){Time$mm07[i] <- 1} else {Time$mm07[i] <- 2}}
+  else{Time$mm07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$m01[i] == 2 & Time$m89[i] == 2) {if(Time$m80[i] == 1){Time$mm08[i] <- 1} else {Time$mm08[i] <- 2}}
+  else{Time$mm08[i] <- 0}}
+Time$ma00 <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm04*1 + Time$mm03*10 + Time$mm02*100 + Time$mm01*1000)
+options(digits=8)
+barplot(table(Time$ma00), main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
+        names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.1222", "1111.2221", "1122.2111", "1211.1111", "1221.1111", "2111.1111", "2211.1111", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
+legend("topright", legend = c("1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+# consistency for t
+Time$tt01 <- NA
+Time$tt02 <- NA
+Time$tt03 <- NA
+Time$tt04 <- NA
+Time$tt05 <- NA
+Time$tt06 <- NA
+Time$tt07 <- NA
+Time$tt08 <- NA
+
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t10[i] == 1){Time$tt01[i] <- -1} else {Time$tt01[i] <- -2}}
+  else{Time$tt01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t20[i] == 1){Time$tt02[i] <- -1} else {Time$tt02[i] <- -2}}
+  else{Time$tt02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t30[i] == 1){Time$tt03[i] <- -1} else {Time$tt03[i] <- -2}}
+  else{Time$tt03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t40[i] == 1){Time$tt04[i] <- -1} else {Time$tt04[i] <- -2}}
+  else{Time$tt04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t50[i] == 1){Time$tt05[i] <- -1} else {Time$tt05[i] <- -2}}
+  else{Time$tt05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t60[i] == 1){Time$tt06[i] <- -1} else {Time$tt06[i] <- -2}}
+  else{Time$tt06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t70[i] == 1){Time$tt07[i] <- -1} else {Time$tt07[i] <- -2}}
+  else{Time$tt07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$t[i] < 0 & Time$t01[i] == 1 & Time$t89[i] == 1) {if(Time$t80[i] == 1){Time$tt08[i] <- -1} else {Time$tt08[i] <- -2}}
+  else{Time$tt08[i] <- 0}}
+print(Time$tt05)
+options(digits=8)
+Time$ta00 <- (Time$tt08*.0001 + Time$tt07*.001 + Time$tt06*.01 + Time$tt05*.1 + Time$tt04*1 + Time$tt03*10 + Time$tt02*100 + Time$tt01*1000); Time$ta00
+barplot(table(Time$ta00), main = "Risk Behavior Patterns for Getting Stuck in a Traffic Jam", ylab = "Counts", las = 2, 
+        names = c("2222.2222", "2222.1111", "2111.2222", "1222.2222", "1221.1122", "1122.2222", "1112.2222", "1112.2221", "1111.2222", "1111.2122", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
+legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+# consistency for v
+Time$vv01 <- NA
+Time$vv02 <- NA
+Time$vv03 <- NA
+Time$vv04 <- NA
+Time$vv05 <- NA
+Time$vv06 <- NA
+Time$vv07 <- NA
+Time$vv08 <- NA
+
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v10[i] == 1){Time$vv01[i] <- -1} else {Time$vv01[i] <- -2}}
+  else{Time$vv01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v20[i] == 1){Time$vv02[i] <- -1} else {Time$vv02[i] <- -2}}
+  else{Time$vv02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v30[i] == 1){Time$vv03[i] <- -1} else {Time$vv03[i] <- -2}}
+  else{Time$vv03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v40[i] == 1){Time$vv04[i] <- -1} else {Time$vv04[i] <- -2}}
+  else{Time$vv04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v50[i] == 1){Time$vv05[i] <- -1} else {Time$vv05[i] <- -2}}
+  else{Time$vv05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v60[i] == 1){Time$vv06[i] <- -1} else {Time$vv06[i] <- -2}}
+  else{Time$vv06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v70[i] == 1){Time$vv07[i] <- -1} else {Time$vv07[i] <- -2}}
+  else{Time$vv07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$v[i] < 0 & Time$v01[i] == 1 & Time$v89[i] == 1) {if(Time$v80[i] == 1){Time$vv08[i] <- -1} else {Time$vv08[i] <- -2}}
+  else{Time$vv08[i] <- 0}}
+options(digits=8)
+Time$va00 <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv04*1 + Time$vv03*10 + Time$vv02*100 + Time$vv01*1000); Time$va00
+barplot(table(Time$va00), main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
+        names = c("2221.1111", "2122.2222", "1222.2222", "1221.1222", "1122.2222", "1112.2222", "1112.2122", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
+legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+# consistency for d
+Time$dd01 <- NA
+Time$dd02 <- NA
+Time$dd03 <- NA
+Time$dd04 <- NA
+Time$dd05 <- NA
+Time$dd06 <- NA
+Time$dd07 <- NA
+Time$dd08 <- NA
+
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d10[i] == 1){Time$dd01[i] <- -1} else {Time$dd01[i] <- -2}}
+  else{Time$dd01[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d20[i] == 1){Time$dd02[i] <- -1} else {Time$dd02[i] <- -2}}
+  else{Time$dd02[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d30[i] == 1){Time$dd03[i] <- -1} else {Time$dd03[i] <- -2}}
+  else{Time$dd03[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d40[i] == 1){Time$dd04[i] <- -1} else {Time$dd04[i] <- -2}}
+  else{Time$dd04[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d50[i] == 1){Time$dd05[i] <- -1} else {Time$dd05[i] <- -2}}
+  else{Time$dd05[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d60[i] == 1){Time$dd06[i] <- -1} else {Time$dd06[i] <- -2}}
+  else{Time$dd06[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d70[i] == 1){Time$dd07[i] <- -1} else {Time$dd07[i] <- -2}}
+  else{Time$dd07[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$d[i] < 0 & Time$d01[i] == 1 & Time$d89[i] == 1) {if(Time$d80[i] == 1){Time$dd08[i] <- -1} else {Time$dd08[i] <- -2}}
+  else{Time$dd08[i] <- 0}}
+options(digits=8)
+Time$da00 <- (Time$dd08*.0001 + Time$dd07*.001 + Time$dd06*.01 + Time$dd05*.1 + Time$dd04*1 + Time$dd03*10 + Time$dd02*100 + Time$dd01*1000); Time$da00
+barplot(table(Time$da00), main = "Risk Behavior Patterns for Washing Dishes", col = "brown", las = 2, 
+        names = c("2222.2222", "2221.1122", "2122.2222", "2111.2222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
+legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+
+#Loss aversion
+# 1 = neither actitiyies and 2 = gamble
+Time$l1 <- NA
+Time$l2 <- NA
+Time$l3 <- NA
+#choosing a sure option = loss averse
+for(i in 1:nrow(Time)){
+  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0){Time$l1[i] <- 1} else
+  {Time$l1[i] <- 0}
+}
+print(Time$l1)
+
+for(i in 1:nrow(Time)){
+  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0){Time$l2[i] <- 1} else
+  {Time$l2[i] <- 0}
+}
+print(Time$l2)
+
+for(i in 1:nrow(Time)){
+  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0){Time$l3[i] <- 1} else
+  {Time$l3[i] <- 0}
+}
+print(Time$l3)
+
+Time$loss <- Time$l1 + Time$l2 + Time$l3; Time$loss
+Time$lp <- 100*Time$loss/3; Time$lp
+
+hist(Time$lp, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
+t.test(Time$lp, y = NULL, mu = 50)
+
+#Consistency Mixed Gamble
+#gd
+Time$gdn4 <- NA
+Time$gdn3 <- NA
+Time$gdn2 <- NA
+Time$gdn1 <- NA
+Time$gdp1 <- NA
+Time$gdp2 <- NA
+Time$gdp3 <- NA
+Time$gdp4 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.40[i] == 1){Time$gdn4[i] <- -1} else {Time$gdn4[i] <- -2}}
+  else{Time$gdn4[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.30[i] == 1){Time$gdn3[i] <- -1} else {Time$gdn3[i] <- -2}}
+  else{Time$gdn3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.20[i] == 1){Time$gdn2[i] <- -1} else {Time$gdn2[i] <- -2}}
+  else{Time$gdn2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.10[i] == 1){Time$gdn1[i] <- -1} else {Time$gdn1[i] <- -2}}
+  else{Time$gdn1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd10[i] == 1){Time$gdp1[i] <- -1} else {Time$gdp1[i] <- -2}}
+  else{Time$gdp1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd20[i] == 1){Time$gdp2[i] <- -1} else {Time$gdp2[i] <- -2}}
+  else{Time$gdp2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd30[i] == 1){Time$gdp3[i] <- -1} else {Time$gdp3[i] <- -2}}
+  else{Time$gdp3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd40[i] == 1){Time$gdp4[i] <- -1} else {Time$gdp4[i] <- -2}}
+  else{Time$gdp4[i] <- 0}}
+options(digits=8)
+Time$gda <- (Time$gdp4*.0001 + Time$gdp3*.001 + Time$gdp2*.01 + Time$gdp1*.1 + Time$gdn1*1 + Time$gdn2*10 + Time$gdn3*100 + Time$gdn4*1000); Time$gda
+barplot(table(Time$gda), main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "brown", las = 2, 
+        names = c("2222.2222", "2222.2221", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1122", "2221.1112", "2221.1111", "2211.2221", "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+legend("topright", legend = c("NA = Rated Playing Games as Negative or Washing Dishes as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+#mv
+Time$mvn4 <- NA
+Time$mvn3 <- NA
+Time$mvn2 <- NA
+Time$mvn1 <- NA
+Time$mvp1 <- NA
+Time$mvp2 <- NA
+Time$mvp3 <- NA
+Time$mvp4 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.40[i] == 1){Time$mvn4[i] <- -1} else {Time$mvn4[i] <- -2}}
+  else{Time$mvn4[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.30[i] == 1){Time$mvn3[i] <- -1} else {Time$mvn3[i] <- -2}}
+  else{Time$mvn3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.20[i] == 1){Time$mvn2[i] <- -1} else {Time$mvn2[i] <- -2}}
+  else{Time$mvn2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.10[i] == 1){Time$mvn1[i] <- -1} else {Time$mvn1[i] <- -2}}
+  else{Time$mvn1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv10[i] == 1){Time$mvp1[i] <- -1} else {Time$mvp1[i] <- -2}}
+  else{Time$mvp1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv20[i] == 1){Time$mvp2[i] <- -1} else {Time$mvp2[i] <- -2}}
+  else{Time$mvp2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv30[i] == 1){Time$mvp3[i] <- -1} else {Time$mvp3[i] <- -2}}
+  else{Time$mvp3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv40[i] == 1){Time$mvp4[i] <- -1} else {Time$mvp4[i] <- -2}}
+  else{Time$mvp4[i] <- 0}}
+options(digits=8)
+Time$mva <- (Time$mvp4*.0001 + Time$mvp3*.001 + Time$mvp2*.01 + Time$mvp1*.1 + Time$mvn1*1 + Time$mvn2*10 + Time$mvn3*100 + Time$mvn4*1000); Time$mva
+barplot(table(Time$mva), main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "brown", las = 2, 
+        names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+legend("topright", legend = c("NA = Rated Listening to Music as Negative or Vacuuming a Theater as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+
+#st
+Time$stn4 <- NA
+Time$stn3 <- NA
+Time$stn2 <- NA
+Time$stn1 <- NA
+Time$stp1 <- NA
+Time$stp2 <- NA
+Time$stp3 <- NA
+Time$stp4 <- NA
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.40[i] == 1){Time$stn4[i] <- -1} else {Time$stn4[i] <- -2}}
+  else{Time$stn4[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.30[i] == 1){Time$stn3[i] <- -1} else {Time$stn3[i] <- -2}}
+  else{Time$stn3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.20[i] == 1){Time$stn2[i] <- -1} else {Time$stn2[i] <- -2}}
+  else{Time$stn2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.10[i] == 1){Time$stn1[i] <- -1} else {Time$stn1[i] <- -2}}
+  else{Time$stn1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st10[i] == 1){Time$stp1[i] <- -1} else {Time$stp1[i] <- -2}}
+  else{Time$stp1[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st20[i] == 1){Time$stp2[i] <- -1} else {Time$stp2[i] <- -2}}
+  else{Time$stp2[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st30[i] == 1){Time$stp3[i] <- -1} else {Time$stp3[i] <- -2}}
+  else{Time$stp3[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st40[i] == 1){Time$stp4[i] <- -1} else {Time$stp4[i] <- -2}}
+  else{Time$stp4[i] <- 0}}
+options(digits=8)
+Time$sta <- (Time$stp4*.0001 + Time$stp3*.001 + Time$stp2*.01 + Time$stp1*.1 + Time$stn1*1 + Time$stn2*10 + Time$stn3*100 + Time$stn4*1000); Time$sta
+barplot(table(Time$sta), main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "brown", las = 2, 
+        names = c("2222.2211", "2222.2111", "2222.1111", "2221.2221", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2222", "2211.2221", "2211.2211", "2211.2111", "2211.1122", "2211.1111", "2111.2111", "2111.1112", "2111.1111", "1111.2222", "1111.1222", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
+legend("topright", legend = c("NA = Rated Playing Sports as Negative or Getting Stuck in a Traffic as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+

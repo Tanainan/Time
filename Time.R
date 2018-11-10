@@ -910,149 +910,182 @@ legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certai
 
 #Loss aversion
 # 1 = neither actitiyies and 2 = gamble
-Time$l1 <- NA
-Time$l2 <- NA
-Time$l3 <- NA
+Time$l10 <- NA
+Time$l20 <- NA
+Time$l30 <- NA
 #choosing a sure option = loss averse
 for(i in 1:nrow(Time)){
-  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0){Time$l1[i] <- 1} else
-  {Time$l1[i] <- 0}
+  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$g89[i] == 2 & Time$d01[i] == 1 & Time$d89[i] == 1){Time$l10[i] <- 1} else
+  {Time$l10[i] <- 0}
 }
-print(Time$l1)
+print(Time$l10)
 
 for(i in 1:nrow(Time)){
-  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0){Time$l2[i] <- 1} else
-  {Time$l2[i] <- 0}
+  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$s89[i] == 2 & Time$t01[i] == 1 & Time$t89[i] == 1){Time$l20[i] <- 1} else
+  {Time$l20[i] <- 0}
 }
-print(Time$l2)
+print(Time$l20)
 
 for(i in 1:nrow(Time)){
-  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0){Time$l3[i] <- 1} else
-  {Time$l3[i] <- 0}
+  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$m89[i] == 2 & Time$v01[i] == 1 & Time$v89[i] == 1){Time$l30[i] <- 1} else
+  {Time$l30[i] <- 0}
 }
-print(Time$l3)
+print(Time$l30)
 
-Time$loss <- Time$l1 + Time$l2 + Time$l3; Time$loss
-Time$lp <- 100*Time$loss/3; Time$lp
+Time$loss0 <- Time$l10 + Time$l20 + Time$l30; Time$loss0
+Time$lp0 <- 100*Time$loss0/3; Time$lp0
 
-hist(Time$lp, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
-t.test(Time$lp, y = NULL, mu = 50)
+hist(Time$lp0, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
+t.test(Time$lp0, y = NULL, mu = 50)
 
-#Consistency Mixed Gamble
+#Loss aversion Excluding 80 vs 90 mins
+# 1 = neither actitiyies and 2 = gamble
+Time$l100 <- NA
+Time$l200 <- NA
+Time$l300 <- NA
+#choosing a sure option = loss averse
+for(i in 1:nrow(Time)){
+  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1){Time$l100[i] <- 1} else
+  {Time$l100[i] <- 0}
+}
+print(Time$l100)
+
+for(i in 1:nrow(Time)){
+  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1){Time$l200[i] <- 1} else
+  {Time$l200[i] <- 0}
+}
+print(Time$l200)
+
+for(i in 1:nrow(Time)){
+  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1){Time$l300[i] <- 1} else
+  {Time$l300[i] <- 0}
+}
+print(Time$l300)
+
+Time$loss00 <- Time$l100 + Time$l200 + Time$l300; Time$loss00
+Time$lp00 <- 100*Time$loss00/3; Time$lp00
+
+hist(Time$lp00, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
+t.test(Time$lp00, y = NULL, mu = 50) # not significant!
+
+#Consistency Mixed Gamble Excluding 80 vs 90 mins
 #gd
-Time$gdn4 <- NA
-Time$gdn3 <- NA
-Time$gdn2 <- NA
-Time$gdn1 <- NA
-Time$gdp1 <- NA
-Time$gdp2 <- NA
-Time$gdp3 <- NA
-Time$gdp4 <- NA
+Time$gdn4. <- NA
+Time$gdn3. <- NA
+Time$gdn2. <- NA
+Time$gdn1. <- NA
+Time$gdp1. <- NA
+Time$gdp2. <- NA
+Time$gdp3. <- NA
+Time$gdp4. <- NA
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.40[i] == 1){Time$gdn4[i] <- -1} else {Time$gdn4[i] <- -2}}
-  else{Time$gdn4[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd.40[i] == 1){Time$gdn4.[i] <- -1} else {Time$gdn4.[i] <- -2}}
+  else{Time$gdn4.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.30[i] == 1){Time$gdn3[i] <- -1} else {Time$gdn3[i] <- -2}}
-  else{Time$gdn3[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd.30[i] == 1){Time$gdn3.[i] <- -1} else {Time$gdn3.[i] <- -2}}
+  else{Time$gdn3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.20[i] == 1){Time$gdn2[i] <- -1} else {Time$gdn2[i] <- -2}}
-  else{Time$gdn2[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd.20[i] == 1){Time$gdn2.[i] <- -1} else {Time$gdn2.[i] <- -2}}
+  else{Time$gdn2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd.10[i] == 1){Time$gdn1[i] <- -1} else {Time$gdn1[i] <- -2}}
-  else{Time$gdn1[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd.10[i] == 1){Time$gdn1.[i] <- -1} else {Time$gdn1.[i] <- -2}}
+  else{Time$gdn1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd10[i] == 1){Time$gdp1[i] <- -1} else {Time$gdp1[i] <- -2}}
-  else{Time$gdp1[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd10[i] == 1){Time$gdp1.[i] <- -1} else {Time$gdp1.[i] <- -2}}
+  else{Time$gdp1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd20[i] == 1){Time$gdp2[i] <- -1} else {Time$gdp2[i] <- -2}}
-  else{Time$gdp2[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd20[i] == 1){Time$gdp2.[i] <- -1} else {Time$gdp2.[i] <- -2}}
+  else{Time$gdp2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd30[i] == 1){Time$gdp3[i] <- -1} else {Time$gdp3[i] <- -2}}
-  else{Time$gdp3[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd30[i] == 1){Time$gdp3.[i] <- -1} else {Time$gdp3.[i] <- -2}}
+  else{Time$gdp3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd40[i] == 1){Time$gdp4[i] <- -1} else {Time$gdp4[i] <- -2}}
-  else{Time$gdp4[i] <- 0}}
+  if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd40[i] == 1){Time$gdp4.[i] <- -1} else {Time$gdp4.[i] <- -2}}
+  else{Time$gdp4.[i] <- 0}}
 options(digits=8)
-Time$gda <- (Time$gdp4*.0001 + Time$gdp3*.001 + Time$gdp2*.01 + Time$gdp1*.1 + Time$gdn1*1 + Time$gdn2*10 + Time$gdn3*100 + Time$gdn4*1000); Time$gda
-barplot(table(Time$gda), main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "brown", las = 2, 
-        names = c("2222.2222", "2222.2221", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1122", "2221.1112", "2221.1111", "2211.2221", "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+Time$gda. <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdn1.*1 + Time$gdn2.*10 + Time$gdn3.*100 + Time$gdn4.*1000); Time$gda.
+barplot(table(Time$gda.), main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "brown", las = 2, 
+        names = c("2222.2222", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2221", 
+                  "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Playing Games as Negative or Washing Dishes as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
 
 #mv
-Time$mvn4 <- NA
-Time$mvn3 <- NA
-Time$mvn2 <- NA
-Time$mvn1 <- NA
-Time$mvp1 <- NA
-Time$mvp2 <- NA
-Time$mvp3 <- NA
-Time$mvp4 <- NA
+Time$mvn4. <- NA
+Time$mvn3. <- NA
+Time$mvn2. <- NA
+Time$mvn1. <- NA
+Time$mvp1. <- NA
+Time$mvp2. <- NA
+Time$mvp3. <- NA
+Time$mvp4. <- NA
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.40[i] == 1){Time$mvn4[i] <- -1} else {Time$mvn4[i] <- -2}}
-  else{Time$mvn4[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.40[i] == 1){Time$mvn4.[i] <- -1} else {Time$mvn4.[i] <- -2}}
+  else{Time$mvn4.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.30[i] == 1){Time$mvn3[i] <- -1} else {Time$mvn3[i] <- -2}}
-  else{Time$mvn3[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.30[i] == 1){Time$mvn3.[i] <- -1} else {Time$mvn3.[i] <- -2}}
+  else{Time$mvn3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.20[i] == 1){Time$mvn2[i] <- -1} else {Time$mvn2[i] <- -2}}
-  else{Time$mvn2[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.20[i] == 1){Time$mvn2.[i] <- -1} else {Time$mvn2.[i] <- -2}}
+  else{Time$mvn2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv.10[i] == 1){Time$mvn1[i] <- -1} else {Time$mvn1[i] <- -2}}
-  else{Time$mvn1[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.10[i] == 1){Time$mvn1.[i] <- -1} else {Time$mvn1.[i] <- -2}}
+  else{Time$mvn1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv10[i] == 1){Time$mvp1[i] <- -1} else {Time$mvp1[i] <- -2}}
-  else{Time$mvp1[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv10[i] == 1){Time$mvp1.[i] <- -1} else {Time$mvp1.[i] <- -2}}
+  else{Time$mvp1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv20[i] == 1){Time$mvp2[i] <- -1} else {Time$mvp2[i] <- -2}}
-  else{Time$mvp2[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv20[i] == 1){Time$mvp2.[i] <- -1} else {Time$mvp2.[i] <- -2}}
+  else{Time$mvp2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv30[i] == 1){Time$mvp3[i] <- -1} else {Time$mvp3[i] <- -2}}
-  else{Time$mvp3[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv30[i] == 1){Time$mvp3.[i] <- -1} else {Time$mvp3.[i] <- -2}}
+  else{Time$mvp3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0) {if(Time$mv40[i] == 1){Time$mvp4[i] <- -1} else {Time$mvp4[i] <- -2}}
-  else{Time$mvp4[i] <- 0}}
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv40[i] == 1){Time$mvp4.[i] <- -1} else {Time$mvp4.[i] <- -2}}
+  else{Time$mvp4.[i] <- 0}}
 options(digits=8)
-Time$mva <- (Time$mvp4*.0001 + Time$mvp3*.001 + Time$mvp2*.01 + Time$mvp1*.1 + Time$mvn1*1 + Time$mvn2*10 + Time$mvn3*100 + Time$mvn4*1000); Time$mva
-barplot(table(Time$mva), main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "brown", las = 2, 
-        names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+Time$mva. <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvn1.*1 + Time$mvn2.*10 + Time$mvn3.*100 + Time$mvn4.*1000); Time$mva.
+barplot(table(Time$mva.), main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "brown", las = 2, 
+        names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112",
+                  "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Listening to Music as Negative or Vacuuming a Theater as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
 
 #st
-Time$stn4 <- NA
-Time$stn3 <- NA
-Time$stn2 <- NA
-Time$stn1 <- NA
-Time$stp1 <- NA
-Time$stp2 <- NA
-Time$stp3 <- NA
-Time$stp4 <- NA
+Time$stn4. <- NA
+Time$stn3. <- NA
+Time$stn2. <- NA
+Time$stn1. <- NA
+Time$stp1. <- NA
+Time$stp2. <- NA
+Time$stp3. <- NA
+Time$stp4. <- NA
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.40[i] == 1){Time$stn4[i] <- -1} else {Time$stn4[i] <- -2}}
-  else{Time$stn4[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st.40[i] == 1){Time$stn4.[i] <- -1} else {Time$stn4.[i] <- -2}}
+  else{Time$stn4.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.30[i] == 1){Time$stn3[i] <- -1} else {Time$stn3[i] <- -2}}
-  else{Time$stn3[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st.30[i] == 1){Time$stn3.[i] <- -1} else {Time$stn3.[i] <- -2}}
+  else{Time$stn3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.20[i] == 1){Time$stn2[i] <- -1} else {Time$stn2[i] <- -2}}
-  else{Time$stn2[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st.20[i] == 1){Time$stn2.[i] <- -1} else {Time$stn2.[i] <- -2}}
+  else{Time$stn2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st.10[i] == 1){Time$stn1[i] <- -1} else {Time$stn1[i] <- -2}}
-  else{Time$stn1[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st.10[i] == 1){Time$stn1.[i] <- -1} else {Time$stn1.[i] <- -2}}
+  else{Time$stn1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st10[i] == 1){Time$stp1[i] <- -1} else {Time$stp1[i] <- -2}}
-  else{Time$stp1[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st10[i] == 1){Time$stp1.[i] <- -1} else {Time$stp1.[i] <- -2}}
+  else{Time$stp1.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st20[i] == 1){Time$stp2[i] <- -1} else {Time$stp2[i] <- -2}}
-  else{Time$stp2[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st20[i] == 1){Time$stp2.[i] <- -1} else {Time$stp2.[i] <- -2}}
+  else{Time$stp2.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st30[i] == 1){Time$stp3[i] <- -1} else {Time$stp3[i] <- -2}}
-  else{Time$stp3[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st30[i] == 1){Time$stp3.[i] <- -1} else {Time$stp3[i] <- -2}}
+  else{Time$stp3.[i] <- 0}}
 for(i in 1:nrow(Time)){
-  if(Time$s[i] > 0 & Time$t[i] < 0) {if(Time$st40[i] == 1){Time$stp4[i] <- -1} else {Time$stp4[i] <- -2}}
-  else{Time$stp4[i] <- 0}}
+  if(Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1) {if(Time$st40[i] == 1){Time$stp4.[i] <- -1} else {Time$stp4.[i] <- -2}}
+  else{Time$stp4.[i] <- 0}}
 options(digits=8)
-Time$sta <- (Time$stp4*.0001 + Time$stp3*.001 + Time$stp2*.01 + Time$stp1*.1 + Time$stn1*1 + Time$stn2*10 + Time$stn3*100 + Time$stn4*1000); Time$sta
-barplot(table(Time$sta), main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "brown", las = 2, 
-        names = c("2222.2211", "2222.2111", "2222.1111", "2221.2221", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2222", "2211.2221", "2211.2211", "2211.2111", "2211.1122", "2211.1111", "2111.2111", "2111.1112", "2111.1111", "1111.2222", "1111.1222", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
+Time$sta. <- (Time$stp4.*.0001 + Time$stp3.*.001 + Time$stp2.*.01 + Time$stp1.*.1 + Time$stn1.*1 + Time$stn2.*10 + Time$stn3.*100 + Time$stn4.*1000); Time$sta.
+barplot(table(Time$sta.), main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "brown", las = 2, 
+        names = c("2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1111",
+                  "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Playing Sports as Negative or Getting Stuck in a Traffic as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
 

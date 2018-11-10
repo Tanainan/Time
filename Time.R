@@ -543,7 +543,7 @@ percent(Time$t89)
 percent(Time$v89)
 percent(Time$d89)
 
-#monotonicity************************************************
+#monotonicity*************************************************************************************
 Time$gg0 <- NA
 Time$ss0 <- NA
 Time$mm0 <- NA
@@ -657,9 +657,10 @@ print(Time$negresponse0)
 Time$pst0 <- 100*Time$posiresponse0/Time$posi0; Time$pst0
 Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
 Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
-hist(Time$pst0, main = "Time Gain and Risk-Aversion", xlab = "Participants' Percentages of Choosing a Certain Option for Time Gain")
-hist(Time$ngt0, main = "Time Loss and Risk-Seeking", xlab = "Participants' Percentages of Choosing a Gamble Option for Time Loss")
-hist(Time$total0, main = "Time and Reflection Effect", xlab = "Percentages of Correct Predictions of the Reflection Effect")
+
+hist(Time$pst0, ylim = c(0,200), labels = TRUE, main = "Time Gain and Risk-Aversion", xlab = "Participants' Percentages of Choosing a Certain Option for Time Gain")
+hist(Time$ngt0, ylim = c(0,80), labels = TRUE, main = "Time Loss and Risk-Seeking", xlab = "Participants' Percentages of Choosing a Gamble Option for Time Loss")
+hist(Time$total0, ylim = c(0,70), labels = TRUE, main = "Time and Reflection Effect", xlab = "Percentages of Correct Predictions of the Reflection Effect")
 
 t.test(Time$pst0, y = NULL, mu = 50)
 t.test(Time$ngt0, y = NULL, mu = 50) # not significant
@@ -704,9 +705,11 @@ for(i in 1:nrow(Time)){
   else{Time$gg08[i] <- 0}}
 Time$ga00 <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg04*1 + Time$gg03*10 + Time$gg02*100 + Time$gg01*1000)
 options(digits=8)
-barplot(table(Time$ga00), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
+i <- barplot(table(Time$ga00), ylim = c(0,120), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
         names = c("NA", "1111.1111", "1111.1221", "1111.1222", "2111.1111", "2111.1122", "2211.1111", "2211.2111", "2221.1111", "2222.1111", "2222.2111", "2222.2222"))
 legend("topright", legend = c("NA = Rated This Activity Negatively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(i, table(Time$ga00), pos = 3, cex = 1, labels=as.character(table(Time$ga00)))
+
 
 # consistency for s
 Time$ss01 <- NA
@@ -743,9 +746,12 @@ for(i in 1:nrow(Time)){
   else{Time$ss08[i] <- 0}}
 Time$sa00 <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss04*1 + Time$ss03*10 + Time$ss02*100 + Time$ss01*1000)
 options(digits=8)
-barplot(table(Time$sa00), main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
+h <- barplot(table(Time$sa00), ylim = c(0,120), main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
         names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.2222", "2111.1111", "2111.1122", "2211.1111", "2211.1122", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
 legend("topright", legend = c("NA = Rated This Activity Negatively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(h, table(Time$sa00), pos = 3, cex = 1, labels=as.character(table(Time$sa00)))
+
+
 
 # consistency for m
 Time$mm01 <- NA
@@ -782,9 +788,12 @@ for(i in 1:nrow(Time)){
   else{Time$mm08[i] <- 0}}
 Time$ma00 <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm04*1 + Time$mm03*10 + Time$mm02*100 + Time$mm01*1000)
 options(digits=8)
-barplot(table(Time$ma00), main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
+g <- barplot(table(Time$ma00), ylim = c(0,70), main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
         names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.1222", "1111.2221", "1122.2111", "1211.1111", "1221.1111", "2111.1111", "2211.1111", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
 legend("topright", legend = c("1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(g, table(Time$ma00), pos = 3, cex = 1, labels=as.character(table(Time$ma00)))
+
+
 
 # consistency for t
 Time$tt01 <- NA
@@ -823,9 +832,11 @@ for(i in 1:nrow(Time)){
 print(Time$tt05)
 options(digits=8)
 Time$ta00 <- (Time$tt08*.0001 + Time$tt07*.001 + Time$tt06*.01 + Time$tt05*.1 + Time$tt04*1 + Time$tt03*10 + Time$tt02*100 + Time$tt01*1000); Time$ta00
-barplot(table(Time$ta00), main = "Risk Behavior Patterns for Getting Stuck in a Traffic Jam", ylab = "Counts", las = 2, 
+f <- barplot(table(Time$ta00), ylim = c(0,80), col = "light blue", main = "Risk Behavior Patterns for Getting Stuck in a Traffic Jam", ylab = "Counts", las = 2, 
         names = c("2222.2222", "2222.1111", "2111.2222", "1222.2222", "1221.1122", "1122.2222", "1112.2222", "1112.2221", "1111.2222", "1111.2122", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
 legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(f, table(Time$ta00), pos = 3, cex = 1, labels=as.character(table(Time$ta00)))
+
 
 # consistency for v
 Time$vv01 <- NA
@@ -863,9 +874,11 @@ for(i in 1:nrow(Time)){
   else{Time$vv08[i] <- 0}}
 options(digits=8)
 Time$va00 <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv04*1 + Time$vv03*10 + Time$vv02*100 + Time$vv01*1000); Time$va00
-barplot(table(Time$va00), main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
+e <- barplot(table(Time$va00), ylim = c(0, 70), col = "light blue", main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
         names = c("2221.1111", "2122.2222", "1222.2222", "1221.1222", "1122.2222", "1112.2222", "1112.2122", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
 legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(e, table(Time$va00), pos = 3, cex = 1, labels=as.character(table(Time$va00)))
+
 
 # consistency for d
 Time$dd01 <- NA
@@ -903,9 +916,10 @@ for(i in 1:nrow(Time)){
   else{Time$dd08[i] <- 0}}
 options(digits=8)
 Time$da00 <- (Time$dd08*.0001 + Time$dd07*.001 + Time$dd06*.01 + Time$dd05*.1 + Time$dd04*1 + Time$dd03*10 + Time$dd02*100 + Time$dd01*1000); Time$da00
-barplot(table(Time$da00), main = "Risk Behavior Patterns for Washing Dishes", col = "brown", las = 2, 
+d <- barplot(table(Time$da00), ylim = c(0,80), col = "light blue", main = "Risk Behavior Patterns for Washing Dishes", las = 2, 
         names = c("2222.2222", "2221.1122", "2122.2222", "2111.2222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated This Activity Positively", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(d, table(Time$da00), pos = 3, cex = 1, labels=as.character(table(Time$da00)))
 
 
 #Loss aversion
@@ -1004,10 +1018,11 @@ for(i in 1:nrow(Time)){
   else{Time$gdp4.[i] <- 0}}
 options(digits=8)
 Time$gda. <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdn1.*1 + Time$gdn2.*10 + Time$gdn3.*100 + Time$gdn4.*1000); Time$gda.
-barplot(table(Time$gda.), main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "brown", las = 2, 
+c <- barplot(table(Time$gda.), ylim = c(0,70), density = 60, main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "dark green", las = 2, 
         names = c("2222.2222", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2221", 
                   "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Playing Games as Negative or Washing Dishes as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(c, table(Time$gda.), pos = 3, cex = 1, labels=as.character(table(Time$gda.)))
 
 #mv
 Time$mvn4. <- NA
@@ -1044,10 +1059,11 @@ for(i in 1:nrow(Time)){
   else{Time$mvp4.[i] <- 0}}
 options(digits=8)
 Time$mva. <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvn1.*1 + Time$mvn2.*10 + Time$mvn3.*100 + Time$mvn4.*1000); Time$mva.
-barplot(table(Time$mva.), main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "brown", las = 2, 
+b <- barplot(table(Time$mva.), ylim = c(0,80), density = 40, main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "red", las = 2, 
         names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112",
                   "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Listening to Music as Negative or Vacuuming a Theater as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(b, table(Time$mva.), pos = 3, cex = 1, labels=as.character(table(Time$mva.)))
 
 #st
 Time$stn4. <- NA
@@ -1084,8 +1100,9 @@ for(i in 1:nrow(Time)){
   else{Time$stp4.[i] <- 0}}
 options(digits=8)
 Time$sta. <- (Time$stp4.*.0001 + Time$stp3.*.001 + Time$stp2.*.01 + Time$stp1.*.1 + Time$stn1.*1 + Time$stn2.*10 + Time$stn3.*100 + Time$stn4.*1000); Time$sta.
-barplot(table(Time$sta.), main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "brown", las = 2, 
+a <- barplot(table(Time$sta.), ylim = c(0,80), density = 30, main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "blue", las = 2, 
         names = c("2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1111",
                   "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Playing Sports as Negative or Getting Stuck in a Traffic as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
+text(a, table(Time$sta.), pos = 3, cex = 1, labels=as.character(table(Time$sta.)))
 

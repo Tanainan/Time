@@ -4,6 +4,7 @@ Time <- read_csv("Time.csv", skip = 1)
 Time <- Time[-c(1),]
 Time <- data.frame(sapply(Time, function(x) as.numeric(as.character(x))))
 library(memisc)
+library(ggplot2)
 summary(Time$age) # age
 percent(Time$gender == 1) #male
 percent(Time$gender == 2) #female
@@ -1105,4 +1106,185 @@ a <- barplot(table(Time$sta.), ylim = c(0,80), density = 30, main = "Risk Behavi
                   "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 legend("topright", legend = c("NA = Rated Playing Sports as Negative or Getting Stuck in a Traffic as Positive or Both", "1 = Certain Option", "2 = Gamble Option", "Digits from Left to Right Indicate Multiplies of 10 Minutes, Starting from 10 to 80 "))
 text(a, table(Time$sta.), pos = 3, cex = 1, labels=as.character(table(Time$sta.)))
+
+###### New graph (curve)
+dg <- Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1,]
+ts <- Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1,]
+vm <- Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1,]
+
+######Find proportions
+#dg
+dg$dgn4 <- NA
+dg$dgn3 <- NA
+dg$dgn2 <- NA
+dg$dgn1 <- NA
+dg$dgz <- NA
+dg$dgp1 <- NA
+dg$dgp2 <- NA
+dg$dgp3 <- NA
+dg$dgp4 <- NA
+for(i in 1:nrow(dg)){
+  if(dg$gd.40[i] == 1) {dg$dgn4[i] <- 1} else {dg$dgn4[i] <- 0}}
+print(dg$dgn4)
+for(i in 1:nrow(dg)){
+  if(dg$gd.30[i] == 1) {dg$dgn3[i] <- 1} else {dg$dgn3[i] <- 0}}
+print(dg$dgn3)
+for(i in 1:nrow(dg)){
+  if(dg$gd.20[i] == 1) {dg$dgn2[i] <- 1} else {dg$dgn2[i] <- 0}}
+print(dg$dgn2)
+for(i in 1:nrow(dg)){
+  if(dg$gd.10[i] == 1) {dg$dgn1[i] <- 1} else {dg$dgn1[i] <- 0}}
+print(dg$dgn1)
+for(i in 1:nrow(dg)){
+  if(dg$gd0[i] == 1) {dg$dgz[i] <- 1} else {dg$dgz[i] <- 0}}
+print(dg$dgz) ###### not consistent
+for(i in 1:nrow(dg)){
+  if(dg$gd10[i] == 1) {dg$dgp1[i] <- 1} else {dg$dgp1[i] <- 0}}
+print(dg$dgp1)
+for(i in 1:nrow(dg)){
+  if(dg$gd20[i] == 1) {dg$dgp2[i] <- 1} else {dg$dgp2[i] <- 0}}
+print(dg$dgp2)
+for(i in 1:nrow(dg)){
+  if(dg$gd30[i] == 1) {dg$dgp3[i] <- 1} else {dg$dgp3[i] <- 0}}
+print(dg$dgp3)
+for(i in 1:nrow(dg)){
+  if(dg$gd40[i] == 1) {dg$dgp4[i] <- 1} else {dg$dgp4[i] <- 0}}
+print(dg$dgp4)
+
+#calculate proportion
+#n40
+gd40n <- nrow(dg[dg$dgn4 == 1,])/168; gd40n
+gd30n <- nrow(dg[dg$dgn3 == 1,])/168; gd30n
+gd20n <- nrow(dg[dg$dgn2 == 1,])/168; gd20n
+gd10n <- nrow(dg[dg$dgn1 == 1,])/168; gd10n
+gdz <- nrow(dg[dg$dgz == 1,])/168; gdz
+gd10p <- nrow(dg[dg$dgp1 == 1,])/168; gd10p
+gd20p <- nrow(dg[dg$dgp2 == 1,])/168; gd20p
+gd30p <- nrow(dg[dg$dgp3 == 1,])/168; gd30p
+gd40p <- nrow(dg[dg$dgp4 == 1,])/168; gd40p
+
+pgd <- data.frame(Time = c("-40","-30","-20","-10","0","10","20","30","40"), Proportion = c(gd40n, gd30n, gd20n, gd10n, gdz, gd10p, gd20p, gd30p, gd40p)) 
+ggplot(pgd, aes(Time, Proportion, group = 1)) + 
+  geom_point() + 
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  geom_line() + 
+  ggtitle("Proportions of Dishes and Games") +
+  theme(plot.title = element_text(hjust=0.5))
+
+
+#ts
+ts$tsn4 <- NA
+ts$tsn3 <- NA
+ts$tsn2 <- NA
+ts$tsn1 <- NA
+ts$tsz <- NA
+ts$tsp1 <- NA
+ts$tsp2 <- NA
+ts$tsp3 <- NA
+ts$tsp4 <- NA
+for(i in 1:nrow(ts)){
+  if(ts$st.40[i] == 1) {ts$tsn4[i] <- 1} else {ts$tsn4[i] <- 0}}
+print(ts$tsn4)
+for(i in 1:nrow(ts)){
+  if(dg$st.30[i] == 1) {ts$tsn3[i] <- 1} else {ts$tsn3[i] <- 0}}
+print(ts$tsn3)
+for(i in 1:nrow(ts)){
+  if(ts$st.20[i] == 1) {ts$tsn2[i] <- 1} else {ts$tsn2[i] <- 0}}
+print(ts$tsn2)
+for(i in 1:nrow(ts)){
+  if(ts$st.10[i] == 1) {ts$tsn1[i] <- 1} else {ts$tsn1[i] <- 0}}
+print(ts$tsn1)
+for(i in 1:nrow(ts)){
+  if(ts$st0[i] == 1) {ts$tsz[i] <- 1} else {ts$tsz[i] <- 0}}
+print(ts$tsz) ###### not consistent
+for(i in 1:nrow(ts)){
+  if(ts$st10[i] == 1) {ts$tsp1[i] <- 1} else {ts$tsp1[i] <- 0}}
+print(ts$tsp1)
+for(i in 1:nrow(ts)){
+  if(ts$st20[i] == 1) {ts$tsp2[i] <- 1} else {ts$tsp2[i] <- 0}}
+print(ts$tsp2)
+for(i in 1:nrow(ts)){
+  if(ts$st30[i] == 1) {ts$tsp3[i] <- 1} else {ts$tsp3[i] <- 0}}
+print(ts$tsp3)
+for(i in 1:nrow(ts)){
+  if(ts$st40[i] == 1) {ts$tsp4[i] <- 1} else {ts$tsp4[i] <- 0}}
+print(ts$tsp4)
+
+#calculate proportion
+#n40
+ts40n <- nrow(ts[ts$tsn4 == 1,])/167; ts40n
+ts30n <- nrow(ts[ts$tsn3 == 1,])/167; ts30n
+ts20n <- nrow(ts[ts$tsn2 == 1,])/167; ts20n
+ts10n <- nrow(ts[ts$tsn1 == 1,])/167; ts10n
+tsz <- nrow(ts[ts$tsz == 1,])/167; tsz
+ts10p <- nrow(ts[ts$tsp1 == 1,])/167; ts10p
+ts20p <- nrow(ts[ts$tsp2 == 1,])/167; ts20p
+ts30p <- nrow(ts[ts$tsp3 == 1,])/167; ts30p
+ts40p <- nrow(ts[ts$tsp4 == 1,])/167; ts40p
+
+pts <- data.frame(Time = c("-40","-30","-20","-10","0","10","20","30","40"), Proportion = c(ts40n, ts30n, ts20n, ts10n, tsz, ts10p, ts20p, ts30p, ts40p)) 
+ggplot(pts, aes(Time, Proportion, group = 1)) + 
+  geom_point() + 
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  geom_line() +
+  ggtitle("Proportions of Traffic and Sports") +
+  theme(plot.title = element_text(hjust=0.5))
+
+#vm
+vm$vmn4 <- NA
+vm$vmn3 <- NA
+vm$vmn2 <- NA
+vm$vmn1 <- NA
+vm$vmz <- NA
+vm$vmp1 <- NA
+vm$vmp2 <- NA
+vm$vmp3 <- NA
+vm$vmp4 <- NA
+for(i in 1:nrow(vm)){
+  if(vm$mv.40[i] == 1) {vm$vmn4[i] <- 1} else {vm$vmn4[i] <- 0}}
+print(vm$vmn4)
+for(i in 1:nrow(vm)){
+  if(vm$mv.30[i] == 1) {vm$vmn3[i] <- 1} else {vm$vmn3[i] <- 0}}
+print(vm$vmn3)
+for(i in 1:nrow(vm)){
+  if(vm$mv.20[i] == 1) {vm$vmn2[i] <- 1} else {vm$vmn2[i] <- 0}}
+print(vm$vmn2)
+for(i in 1:nrow(vm)){
+  if(vm$mv.10[i] == 1) {vm$vmn1[i] <- 1} else {vm$vmn1[i] <- 0}}
+print(vm$vmn1)
+for(i in 1:nrow(vm)){
+  if(vm$mv0[i] == 1) {vm$vmz[i] <- 1} else {vm$vmz[i] <- 0}}
+print(vm$vmz) ###### not consistent
+for(i in 1:nrow(vm)){
+  if(vm$mv10[i] == 1) {vm$vmp1[i] <- 1} else {vm$vmp1[i] <- 0}}
+print(vm$vmp1)
+for(i in 1:nrow(vm)){
+  if(vm$mv20[i] == 1) {vm$vmp2[i] <- 1} else {vm$vmp2[i] <- 0}}
+print(vm$vmp2)
+for(i in 1:nrow(vm)){
+  if(vm$mv30[i] == 1) {vm$vmp3[i] <- 1} else {vm$vmp3[i] <- 0}}
+print(vm$vmp3)
+for(i in 1:nrow(vm)){
+  if(vm$mv40[i] == 1) {vm$vmp4[i] <- 1} else {vm$vmp4[i] <- 0}}
+print(vm$vmp4)
+
+#calculate proportion
+#n40
+vm40n <- nrow(vm[vm$vmn4 == 1,])/201; vm40n
+vm30n <- nrow(vm[vm$vmn3 == 1,])/201; vm30n
+vm20n <- nrow(vm[vm$vmn2 == 1,])/201; vm20n
+vm10n <- nrow(vm[vm$vmn1 == 1,])/201; vm10n
+vmz <- nrow(vm[vm$vmz == 1,])/201; vmz
+vm10p <- nrow(vm[vm$vmp1 == 1,])/201; vm10p
+vm20p <- nrow(vm[vm$vmp2 == 1,])/201; vm20p
+vm30p <- nrow(vm[vm$vmp3 == 1,])/201; vm30p
+vm40p <- nrow(vm[vm$vmp4 == 1,])/201; vm40p
+
+pvm <- data.frame(Time = c("-40","-30","-20","-10","0","10","20","30","40"), Proportion = c(vm40n, vm30n, vm20n, vm10n, vmz, vm10p, vm20p, vm30p, vm40p)) 
+ggplot(pvm, aes(Time, Proportion, group = 1)) + 
+  geom_point() + 
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  geom_line() +
+  ggtitle("Proportions of Vacuum and Music") +
+  theme(plot.title = element_text(hjust=0.5))
 

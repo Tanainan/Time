@@ -1683,3 +1683,17 @@ length(which(Time$g > 0 & Time$g01 == 2 & Time$d01 == 1 & Time$d < 0)) #168
 length(which(Time$s > 0 & Time$s01 == 2 & Time$t01 == 1 & Time$t < 0)) #167
 #mv
 length(which(Time$m > 0 & Time$m01 == 2 & Time$v01 == 1 & Time$v < 0)) #201
+
+#only 80 vs 90 but not 0 vs 10
+#g
+length(which(Time$g > 0 & Time$g89 == 2)) #156
+#s
+length(which(Time$s > 0 & Time$s89 == 2)) #157
+#m
+length(which(Time$m > 0 & Time$m89 == 2)) #171
+#t
+length(which(Time$t < 0 & Time$t89 == 1)) #218
+#d
+length(which(Time$d < 0 & Time$d89 == 1)) #223
+#v
+length(which(Time$v < 0 & Time$v89 == 1)) #207

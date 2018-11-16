@@ -1660,3 +1660,26 @@ ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) +
   ggtitle("Proportions People Who Chose Certain Options for Disiked and Liked Activities") +
   theme(plot.title = element_text(hjust=0.5)) +
   scale_color_brewer(palette="Paired")
+
+
+#calculate total amount of participants after excluding the monotonicity
+#g
+length(which(Time$g > 0 & Time$g01 == 2 & Time$g89 == 2)) #128
+#s
+length(which(Time$s > 0 & Time$s01 == 2 & Time$s89 == 2)) #125
+#m
+length(which(Time$m > 0 & Time$m01 == 2 & Time$m89 == 2)) #169
+#t
+length(which(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1)) #215
+#d
+length(which(Time$d < 0 & Time$d01 == 1 & Time$d89 == 1)) #218
+#v
+length(which(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1)) #205
+
+#Mixed 
+#gd
+length(which(Time$g > 0 & Time$g01 == 2 & Time$d01 == 1 & Time$d < 0)) #168
+#st
+length(which(Time$s > 0 & Time$s01 == 2 & Time$t01 == 1 & Time$t < 0)) #167
+#mv
+length(which(Time$m > 0 & Time$m01 == 2 & Time$v01 == 1 & Time$v < 0)) #201

@@ -5,6 +5,10 @@ Time <- Time[-c(1),]
 Time <- data.frame(sapply(Time, function(x) as.numeric(as.character(x))))
 library(memisc)
 library(ggplot2)
+library(gridExtra)
+library(grid)
+library(lattice)
+library(stats)
 summary(Time$age) # age
 percent(Time$gender == 1) #male
 percent(Time$gender == 2) #female
@@ -1174,3 +1178,559 @@ length(which(Time$t < 0 & Time$t89 == 1)) #218
 length(which(Time$d < 0 & Time$d89 == 1)) #223
 #v
 length(which(Time$v < 0 & Time$v89 == 1)) #207
+
+# Descriptive 
+c1 <- data.frame(Evaluation = Time$g)
+c2 <- data.frame(Evaluation = Time$s)
+c3 <- data.frame(Evaluation = Time$m)
+# cc <- rbind(c1, c2 ,c3)
+# cc$cond <- factor(c(rep(c("Games"), times = 234), rep(c("Sports"), times = 234), rep(c("Music"), times = 234)))
+# 
+# ggplot(cc, aes(x = Evaluation, fill = cond)) +
+#   geom_histogram(alpha=.7, binwidth=1) +
+#   theme_bw()
+
+# All g
+mean(Time$g)
+sd(Time$g)
+
+ggplot(c1, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3300FF") +
+  theme_bw() +
+  ggtitle("Evaluations for Playing Games for 45 Minutes")
+
+# All s
+mean(Time$s)
+sd(Time$s)
+
+ggplot(c2, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#0066FF") +
+  theme_bw() +
+  ggtitle("Evaluations for Playing Sports for 45 Minutes")
+
+
+# All m
+mean(Time$m)
+sd(Time$m)
+
+ggplot(c3, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3333FF") +
+  theme_bw() +
+  ggtitle("Evaluations for Listening to Music for 45 Minutes")
+
+
+
+c4 <- data.frame(Evaluation = Time$t)
+c5 <- data.frame(Evaluation = Time$v)
+c6 <- data.frame(Evaluation = Time$d)
+# ca <- rbind(c4, c5 ,c6)
+# ca$cond <- factor(c(rep(c("Traffic Jam"), times = 234), rep(c("Vacuum"), times = 234), rep(c("Dishes"), times = 234)))
+# 
+# ggplot(ca, aes(x = Evaluation, fill = cond)) +
+#   geom_density(alpha=.1) +
+#   theme_bw()
+
+# All t
+mean(Time$t)
+sd(Time$t)
+
+ggplot(c4, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#669933") +
+  theme_bw() +
+  ggtitle("Evaluations for Getting Stuck in a Traffic Jam for 45 Minutes")
+
+
+# All v
+mean(Time$v)
+sd(Time$v)
+
+ggplot(c5, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  theme_bw() +
+  ggtitle("Evaluations for Vacuuming a Movie Theater for 45 Minutes")
+
+# All d
+mean(Time$d)
+sd(Time$d)
+
+ggplot(c6, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("Evaluations for Washing Dishes for 45 Minutes")
+
+
+# only positive or negative
+z1 <- data.frame(Evaluation = Time[which(Time$g > 0), c("g")])
+z2 <- data.frame(Evaluation = Time[which(Time$s > 0), c("s")])
+z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
+# zz <- rbind(z1, z2 ,z3)
+# zz$cond <- factor(c(rep(c("Games"), times = 229), rep(c("Sports"), times = 228), rep(c("Music"), times = 234)))
+# 
+# ggplot(zz, aes(x = Evaluation, fill = cond)) +
+#   geom_histogram(alpha=.7, binwidth=1) +
+#   theme_bw() + 
+#   ggtitle("Evaluations for Games, Sports, and Music (Positively Only)")
+
+
+#g
+mean(Time$g > 0)
+sd(Time$g > 0)
+
+a4 <- ggplot(z1, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("Playing Games for 45 Minutes (Only Positively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(0,103)) +
+  theme(plot.title = element_text(size=12)); a4
+
+
+#s
+mean(Time$s > 0)
+sd(Time$s > 0)
+
+a5 <- ggplot(z2, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("Playing Sports for 45 Minutes (Only Positively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(0,103)) +
+  theme(plot.title = element_text(size=12)); a5
+
+
+#m
+mean(Time$m > 0)
+sd(Time$m > 0)
+
+a6 <- ggplot(z3, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("Listening to Music for 45 Minutes (Only Positively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(0,103)) +
+  theme(plot.title = element_text(size=12)); a6
+
+
+z4 <- data.frame(Evaluation = Time[which(Time$t < 0), c("t")])
+z5 <- data.frame(Evaluation = Time[which(Time$v < 0), c("v")])
+z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
+# zzz <- rbind(z4, z5 ,z6)
+# zzz$cond <- factor(c(rep(c("Traffic Jam"), times = 218), rep(c("Vacuum"), times = 208), rep(c("Dishes"), times = 223)))
+# 
+# ggplot(zzz, aes(x = Evaluation, fill = cond)) +
+#   geom_histogram(alpha=.7, binwidth=1) +
+#   theme_bw() + 
+#   ggtitle("Evaluations for Traffic Jam, Vacuum, and Dishes (Negatively Only)")
+
+
+#t
+mean(Time$t < 0)
+sd(Time$t < 0)
+
+a1 <- ggplot(z4, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  theme_bw() +
+  ggtitle("Getting Stuck in a Traffic Jam for 45 Minutes (Only Negatively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,0)) +
+  theme(plot.title = element_text(size=12)); a1
+
+
+#d
+mean(Time$d < 0)
+sd(Time$d < 0)
+
+a2 <- ggplot(z5, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  theme_bw() +
+  ggtitle("Washing Dishes for 45 Minutes (Only Negatively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,0)) +
+  theme(plot.title = element_text(size=12)); a2
+
+
+#v
+mean(Time$v < 0)
+sd(Time$v < 0)
+
+a3 <- ggplot(z6, aes(x = Evaluation)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  theme_bw() +
+  ggtitle("Vacuuming a Movie Theater for 45 Minutes (Only Negatively Rated)") + 
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,0)) +
+  theme(plot.title = element_text(size=12)); a3
+
+grid.arrange(a2, a4, a1, a5, a3, a6) #############################################
+
+
+#WTdo for positive
+# g
+mean(Time$gp, na.rm = T)
+sd(Time$gp, na.rm = T)
+
+b1 <- data.frame(WTP_to_do = Time$gp, na.rm = T)
+
+e1 <- ggplot(b1, aes(x = WTP_to_do)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("WTP to Play Games for 45 minutes (Only When Positively Rated)") + 
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme(plot.title = element_text(size=10)); e1
+
+# s
+mean(Time$sp, na.rm = T)
+sd(Time$sp, na.rm = T)
+
+b2 <- data.frame(WTP_to_do = Time$sp, na.rm = T)
+
+e2 <- ggplot(b2, aes(x = WTP_to_do)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("WTP to Play Sports for 45 minutes (Only When Positively Rated)") + 
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme(plot.title = element_text(size=10)); e2
+
+# m
+mean(Time$mp, na.rm = T)
+sd(Time$mp, na.rm = T)
+
+b3 <- data.frame(WTP_to_do = Time$mp, na.rm = T)
+
+e3 <- ggplot(b3, aes(x = WTP_to_do)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  theme_bw() +
+  ggtitle("WTP to Listen to Music for 45 minutes (Only When Positively Rated)") + 
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme(plot.title = element_text(size=10)); e3
+
+
+#WTavoid for negative
+# t
+mean(Time$tn, na.rm = T)
+sd(Time$tn, na.rm = T)
+
+b4 <- data.frame(WTP_to_avoid = Time$tn, na.rm = T)
+
+e4 <- ggplot(b4, aes(x = WTP_to_avoid)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme_bw() +
+  ggtitle("WTP to Avoid Getting Stuck in a Traffic Jam for 45 minutes (Only When Negatively Rated)") + 
+  theme(plot.title = element_text(size=10)); e4
+
+
+# v
+mean(Time$vn, na.rm = T)
+sd(Time$vn, na.rm = T)
+
+b5 <- data.frame(WTP_to_avoid = Time$vn, na.rm = T)
+
+e5 <- ggplot(b5, aes(x = WTP_to_avoid)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme_bw() +
+  ggtitle("WTP to Avoid Vacuuming a Movie Theater for 45 minutes (Only When Negatively Rated)") + 
+  theme(plot.title = element_text(size=10)); e5
+
+
+# d
+mean(Time$dn, na.rm = T)
+sd(Time$dn, na.rm = T)
+
+b6 <- data.frame(WTP_to_avoid = Time$dn, na.rm = T)
+
+e6 <- ggplot(b6, aes(x = WTP_to_avoid)) +
+  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  scale_y_continuous(limits=c(0,50)) +
+  scale_x_continuous(limits=c(0,101)) +
+  theme_bw() +
+  ggtitle("WTP to Avoid Washing Dishes for 45 minutes (Only When Negatively Rated)") + 
+  theme(plot.title = element_text(size=10)); e6
+
+grid.arrange(e6, e1, e4, e2, e5, e3)
+
+
+####################### WTP positive - negative 
+gd9$gd0.0 <- NA
+mv9$mv0.0 <- NA
+st9$st0.0 <- NA
+
+####################### WTP percentage of chooing gamble when WTP positive - negative > 0
+for (i in 1:nrow(gd9)) {
+  if (gd9$gdw[i] > 0 & gd9$gd0[i] == 2) {gd9$gd0.0[i] <- 1} else {gd9$gd0.0[i] <- 0}}
+for (i in 1:nrow(mv9)) {
+  if (mv9$mvw[i] > 0 & mv9$mv0[i] == 2) {mv9$mv0.0[i] <- 1} else {mv9$mv0.0[i] <- 0}}
+for (i in 1:nrow(st9)) {
+  if (st9$stw[i] > 0 & st9$st0[i] == 2) {st9$st0.0[i] <- 1} else {st9$st0.0[i] <- 0}}
+
+
+# average?
+min(gd9$gdw)
+max(gd9$gdw)
+min(mv9$mvw)
+max(mv9$mvw)
+min(st9$stw)
+max(st9$stw)
+
+percent(gd9$gd0.0 == 1)
+percent(mv9$mv0.0 == 1)
+percent(st9$st0.0 == 1)
+
+ggplot(gd9, aes(x = gd9$gdw)) + 
+  geom_histogram(binwidth = 1) + 
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("WTP Games - WTP Dishes") + 
+  theme(plot.title = element_text(size=10))
+
+ggplot(mv9, aes(x = mv9$mvw)) + 
+  geom_histogram(binwidth = 1) + 
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("WTP Music - WTP Vacuum") + 
+  theme(plot.title = element_text(size=10))
+
+ggplot(st9, aes(x = st9$stw)) + 
+  geom_histogram(binwidth = 1) + 
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("WTP Sports - WTP Traffic Jam") + 
+  theme(plot.title = element_text(size=10))
+
+
+
+
+############## Bubbles (with time, choice, and WTP differences)
+
+f <- data.frame(gd = Time$g - Time$d, # evaluations
+                mv = Time$m - Time$v,
+                st = Time$s - Time$t,
+                gdw = Time$gp - Time$dn, #wtp to do - wtp to avoid
+                mvw = Time$mp - Time$vn,
+                stw = Time$sp - Time$tn,
+                gd0 = Time$gd0, # mixed gamble for 0
+                mv0 = Time$mv0,
+                st0 = Time$st0,
+                Time$gd.10, Time$gd.20, Time$gd.30, Time$gd.40, Time$gd40, Time$gd30, Time$gd20, Time$gd10,
+                Time$mv.10, Time$mv.20, Time$mv.30, Time$mv.40, Time$mv40, Time$mv30, Time$mv20, Time$mv10,
+                Time$st.10, Time$st.20, Time$st.30, Time$st.40, Time$st40, Time$st30, Time$st20, Time$st10,
+                Time$g, Time$d, Time$m, Time$v, Time$s, Time$t)
+
+
+
+gd9 <- data.frame(gdw = f[which(complete.cases(f$gdw) == T), c("gdw")], gd0 = f[which(complete.cases(f$gdw) == T), c("gd0")],
+                  gd.40 = f[which(complete.cases(f$gdw) == T), c("Time.gd.40")],
+                  gd.30 = f[which(complete.cases(f$gdw) == T), c("Time.gd.30")],
+                  gd.20 = f[which(complete.cases(f$gdw) == T), c("Time.gd.20")],
+                  gd.10 = f[which(complete.cases(f$gdw) == T), c("Time.gd.10")],
+                  gd10 = f[which(complete.cases(f$gdw) == T), c("Time.gd10")],
+                  gd20 = f[which(complete.cases(f$gdw) == T), c("Time.gd20")],
+                  gd30 = f[which(complete.cases(f$gdw) == T), c("Time.gd30")],
+                  gd40 = f[which(complete.cases(f$gdw) == T), c("Time.gd40")],
+                  g = f[which(complete.cases(f$gdw) == T), c("Time.g")],
+                  d = f[which(complete.cases(f$gdw) == T), c("Time.d")])
+ 
+
+gd10 <-  data.frame(Choice = gd9$gd10, Evaluation = gd9$gdw)
+gd20 <-  data.frame(Choice = gd9$gd20, Evaluation = gd9$gdw)
+gd30 <-  data.frame(Choice = gd9$gd30, Evaluation = gd9$gdw)
+gd40 <-  data.frame(Choice = gd9$gd40, Evaluation = gd9$gdw)
+gd.0 <- data.frame(Choice = gd9$gd0, Evaluation = gd9$gdw)
+gd.10 <-  data.frame(Choice = gd9$gd.10, Evaluation = gd9$gdw)
+gd.20 <-  data.frame(Choice = gd9$gd.20, Evaluation = gd9$gdw)
+gd.30 <-  data.frame(Choice = gd9$gd.30, Evaluation = gd9$gdw)
+gd.40 <-  data.frame(Choice = gd9$gd.40, Evaluation = gd9$gdw)
+
+gd99<- rbind(gd.40, gd.30, gd.20, gd.10, gd.0, gd10, gd20, gd30, gd40)
+gd99$Time <- factor(rep(c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40"), each = 218))
+
+gd9$Eva_Proportion <- round(ave(seq(nrow(gd9)), gd9[,1], FUN=length), digits = 2) # get proportion of WTP
+
+gd99$Eva_Proportion <- factor(rep(c(gd9$Eva_Proportion), times = 9))
+
+#create choice proportion for each time
+pgd$P <- round(1-pgd$Proportion, digits = 2) #use the propotion calculated earlier (make it gamble option)
+
+gd99$Choice_Proportion <- NA
+for (i in 1:nrow(gd99)) {
+  if (gd99$Time[i] == -40) {gd99$Choice_Proportion[i] <- pgd$P[1]}
+  if (gd99$Time[i] == -30) {gd99$Choice_Proportion[i] <- pgd$P[2]}
+  if (gd99$Time[i] == -20) {gd99$Choice_Proportion[i] <- pgd$P[3]}
+  if (gd99$Time[i] == -10) {gd99$Choice_Proportion[i] <- pgd$P[4]}
+  if (gd99$Time[i] == 0) {gd99$Choice_Proportion[i] <- pgd$P[5]}
+  if (gd99$Time[i] == 10) {gd99$Choice_Proportion[i] <- pgd$P[6]}
+  if (gd99$Time[i] == 20) {gd99$Choice_Proportion[i] <- pgd$P[7]}
+  if (gd99$Time[i] == 30) {gd99$Choice_Proportion[i] <- pgd$P[8]}
+  if (gd99$Time[i] == 40) {gd99$Choice_Proportion[i] <- pgd$P[9]}
+}
+
+
+gd99 <- data.frame(sapply(gd99, function(x) as.numeric(as.character(x))))
+  
+gd99$Weight_Choice = gd99$Eva_Proportion * gd99$Choice_Proportion #weighted the choice and the evaluation proportion
+gd99 <- data.frame(sapply(gd99, function(x) as.numeric(as.character(x))))
+
+
+#bubble for gd
+ggplot(gd99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+  geom_point(alpha = 0.08, color = "#0066cc") +
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+  theme_bw() +
+  coord_cartesian(xlim = NULL) +
+  labs(x = "Time", y = "Difference of WTP (Games - Dishes)", size = "Gamble Proportion x Difference of WTP") 
+
+
+##### for mv
+mv9 <- data.frame(mvw = f[which(complete.cases(f$mvw) == T), c("mvw")], mv0 = f[which(complete.cases(f$mvw) == T), c("mv0")],
+                  mv.40 = f[which(complete.cases(f$mvw) == T), c("Time.mv.40")],
+                  mv.30 = f[which(complete.cases(f$mvw) == T), c("Time.mv.30")],
+                  mv.20 = f[which(complete.cases(f$mvw) == T), c("Time.mv.20")],
+                  mv.10 = f[which(complete.cases(f$mvw) == T), c("Time.mv.10")],
+                  mv10 = f[which(complete.cases(f$mvw) == T), c("Time.mv10")],
+                  mv20 = f[which(complete.cases(f$mvw) == T), c("Time.mv20")],
+                  mv30 = f[which(complete.cases(f$mvw) == T), c("Time.mv30")],
+                  mv40 = f[which(complete.cases(f$mvw) == T), c("Time.mv40")], 
+                  m = f[which(complete.cases(f$mvw) == T), c("Time.m")],
+                  v = f[which(complete.cases(f$mvw) == T), c("Time.v")])
+
+
+mv10 <-  data.frame(Choice = mv9$mv10, Evaluation = mv9$mvw)
+mv20 <-  data.frame(Choice = mv9$mv20, Evaluation = mv9$mvw)
+mv30 <-  data.frame(Choice = mv9$mv30, Evaluation = mv9$mvw)
+mv40 <-  data.frame(Choice = mv9$mv40, Evaluation = mv9$mvw)
+mv.0 <- data.frame(Choice = mv9$mv0, Evaluation = mv9$mvw)
+mv.10 <-  data.frame(Choice = mv9$mv.10, Evaluation = mv9$mvw)
+mv.20 <-  data.frame(Choice = mv9$mv.20, Evaluation = mv9$mvw)
+mv.30 <-  data.frame(Choice = mv9$mv.30, Evaluation = mv9$mvw)
+mv.40 <-  data.frame(Choice = mv9$mv.40, Evaluation = mv9$mvw)
+
+mv99<- rbind(mv.40, mv.30, mv.20, mv.10, mv.0, mv10, mv20, mv30, mv40)
+mv99$Time <- factor(rep(c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40"), each = 208))
+
+mv9$Eva_Proportion <- round(ave(seq(nrow(mv9)), mv9[,1], FUN=length), digits = 2) # get proportion of WTP
+
+mv99$Eva_Proportion <- factor(rep(c(mv9$Eva_Proportion), times = 9))
+
+#create choice proportion for each time
+pvm$P <- round(1-pvm$Proportion, digits = 2) #use the propotion calculated earlier (make it gamble option)
+
+mv99$Choice_Proportion <- NA
+for (i in 1:nrow(mv99)) {
+  if (mv99$Time[i] == -40) {mv99$Choice_Proportion[i] <- pvm$P[1]}
+  if (mv99$Time[i] == -30) {mv99$Choice_Proportion[i] <- pvm$P[2]}
+  if (mv99$Time[i] == -20) {mv99$Choice_Proportion[i] <- pvm$P[3]}
+  if (mv99$Time[i] == -10) {mv99$Choice_Proportion[i] <- pvm$P[4]}
+  if (mv99$Time[i] == 0) {mv99$Choice_Proportion[i] <- pvm$P[5]}
+  if (mv99$Time[i] == 10) {mv99$Choice_Proportion[i] <- pvm$P[6]}
+  if (mv99$Time[i] == 20) {mv99$Choice_Proportion[i] <- pvm$P[7]}
+  if (mv99$Time[i] == 30) {mv99$Choice_Proportion[i] <- pvm$P[8]}
+  if (mv99$Time[i] == 40) {mv99$Choice_Proportion[i] <- pvm$P[9]}
+}
+
+
+mv99 <- data.frame(sapply(mv99, function(x) as.numeric(as.character(x))))
+
+mv99$Weight_Choice = mv99$Eva_Proportion * mv99$Choice_Proportion #weighted the choice and the evaluation proportion
+mv99 <- data.frame(sapply(mv99, function(x) as.numeric(as.character(x))))
+
+
+#bubble for mv
+ggplot(mv99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+  geom_point(alpha = 0.08, color = "#ff6666") +
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+  theme_bw() +
+  coord_cartesian(xlim = NULL) +
+  labs(x = "Time", y = "Difference of WTP (Music - Vacuum)", size = "Gamble Proportion x Difference of WTP") 
+
+
+
+###### for st
+
+st9 <- data.frame(stw = f[which(complete.cases(f$stw) == T), c("stw")], st0 = f[which(complete.cases(f$stw) == T), c("st0")],
+                  st.40 = f[which(complete.cases(f$stw) == T), c("Time.st.40")],
+                  st.30 = f[which(complete.cases(f$stw) == T), c("Time.st.30")],
+                  st.20 = f[which(complete.cases(f$stw) == T), c("Time.st.20")],
+                  st.10 = f[which(complete.cases(f$stw) == T), c("Time.st.10")],
+                  st10 = f[which(complete.cases(f$stw) == T), c("Time.st10")],
+                  st20 = f[which(complete.cases(f$stw) == T), c("Time.st20")],
+                  st30 = f[which(complete.cases(f$stw) == T), c("Time.st30")],
+                  st40 = f[which(complete.cases(f$stw) == T), c("Time.st40")], 
+                  s = f[which(complete.cases(f$stw) == T), c("Time.s")],
+                  t = f[which(complete.cases(f$stw) == T), c("Time.t")])
+
+st10 <-  data.frame(Choice = st9$st10, Evaluation = st9$stw)
+st20 <-  data.frame(Choice = st9$st20, Evaluation = st9$stw)
+st30 <-  data.frame(Choice = st9$st30, Evaluation = st9$stw)
+st40 <-  data.frame(Choice = st9$st40, Evaluation = st9$stw)
+st.0 <- data.frame(Choice = st9$st0, Evaluation = st9$stw)
+st.10 <-  data.frame(Choice = st9$st.10, Evaluation = st9$stw)
+st.20 <-  data.frame(Choice = st9$st.20, Evaluation = st9$stw)
+st.30 <-  data.frame(Choice = st9$st.30, Evaluation = st9$stw)
+st.40 <-  data.frame(Choice = st9$st.40, Evaluation = st9$stw)
+
+st99<- rbind(st.40, st.30, st.20, st.10, st.0, st10, st20, st30, st40)
+st99$Time <- factor(rep(c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40"), each = 213))
+
+st9$Eva_Proportion <- round(ave(seq(nrow(st9)), st9[,1], FUN=length), digits = 2) # get proportion of WTP
+
+st99$Eva_Proportion <- factor(rep(c(st9$Eva_Proportion), times = 9))
+
+#create choice proportion for each time
+pts$P <- round(1-pts$Proportion, digits = 2) #use the propotion calculated earlier (make it gamble option)
+
+st99$Choice_Proportion <- NA
+for (i in 1:nrow(st99)) {
+  if (st99$Time[i] == -40) {st99$Choice_Proportion[i] <- pts$P[1]}
+  if (st99$Time[i] == -30) {st99$Choice_Proportion[i] <- pts$P[2]}
+  if (st99$Time[i] == -20) {st99$Choice_Proportion[i] <- pts$P[3]}
+  if (st99$Time[i] == -10) {st99$Choice_Proportion[i] <- pts$P[4]}
+  if (st99$Time[i] == 0) {st99$Choice_Proportion[i] <- pts$P[5]}
+  if (st99$Time[i] == 10) {st99$Choice_Proportion[i] <- pts$P[6]}
+  if (st99$Time[i] == 20) {st99$Choice_Proportion[i] <- pts$P[7]}
+  if (st99$Time[i] == 30) {st99$Choice_Proportion[i] <- pts$P[8]}
+  if (st99$Time[i] == 40) {st99$Choice_Proportion[i] <- pts$P[9]}
+}
+
+
+st99 <- data.frame(sapply(st99, function(x) as.numeric(as.character(x))))
+
+st99$Weight_Choice = st99$Eva_Proportion * st99$Choice_Proportion #weighted the choice and the evaluation proportion
+st99 <- data.frame(sapply(st99, function(x) as.numeric(as.character(x))))
+
+
+#bubble for st
+ggplot(st99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+  geom_point(alpha = 0.08, color = "#339966") +
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+  theme_bw() +
+  coord_cartesian(xlim = NULL) +
+  labs(x = "Time", y = "Difference of WTP (Sports - Traffic Jam)", size = "Gamble Proportion x Difference of WTP") 
+
+
+
+
+
+
+
+
+
+
+# gd <- data.frame(Time$gp - Time$dn)
+# mv <- data.frame(Time$mp - Time$vn)
+# st <-  data.frame(Time$sp - Time$tn)
+
+# Time$gdw = Time$gp - Time$dn #wtp to do - wtp to avoid
+# Time$mvw = Time$mp - Time$vn
+# Time$stw = Time$sp - Time$tn
+
+
+

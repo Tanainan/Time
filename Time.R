@@ -1179,7 +1179,8 @@ length(which(Time$d < 0 & Time$d89 == 1)) #223
 #v
 length(which(Time$v < 0 & Time$v89 == 1)) #207
 
-# Descriptive 
+########################### Descriptive 
+#Evaluation for all
 c1 <- data.frame(Evaluation = Time$g)
 c2 <- data.frame(Evaluation = Time$s)
 c3 <- data.frame(Evaluation = Time$m)
@@ -1259,7 +1260,8 @@ ggplot(c6, aes(x = Evaluation)) +
   ggtitle("Evaluations for Washing Dishes for 45 Minutes")
 
 
-# only positive or negative
+################################ only positive or negative
+
 z1 <- data.frame(Evaluation = Time[which(Time$g > 0), c("g")])
 z2 <- data.frame(Evaluation = Time[which(Time$s > 0), c("s")])
 z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
@@ -1279,9 +1281,10 @@ sd(Time$g > 0)
 a4 <- ggplot(z1, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("Playing Games for 45 Minutes (Only Positively Rated)") + 
+  ggtitle("Playing Games") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(0,103)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a4
 
 
@@ -1292,9 +1295,10 @@ sd(Time$s > 0)
 a5 <- ggplot(z2, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("Playing Sports for 45 Minutes (Only Positively Rated)") + 
+  ggtitle("Playing Sports") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(0,103)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a5
 
 
@@ -1305,9 +1309,10 @@ sd(Time$m > 0)
 a6 <- ggplot(z3, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("Listening to Music for 45 Minutes (Only Positively Rated)") + 
+  ggtitle("Listening to Music") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(0,103)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a6
 
 
@@ -1330,9 +1335,10 @@ sd(Time$t < 0)
 a1 <- ggplot(z4, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
   theme_bw() +
-  ggtitle("Getting Stuck in a Traffic Jam for 45 Minutes (Only Negatively Rated)") + 
+  ggtitle("Getting Stuck in a Traffic Jam") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(-103,0)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a1
 
 
@@ -1343,9 +1349,10 @@ sd(Time$d < 0)
 a2 <- ggplot(z5, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
   theme_bw() +
-  ggtitle("Washing Dishes for 45 Minutes (Only Negatively Rated)") + 
+  ggtitle("Washing Dishes") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(-103,0)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a2
 
 
@@ -1356,15 +1363,19 @@ sd(Time$v < 0)
 a3 <- ggplot(z6, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
   theme_bw() +
-  ggtitle("Vacuuming a Movie Theater for 45 Minutes (Only Negatively Rated)") + 
+  ggtitle("Vacuuming a Movie Theater") + 
   scale_y_continuous(limits=c(0,125)) +
   scale_x_continuous(limits=c(-103,0)) +
+  xlab("") +
   theme(plot.title = element_text(size=12)); a3
 
-grid.arrange(a2, a4, a1, a5, a3, a6) #############################################
+aaa <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
+grid.arrange(arrangeGrob(a2, top = "Negatively Rated Activities"), arrangeGrob(a4, top = "Positively Rated Activities"), a1, a5, a3, a6, 
+             top = textGrob("Evaluations of Doing Positive Activity and Negative Activities for 45 Minutes", gp=gpar(fontsize=15)),
+             bottom = aaa)
 
 
-#WTdo for positive
+######################################### WTdo for positive
 # g
 mean(Time$gp, na.rm = T)
 sd(Time$gp, na.rm = T)
@@ -1374,7 +1385,8 @@ b1 <- data.frame(WTP_to_do = Time$gp, na.rm = T)
 e1 <- ggplot(b1, aes(x = WTP_to_do)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("WTP to Play Games for 45 minutes (Only When Positively Rated)") + 
+  xlab("") +
+  ggtitle("Play Games") + 
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme(plot.title = element_text(size=10)); e1
@@ -1388,7 +1400,8 @@ b2 <- data.frame(WTP_to_do = Time$sp, na.rm = T)
 e2 <- ggplot(b2, aes(x = WTP_to_do)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("WTP to Play Sports for 45 minutes (Only When Positively Rated)") + 
+  xlab("") +
+  ggtitle("Play Sports") + 
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme(plot.title = element_text(size=10)); e2
@@ -1402,7 +1415,8 @@ b3 <- data.frame(WTP_to_do = Time$mp, na.rm = T)
 e3 <- ggplot(b3, aes(x = WTP_to_do)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
   theme_bw() +
-  ggtitle("WTP to Listen to Music for 45 minutes (Only When Positively Rated)") + 
+  xlab("") +
+  ggtitle("Listen to Music") + 
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme(plot.title = element_text(size=10)); e3
@@ -1420,7 +1434,8 @@ e4 <- ggplot(b4, aes(x = WTP_to_avoid)) +
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme_bw() +
-  ggtitle("WTP to Avoid Getting Stuck in a Traffic Jam for 45 minutes (Only When Negatively Rated)") + 
+  xlab("") +
+  ggtitle("Getting Stuck in a Traffic Jam") + 
   theme(plot.title = element_text(size=10)); e4
 
 
@@ -1435,7 +1450,8 @@ e5 <- ggplot(b5, aes(x = WTP_to_avoid)) +
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme_bw() +
-  ggtitle("WTP to Avoid Vacuuming a Movie Theater for 45 minutes (Only When Negatively Rated)") + 
+  xlab("") +
+  ggtitle("Vacuuming a Movie Theater") + 
   theme(plot.title = element_text(size=10)); e5
 
 
@@ -1450,11 +1466,11 @@ e6 <- ggplot(b6, aes(x = WTP_to_avoid)) +
   scale_y_continuous(limits=c(0,50)) +
   scale_x_continuous(limits=c(0,101)) +
   theme_bw() +
-  ggtitle("WTP to Avoid Washing Dishes for 45 minutes (Only When Negatively Rated)") + 
+  ggtitle("Washing Dishes") + 
+  xlab("") +
   theme(plot.title = element_text(size=10)); e6
 
-grid.arrange(e6, e1, e4, e2, e5, e3)
-
+grid.arrange(arrangeGrob(e6, top = "Negatively Rated Activities"), arrangeGrob(e1, top = "Positively Rated Activities"), e4, e2, arrangeGrob(e5, bottom = "WTP to Avoid"), arrangeGrob(e3, bottom = "WTP to Do"), top = textGrob("WTP to Do a Positive Activity or to Avoid Doing a Negative Activity for 45 Minutes", gp=gpar(fontsize=15)))
 
 ####################### WTP positive - negative 
 gd9$gd0.0 <- NA
@@ -1482,31 +1498,34 @@ percent(gd9$gd0.0 == 1)
 percent(mv9$mv0.0 == 1)
 percent(st9$st0.0 == 1)
 
-ggplot(gd9, aes(x = gd9$gdw)) + 
+o1 <- ggplot(gd9, aes(x = gd9$gdw)) + 
   geom_histogram(binwidth = 1) + 
   scale_y_continuous(limits=c(0,45)) +
   scale_x_continuous(limits=c(-75,75)) +
   theme_bw() +
-  ggtitle("WTP Games - WTP Dishes") + 
-  theme(plot.title = element_text(size=10))
+  ggtitle("Games & Dishes") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Games - Dishes)")
 
-ggplot(mv9, aes(x = mv9$mvw)) + 
+o2 <- ggplot(mv9, aes(x = mv9$mvw)) + 
   geom_histogram(binwidth = 1) + 
   scale_y_continuous(limits=c(0,45)) +
   scale_x_continuous(limits=c(-75,75)) +
   theme_bw() +
-  ggtitle("WTP Music - WTP Vacuum") + 
-  theme(plot.title = element_text(size=10))
+  ggtitle("Music & Vacuum") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Music - Vacuum)")
 
-ggplot(st9, aes(x = st9$stw)) + 
+o3 <- ggplot(st9, aes(x = st9$stw)) + 
   geom_histogram(binwidth = 1) + 
   scale_y_continuous(limits=c(0,45)) +
   scale_x_continuous(limits=c(-75,75)) +
   theme_bw() +
-  ggtitle("WTP Sports - WTP Traffic Jam") + 
-  theme(plot.title = element_text(size=10))
+  ggtitle("Sports & Traffic Jam") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Sports - Traffic Jam)")
 
-
+grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to Avoid Doing a Negative Activity"))
 
 
 ############## Bubbles (with time, choice, and WTP differences)

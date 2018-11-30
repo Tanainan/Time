@@ -1191,9 +1191,61 @@ c3 <- data.frame(Evaluation = Time$m)
 #   geom_histogram(alpha=.7, binwidth=1) +
 #   theme_bw()
 
-# All g
+
+#### Positive
+#g
 mean(Time$g)
 sd(Time$g)
+
+mean(Time$g > 0) # percent of ppl rated positive
+mean(Time[which(Time$g > 0), c("g")]) # mean 
+sd(Time[which(Time$g > 0), c("g")])
+
+#s
+mean(Time$s)
+sd(Time$s)
+
+mean(Time$s > 0)
+mean(Time[which(Time$s > 0), c("s")])
+sd(Time[which(Time$s > 0), c("s")])
+
+#m
+mean(Time$m)
+sd(Time$m)
+
+mean(Time$m > 0)
+mean(Time[which(Time$m > 0), c("m")])
+sd(Time[which(Time$m > 0), c("m")])
+
+#### negative 
+#t
+mean(Time$t)
+sd(Time$t)
+
+mean(Time$t < 0)
+mean(Time[which(Time$t < 0), c("t")])
+sd(Time[which(Time$t < 0), c("t")])
+
+#v
+mean(Time$v)
+sd(Time$v)
+
+mean(Time$v < 0)
+mean(Time[which(Time$v < 0), c("v")])
+sd(Time[which(Time$v < 0), c("v")])
+
+
+#d
+mean(Time$d)
+sd(Time$d)
+
+mean(Time$d < 0)
+mean(Time[which(Time$d < 0), c("d")])
+sd(Time[which(Time$d < 0), c("d")])
+
+
+################### graphs evaluation
+# All g
 
 ggplot(c1, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3300FF") +
@@ -1201,8 +1253,6 @@ ggplot(c1, aes(x = Evaluation)) +
   ggtitle("Evaluations for Playing Games for 45 Minutes")
 
 # All s
-mean(Time$s)
-sd(Time$s)
 
 ggplot(c2, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#0066FF") +
@@ -1211,8 +1261,6 @@ ggplot(c2, aes(x = Evaluation)) +
 
 
 # All m
-mean(Time$m)
-sd(Time$m)
 
 ggplot(c3, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3333FF") +
@@ -1232,8 +1280,6 @@ c6 <- data.frame(Evaluation = Time$d)
 #   theme_bw()
 
 # All t
-mean(Time$t)
-sd(Time$t)
 
 ggplot(c4, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#669933") +
@@ -1242,8 +1288,6 @@ ggplot(c4, aes(x = Evaluation)) +
 
 
 # All v
-mean(Time$v)
-sd(Time$v)
 
 ggplot(c5, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
@@ -1251,8 +1295,6 @@ ggplot(c5, aes(x = Evaluation)) +
   ggtitle("Evaluations for Vacuuming a Movie Theater for 45 Minutes")
 
 # All d
-mean(Time$d)
-sd(Time$d)
 
 ggplot(c6, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
@@ -1260,7 +1302,7 @@ ggplot(c6, aes(x = Evaluation)) +
   ggtitle("Evaluations for Washing Dishes for 45 Minutes")
 
 
-################################ only positive or negative
+################################ evaluation graphs for only positive or negative
 
 z1 <- data.frame(Evaluation = Time[which(Time$g > 0), c("g")])
 z2 <- data.frame(Evaluation = Time[which(Time$s > 0), c("s")])
@@ -1275,8 +1317,6 @@ z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
 
 
 #g
-mean(Time$g > 0)
-sd(Time$g > 0)
 
 a4 <- ggplot(z1, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
@@ -1289,8 +1329,6 @@ a4 <- ggplot(z1, aes(x = Evaluation)) +
 
 
 #s
-mean(Time$s > 0)
-sd(Time$s > 0)
 
 a5 <- ggplot(z2, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
@@ -1303,8 +1341,6 @@ a5 <- ggplot(z2, aes(x = Evaluation)) +
 
 
 #m
-mean(Time$m > 0)
-sd(Time$m > 0)
 
 a6 <- ggplot(z3, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
@@ -1329,8 +1365,7 @@ z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
 
 
 #t
-mean(Time$t < 0)
-sd(Time$t < 0)
+
 
 a1 <- ggplot(z4, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
@@ -1343,8 +1378,6 @@ a1 <- ggplot(z4, aes(x = Evaluation)) +
 
 
 #d
-mean(Time$d < 0)
-sd(Time$d < 0)
 
 a2 <- ggplot(z5, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
@@ -1357,8 +1390,6 @@ a2 <- ggplot(z5, aes(x = Evaluation)) +
 
 
 #v
-mean(Time$v < 0)
-sd(Time$v < 0)
 
 a3 <- ggplot(z6, aes(x = Evaluation)) +
   geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
@@ -1489,10 +1520,19 @@ for (i in 1:nrow(st9)) {
 # average?
 min(gd9$gdw)
 max(gd9$gdw)
+mean(gd9$gdw)
+sd(gd9$gdw)
+
 min(mv9$mvw)
 max(mv9$mvw)
+mean(mv9$mvw)
+sd(mv9$mvw)
+
 min(st9$stw)
 max(st9$stw)
+mean(st9$stw)
+sd(st9$stw)
+
 
 percent(gd9$gd0.0 == 1)
 percent(mv9$mv0.0 == 1)

@@ -147,9 +147,35 @@ Time$pst0 <- 100*Time$posiresponse0/Time$posi0; Time$pst0
 Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
 Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
 
-hist(Time$pst0, ylim = c(0,200), labels = TRUE, main = "Time Gain and Risk-Aversion", xlab = "Participants' Percentages of Choosing a Certain Option for Time Gain", ylab = "Counts")
-hist(Time$ngt0, ylim = c(0,80), labels = TRUE, main = "Time Loss and Risk-Seeking", xlab = "Participants' Percentages of Choosing a Gamble Option for Time Loss", ylab = "Counts")
-hist(Time$total0, ylim = c(0,70), labels = TRUE, main = "Time and Reflection Effect", xlab = "Percentages of Correct Predictions of the Reflection Effect", ylab = "Counts")
+
+u1 <- ggplot(Time, aes(pst0)) + 
+  geom_bar(fill = "light pink", width = 5) +
+  theme_bw() + 
+  ggtitle("Time Gain and Risk-Aversion") + 
+  xlab("Participants' Percentages of Choosing a Certain Option for Time Gain") +
+  ylab("Count") +
+  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
+  scale_y_continuous(limits = c(0,200)); u1
+
+u2 <- ggplot(Time, aes(ngt0)) + 
+  geom_bar(fill = "light blue", width = 5) +
+  theme_bw() + 
+  ggtitle("Time Loss and Risk-Seeking") + 
+  xlab("Participants' Percentages of Choosing a Gamble Option for Time Loss") +
+  ylab("Count") +
+  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
+  scale_y_continuous(limits = c(0,200)); u2
+
+u3 <- ggplot(Time, aes(total0)) + 
+  geom_bar(fill = "gray", width = 5) +
+  theme_bw() + 
+  ggtitle("Time and Reflection Effect") + 
+  xlab("Percentages of Correct Predictions of the Reflection Effect") +
+  ylab("Count") +
+  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
+  scale_y_continuous(limits = c(0,65)); u3
+
+grid.arrange(u1, u2)
 
 t.test(Time$pst0, y = NULL, mu = 50)
 t.test(Time$ngt0, y = NULL, mu = 50) # not significant
@@ -435,7 +461,7 @@ Time$lp0 <- 100*Time$loss0/3; Time$lp0
 hist(Time$lp0, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
 t.test(Time$lp0, y = NULL, mu = 50)
 
-#Loss aversion Excluding 80 vs 90 mins
+#Mixed gamble with 0 vs 10 
 # 1 = neither actitiyies and 2 = gamble
 Time$l100 <- NA
 Time$l200 <- NA
@@ -1247,25 +1273,37 @@ sd(Time[which(Time$d < 0), c("d")])
 ################### graphs evaluation
 # All g
 
-ggplot(c1, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3300FF") +
+g1 <- ggplot(c1, aes(x = Evaluation)) +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
-  ggtitle("Evaluations for Playing Games for 45 Minutes")
+  ggtitle("Playing Games") +
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)); g1
 
 # All s
 
-ggplot(c2, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#0066FF") +
+g2 <- ggplot(c2, aes(x = Evaluation)) +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
-  ggtitle("Evaluations for Playing Sports for 45 Minutes")
+  ggtitle("Playing Sports") +
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)); g2
 
 
 # All m
 
-ggplot(c3, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#3333FF") +
+g3 <- ggplot(c3, aes(x = Evaluation)) +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
-  ggtitle("Evaluations for Listening to Music for 45 Minutes")
+  ggtitle("Listening to Music") +
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)); g3
 
 
 
@@ -1281,25 +1319,43 @@ c6 <- data.frame(Evaluation = Time$d)
 
 # All t
 
-ggplot(c4, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#669933") +
+g4 <- ggplot(c4, aes(x = Evaluation)) +
+  geom_bar(fill="#996666", alpha=.5) +
   theme_bw() +
-  ggtitle("Evaluations for Getting Stuck in a Traffic Jam for 45 Minutes")
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)) +
+  ggtitle("Getting Stuck in a Traffic Jam"); g4
 
 
 # All v
 
-ggplot(c5, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+g5 <- ggplot(c5, aes(x = Evaluation)) +
   theme_bw() +
-  ggtitle("Evaluations for Vacuuming a Movie Theater for 45 Minutes")
+  ggtitle("Vacuuming a Movie Theater") +
+  geom_bar(fill="#996666", alpha=.5) +
+  theme_bw() +
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)); g5
 
 # All d
 
-ggplot(c6, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+g6 <- ggplot(c6, aes(x = Evaluation)) +
+  geom_bar(fill="#996666", alpha=.5) +
   theme_bw() +
-  ggtitle("Evaluations for Washing Dishes for 45 Minutes")
+  scale_y_continuous(limits=c(0,125)) +
+  scale_x_continuous(limits=c(-103,103)) +
+  xlab("") +
+  theme(plot.title = element_text(size=12)) +
+  ggtitle("Washing Dishes"); g6
+
+bbb <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
+grid.arrange(g6, g1, g4, g2, g5, g3,
+             top = textGrob("Evaluations of Doing Each Activity for 45 Minutes", gp=gpar(fontsize=15)),
+             bottom = bbb)
 
 
 ################################ evaluation graphs for only positive or negative
@@ -1316,10 +1372,10 @@ z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
 #   ggtitle("Evaluations for Games, Sports, and Music (Positively Only)")
 
 
-#g
+#g evaluation
 
 a4 <- ggplot(z1, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   ggtitle("Playing Games") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1328,10 +1384,10 @@ a4 <- ggplot(z1, aes(x = Evaluation)) +
   theme(plot.title = element_text(size=12)); a4
 
 
-#s
+#s evaluation
 
 a5 <- ggplot(z2, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   ggtitle("Playing Sports") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1340,10 +1396,10 @@ a5 <- ggplot(z2, aes(x = Evaluation)) +
   theme(plot.title = element_text(size=12)); a5
 
 
-#m
+#m evaluation
 
 a6 <- ggplot(z3, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   ggtitle("Listening to Music") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1364,11 +1420,11 @@ z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
 #   ggtitle("Evaluations for Traffic Jam, Vacuum, and Dishes (Negatively Only)")
 
 
-#t
+#t evaluation
 
 
 a1 <- ggplot(z4, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  geom_bar(fill="#996666", alpha=.5) +
   theme_bw() +
   ggtitle("Getting Stuck in a Traffic Jam") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1377,10 +1433,10 @@ a1 <- ggplot(z4, aes(x = Evaluation)) +
   theme(plot.title = element_text(size=12)); a1
 
 
-#d
+#d evaluation
 
 a2 <- ggplot(z5, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  geom_bar(fill="#996666", alpha=.5) +
   theme_bw() +
   ggtitle("Washing Dishes") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1389,10 +1445,10 @@ a2 <- ggplot(z5, aes(x = Evaluation)) +
   theme(plot.title = element_text(size=12)); a2
 
 
-#v
+#v evaluation
 
 a3 <- ggplot(z6, aes(x = Evaluation)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
+  geom_bar(fill="#996666", alpha=.5) +
   theme_bw() +
   ggtitle("Vacuuming a Movie Theater") + 
   scale_y_continuous(limits=c(0,125)) +
@@ -1407,101 +1463,146 @@ grid.arrange(arrangeGrob(a2, top = "Negatively Rated Activities"), arrangeGrob(a
 
 
 ######################################### WTdo for positive
-# g
+# g WTP
 mean(Time$gp, na.rm = T)
 sd(Time$gp, na.rm = T)
 
 b1 <- data.frame(WTP_to_do = Time$gp, na.rm = T)
 
 e1 <- ggplot(b1, aes(x = WTP_to_do)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   xlab("") +
   ggtitle("Play Games") + 
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme(plot.title = element_text(size=10)); e1
 
-# s
+# s WTP
 mean(Time$sp, na.rm = T)
 sd(Time$sp, na.rm = T)
 
 b2 <- data.frame(WTP_to_do = Time$sp, na.rm = T)
 
 e2 <- ggplot(b2, aes(x = WTP_to_do)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   xlab("") +
   ggtitle("Play Sports") + 
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme(plot.title = element_text(size=10)); e2
 
-# m
+# m WTP
 mean(Time$mp, na.rm = T)
 sd(Time$mp, na.rm = T)
 
 b3 <- data.frame(WTP_to_do = Time$mp, na.rm = T)
 
 e3 <- ggplot(b3, aes(x = WTP_to_do)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#00cccc") +
+  geom_bar(fill="#00cccc", alpha=.5) +
   theme_bw() +
   xlab("") +
   ggtitle("Listen to Music") + 
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme(plot.title = element_text(size=10)); e3
 
 
 #WTavoid for negative
-# t
+# t WTP
 mean(Time$tn, na.rm = T)
 sd(Time$tn, na.rm = T)
 
 b4 <- data.frame(WTP_to_avoid = Time$tn, na.rm = T)
 
 e4 <- ggplot(b4, aes(x = WTP_to_avoid)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  geom_bar(fill="#996666", alpha=.5) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme_bw() +
   xlab("") +
   ggtitle("Getting Stuck in a Traffic Jam") + 
   theme(plot.title = element_text(size=10)); e4
 
 
-# v
+# v WTP
 mean(Time$vn, na.rm = T)
 sd(Time$vn, na.rm = T)
 
 b5 <- data.frame(WTP_to_avoid = Time$vn, na.rm = T)
 
 e5 <- ggplot(b5, aes(x = WTP_to_avoid)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  geom_bar(fill="#996666", alpha=.5) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme_bw() +
   xlab("") +
   ggtitle("Vacuuming a Movie Theater") + 
   theme(plot.title = element_text(size=10)); e5
 
 
-# d
+# d WTP
 mean(Time$dn, na.rm = T)
 sd(Time$dn, na.rm = T)
 
 b6 <- data.frame(WTP_to_avoid = Time$dn, na.rm = T)
 
 e6 <- ggplot(b6, aes(x = WTP_to_avoid)) +
-  geom_histogram(binwidth=.8, alpha=.5, position="identity", fill="#996666") +
-  scale_y_continuous(limits=c(0,50)) +
-  scale_x_continuous(limits=c(0,101)) +
+  geom_bar(fill="#996666", alpha=.5) +
+  scale_y_continuous(limits=c(0,60)) +
+  scale_x_continuous(limits=c(-1,101)) +
   theme_bw() +
   ggtitle("Washing Dishes") + 
   xlab("") +
   theme(plot.title = element_text(size=10)); e6
 
 grid.arrange(arrangeGrob(e6, top = "Negatively Rated Activities"), arrangeGrob(e1, top = "Positively Rated Activities"), e4, e2, arrangeGrob(e5, bottom = "WTP to Avoid"), arrangeGrob(e3, bottom = "WTP to Do"), top = textGrob("WTP to Do a Positive Activity or to Avoid Doing a Negative Activity for 45 Minutes", gp=gpar(fontsize=15)))
+
+######## reverse evaluation results
+nrow(Time[complete.cases(Time$gn),])
+mean(Time$gn, na.rm = T)
+sd(Time$gn, na.rm = T)
+
+nrow(Time[complete.cases(Time$sn),])
+mean(Time$sn, na.rm = T)
+sd(Time$sn, na.rm = T)
+
+nrow(Time[complete.cases(Time$mn),])
+
+nrow(Time[complete.cases(Time$dp),])
+mean(Time$dp, na.rm = T)
+sd(Time$dp, na.rm = T)
+
+nrow(Time[complete.cases(Time$tp),])
+mean(Time$tp, na.rm = T)
+sd(Time$tp, na.rm = T)
+
+nrow(Time[complete.cases(Time$vp),])
+mean(Time$vp, na.rm = T)
+sd(Time$vp, na.rm = T)
+
+
+####### indifferent for activity
+nrow(Time[complete.cases(Time$gneun),]) # how many rated neutral
+nrow(Time[complete.cases(Time$sneun),]) # 1 person
+nrow(Time[complete.cases(Time$mneun),])
+nrow(Time[complete.cases(Time$tneun),]) # 3 ppl
+nrow(Time[complete.cases(Time$vneun),]) # 1 person
+nrow(Time[complete.cases(Time$dneun),]) # 3 ppl
+ 
+mean(Time$sneun, na.rm = T)
+mean(Time$sneup, na.rm = T)
+mean(Time$tneun, na.rm = T)
+mean(Time$tneup, na.rm = T)
+mean(Time$vneun, na.rm = T)
+mean(Time$vneup, na.rm = T)
+mean(Time$dneun, na.rm = T)
+sd(Time$dneun, na.rm = T)
+mean(Time$dneup, na.rm = T)
+sd(Time$dneup, na.rm = T)
+
+
 
 ####################### WTP positive - negative 
 gd9$gd0.0 <- NA
@@ -1517,55 +1618,6 @@ for (i in 1:nrow(st9)) {
   if (st9$stw[i] > 0 & st9$st0[i] == 2) {st9$st0.0[i] <- 1} else {st9$st0.0[i] <- 0}}
 
 
-# average?
-min(gd9$gdw)
-max(gd9$gdw)
-mean(gd9$gdw)
-sd(gd9$gdw)
-
-min(mv9$mvw)
-max(mv9$mvw)
-mean(mv9$mvw)
-sd(mv9$mvw)
-
-min(st9$stw)
-max(st9$stw)
-mean(st9$stw)
-sd(st9$stw)
-
-
-percent(gd9$gd0.0 == 1)
-percent(mv9$mv0.0 == 1)
-percent(st9$st0.0 == 1)
-
-o1 <- ggplot(gd9, aes(x = gd9$gdw)) + 
-  geom_histogram(binwidth = 1) + 
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Games & Dishes") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Games - Dishes)")
-
-o2 <- ggplot(mv9, aes(x = mv9$mvw)) + 
-  geom_histogram(binwidth = 1) + 
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Music & Vacuum") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Music - Vacuum)")
-
-o3 <- ggplot(st9, aes(x = st9$stw)) + 
-  geom_histogram(binwidth = 1) + 
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Sports & Traffic Jam") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Sports - Traffic Jam)")
-
-grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to Avoid Doing a Negative Activity"))
 
 
 ############## Bubbles (with time, choice, and WTP differences)
@@ -1776,6 +1828,57 @@ ggplot(st99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) 
 
 
 
+# average?
+min(gd9$gdw)
+max(gd9$gdw)
+mean(gd9$gdw)
+sd(gd9$gdw)
+
+min(mv9$mvw)
+max(mv9$mvw)
+mean(mv9$mvw)
+sd(mv9$mvw)
+
+min(st9$stw)
+max(st9$stw)
+mean(st9$stw)
+sd(st9$stw)
+
+
+percent(gd9$gd0.0 == 1)
+percent(mv9$mv0.0 == 1)
+percent(st9$st0.0 == 1)
+
+################## Difference of WTP for mixed gamble pairs
+
+o1 <- ggplot(gd9, aes(x = gd9$gdw)) + 
+  geom_bar() +
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("Games & Dishes") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Games - Dishes)"); o1
+
+o2 <- ggplot(mv9, aes(x = mv9$mvw)) + 
+  geom_bar() +
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("Music & Vacuum") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Music - Vacuum)"); o2
+
+o3 <- ggplot(st9, aes(x = st9$stw)) + 
+  geom_bar() + 
+  scale_y_continuous(limits=c(0,45)) +
+  scale_x_continuous(limits=c(-75,75)) +
+  theme_bw() +
+  ggtitle("Sports & Traffic Jam") + 
+  theme(plot.title = element_text(size=10)) + 
+  labs(x = "Difference of WTPs (Sports - Traffic Jam)"); o3
+
+grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to Avoid Doing a Negative Activity"))
 
 
 

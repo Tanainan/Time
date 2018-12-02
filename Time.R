@@ -182,8 +182,9 @@ t.test(Time$ngt0, y = NULL, mu = 50) # not significant
 t.test(Time$total0, y = NULL, mu = 50)
 
 
-# calculate the average of answers for each activity
-# possible values are 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 << 1 means people chose 1 for all questions, 1.125 means people chose 1 for 7 questions and 2 for 1 question
+############# Risk behavior pattern for each activity
+
+par(mfrow = c(3,1)) # then rerun each barplot individually
 
 #consistency for g
 Time$gg01 <- NA
@@ -220,7 +221,7 @@ for(i in 1:nrow(Time)){
   else{Time$gg08[i] <- 0}}
 Time$ga00 <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg04*1 + Time$gg03*10 + Time$gg02*100 + Time$gg01*1000)
 options(digits=8)
-i <- barplot(table(Time$ga00), ylim = c(0,120), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
+i <- barplot(table(Time$ga00), col = "orange", ylim = c(0,120), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
         names = c("NA", "1111.1111", "1111.1221", "1111.1222", "2111.1111", "2111.1122", "2211.1111", "2211.2111", "2221.1111", "2222.1111", "2222.2111", "2222.2222"))
 text(i, table(Time$ga00), pos = 3, cex = 1, labels=as.character(table(Time$ga00)))
 
@@ -260,7 +261,7 @@ for(i in 1:nrow(Time)){
   else{Time$ss08[i] <- 0}}
 Time$sa00 <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss04*1 + Time$ss03*10 + Time$ss02*100 + Time$ss01*1000)
 options(digits=8)
-h <- barplot(table(Time$sa00), ylim = c(0,120), main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
+h <- barplot(table(Time$sa00), ylim = c(0,120), col = "orange", main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
         names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.2222", "2111.1111", "2111.1122", "2211.1111", "2211.1122", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
 text(h, table(Time$sa00), pos = 3, cex = 1, labels=as.character(table(Time$sa00)))
 
@@ -301,10 +302,13 @@ for(i in 1:nrow(Time)){
   else{Time$mm08[i] <- 0}}
 Time$ma00 <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm04*1 + Time$mm03*10 + Time$mm02*100 + Time$mm01*1000)
 options(digits=8)
-g <- barplot(table(Time$ma00), ylim = c(0,70), main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
+g <- barplot(table(Time$ma00), col = "orange", ylim = c(0,120), main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
         names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.1222", "1111.2221", "1122.2111", "1211.1111", "1221.1111", "2111.1111", "2211.1111", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
 text(g, table(Time$ma00), pos = 3, cex = 1, labels=as.character(table(Time$ma00)))
 
+
+
+par(mfrow = c(3,1)) # then rerun each barplot individually
 
 
 # consistency for t
@@ -349,6 +353,7 @@ f <- barplot(table(Time$ta00), ylim = c(0,80), col = "light blue", main = "Risk 
 text(f, table(Time$ta00), pos = 3, cex = 1, labels=as.character(table(Time$ta00)))
 
 
+
 # consistency for v
 Time$vv01 <- NA
 Time$vv02 <- NA
@@ -385,7 +390,7 @@ for(i in 1:nrow(Time)){
   else{Time$vv08[i] <- 0}}
 options(digits=8)
 Time$va00 <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv04*1 + Time$vv03*10 + Time$vv02*100 + Time$vv01*1000); Time$va00
-e <- barplot(table(Time$va00), ylim = c(0, 70), col = "light blue", main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
+e <- barplot(table(Time$va00), ylim = c(0, 80), col = "light blue", main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
         names = c("2221.1111", "2122.2222", "1222.2222", "1221.1222", "1122.2222", "1112.2222", "1112.2122", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
 text(e, table(Time$va00), pos = 3, cex = 1, labels=as.character(table(Time$va00)))
 
@@ -491,7 +496,12 @@ Time$lp00 <- 100*Time$loss00/3; Time$lp00
 hist(Time$lp00, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
 t.test(Time$lp00, y = NULL, mu = 50) # not significant!
 
+
 #Consistency Mixed Gamble Excluding 80 vs 90 mins
+
+par(mfrow = c(3,1)) # then rerun each barplot individually
+
+
 #gd
 Time$gdn4. <- NA
 Time$gdn3. <- NA
@@ -527,7 +537,7 @@ for(i in 1:nrow(Time)){
   else{Time$gdp4.[i] <- 0}}
 options(digits=8)
 Time$gda. <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdn1.*1 + Time$gdn2.*10 + Time$gdn3.*100 + Time$gdn4.*1000); Time$gda.
-c <- barplot(table(Time$gda.), ylim = c(0,70), density = 60, main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "dark green", las = 2, 
+c <- barplot(table(Time$gda.), ylim = c(0,100), main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "white", 
         names = c("2222.2222", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2221", 
                   "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(c, table(Time$gda.), pos = 3, cex = 1, labels=as.character(table(Time$gda.)))
@@ -567,7 +577,7 @@ for(i in 1:nrow(Time)){
   else{Time$mvp4.[i] <- 0}}
 options(digits=8)
 Time$mva. <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvn1.*1 + Time$mvn2.*10 + Time$mvn3.*100 + Time$mvn4.*1000); Time$mva.
-b <- barplot(table(Time$mva.), ylim = c(0,80), density = 40, main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "red", las = 2, 
+b <- barplot(table(Time$mva.), ylim = c(0,100), main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "white", 
         names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112",
                   "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(b, table(Time$mva.), pos = 3, cex = 1, labels=as.character(table(Time$mva.)))
@@ -607,17 +617,25 @@ for(i in 1:nrow(Time)){
   else{Time$stp4.[i] <- 0}}
 options(digits=8)
 Time$sta. <- (Time$stp4.*.0001 + Time$stp3.*.001 + Time$stp2.*.01 + Time$stp1.*.1 + Time$stn1.*1 + Time$stn2.*10 + Time$stn3.*100 + Time$stn4.*1000); Time$sta.
-a <- barplot(table(Time$sta.), ylim = c(0,80), density = 30, main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "blue", las = 2, 
+a <- barplot(table(Time$sta.), ylim = c(0,100), main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "white",
         names = c("2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1111",
                   "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(a, table(Time$sta.), pos = 3, cex = 1, labels=as.character(table(Time$sta.)))
 
-###### New graph (curve)
+
+
+
+
+
+
+
+###### New graph (curve) monotonic
+###### mixed gamble
 dg <- Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1,]
 ts <- Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1,]
 vm <- Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1,]
 
-######Find proportions
+###### Find proportions
 #dg
 dg$dgn4 <- NA
 dg$dgn3 <- NA
@@ -657,7 +675,7 @@ for(i in 1:nrow(dg)){
 print(dg$dgp4)
 
 #calculate proportion
-#n40
+#gd
 gd40n <- nrow(dg[dg$dgn4 == 1,])/nrow(dg); gd40n
 gd30n <- nrow(dg[dg$dgn3 == 1,])/nrow(dg); gd30n
 gd20n <- nrow(dg[dg$dgn2 == 1,])/nrow(dg); gd20n
@@ -791,6 +809,20 @@ ggplot(pvm, aes(Time, Proportion, group = 1)) +
   geom_line() +
   ggtitle("Proportions of Vacuum and Music") +
   theme(plot.title = element_text(hjust=0.5))
+
+
+#####graph for mixed activities combined
+mixed <- rbind(pts, pvm, pgd)
+mixed$type <- factor(c(rep(c("Traffic Jam & Sports"), times = 9),rep(c("Vacuum & Music"), times = 9),rep(c("Dishes & Games"), times = 9))) 
+
+ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) + 
+  geom_point(aes(col = type)) + 
+  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  geom_line(aes(col = type)) +
+  scale_color_brewer(palette="Paired") + 
+  theme_bw() +
+  labs(color = "Activity Pair", title = "Proportions People Who Chose Certain Options", subtitle = "for Disiked (Negative) and Liked (Positive) Activities")
+
 
 
 #####Gain only
@@ -1056,8 +1088,6 @@ for(i in 1:nrow(v.)){
   if(v.$v80[i] == 1) {v.$v8[i] <- 1} else {v.$v8[i] <- 0}}
 print(v.$v8)
 
-
-
 #calculate proportion
 v11 <- nrow(v.[v.$v1 == 1,])/nrow(v.); v11
 v22 <- nrow(v.[v.$v2 == 1,])/nrow(v.); v22
@@ -1136,37 +1166,33 @@ positive <- rbind(g.0, m.0, s.0)
 positive$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c("Sports"), times = 8))) 
 
 
-ggplot(data = positive, aes(x = Time, y = Proportion, group = type)) + 
+oo01 <- ggplot(data = positive, aes(x = Time, y = Proportion, group = type)) + 
   geom_point(aes(col = type)) + 
   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
   geom_line(aes(col = type)) +
-  ggtitle("Proportions People Who Chose Certain Options for Liked Activities") +
-  theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5)) + 
+  theme_bw() + 
+  scale_y_continuous(limits = c(0,1)) +
+  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Liked (Positive) Activities")
+
 
 #####graph for negative activity combined
 negative <- rbind(t.0, v.0, d.0)
 negative$type <- factor(c(rep(c("Traffic Jam"), times = 8),rep(c("Vacuum"), times = 8),rep(c("Dishes"), times = 8))) 
 
-ggplot(data = negative, aes(x = Time, y = Proportion, group = type)) + 
+oo02 <- ggplot(data = negative, aes(x = Time, y = Proportion, group = type)) + 
   geom_point(aes(col = type)) + 
   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
   geom_line(aes(col = type)) +
-  ggtitle("Proportions People Who Chose Certain Options for Disiked Activities") +
   theme(plot.title = element_text(hjust=0.5)) +
-  scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+  scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) + 
+  theme_bw() +
+  scale_y_continuous(limits = c(0,1)) +
+  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities")
 
 
-#####graph for mixed activities combined
-mixed <- rbind(pts, pvm, pgd)
-mixed$type <- factor(c(rep(c("Traffic Jam & Sports"), times = 9),rep(c("Vacuum & Music"), times = 9),rep(c("Dishes & Games"), times = 9))) 
-
-ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
-  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
-  geom_line(aes(col = type)) +
-  ggtitle("Proportions People Who Chose Certain Options for Disiked and Liked Activities") +
-  theme(plot.title = element_text(hjust=0.5)) +
-  scale_color_brewer(palette="Paired")
+library(patchwork)
+(oo01/oo02)
 
 
 #calculate total amount of participants after excluding the monotonicity

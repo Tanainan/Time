@@ -9,10 +9,43 @@ library(gridExtra)
 library(grid)
 library(lattice)
 library(stats)
+
+######## Descriptive
+
 summary(Time$age) # age
 percent(Time$gender == 1) #male
 percent(Time$gender == 2) #female
 sd(Time$age) # SD
+
+# Evaluation
+nrow(Time[c(Time$g > 0),])
+nrow(Time[c(Time$s > 0),])
+nrow(Time[c(Time$m > 0),])
+nrow(Time[c(Time$t < 0),])
+nrow(Time[c(Time$v < 0),])
+nrow(Time[c(Time$d < 0),])
+
+# monotonicity for each activity
+nrow(Time[c(Time$g > 0 & Time$g01 == 2 & Time$g89 == 2),])
+percent(Time$g > 0 & Time$g01 == 2 & Time$g89 == 2)
+nrow(Time[c(Time$s > 0 & Time$s01 == 2 & Time$s89 == 2),])
+percent(Time$s > 0 & Time$s01 == 2 & Time$s89 == 2)
+nrow(Time[c(Time$m > 0 & Time$m01 == 2 & Time$m89 == 2),])
+percent(Time$m > 0 & Time$m01 == 2 & Time$m89 == 2)
+nrow(Time[c(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1),])
+percent(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1)
+nrow(Time[c(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1),])
+percent(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1)
+nrow(Time[c(Time$d < 0 & Time$d01 == 1 & Time$d89 == 1),])
+percent(Time$d < 0 & Time$d01 == 1 & Time$d89 == 1)
+
+# monotonicity for mixed gamble
+nrow(Time[c(Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1),])
+percent(Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1)
+nrow(Time[c(Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1),])
+percent(Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1)
+nrow(Time[c(Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1),])
+percent(Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1)
 
 
 # 0 vs 10

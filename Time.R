@@ -1944,14 +1944,3 @@ grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to 
 
 
 
-
-# gd <- data.frame(Time$gp - Time$dn)
-# mv <- data.frame(Time$mp - Time$vn)
-# st <-  data.frame(Time$sp - Time$tn)
-
-# Time$gdw = Time$gp - Time$dn #wtp to do - wtp to avoid
-# Time$mvw = Time$mp - Time$vn
-# Time$stw = Time$sp - Time$tn
-
-
-

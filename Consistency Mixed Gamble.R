@@ -242,6 +242,6 @@ q320 <- ggplot(mvwn1, aes(x = mv0)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q320
 
 
-grid.arrange(q10,q130,q120,q20,q220,q230,q30,q310,q320, nrow = 3, top = textGrob("Evaluation Differences", gp=gpar(fontsize=15)))
+grid.arrange(q10,q130,q120,q20,q220,q230,q30,q310,q320, nrow = 3, top = textGrob("Absolute Evaluation Differences", gp=gpar(fontsize=15)))
 
 

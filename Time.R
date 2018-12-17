@@ -180,6 +180,7 @@ Time$pst0 <- 100*Time$posiresponse0/Time$posi0; Time$pst0
 Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
 Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
 
+###### For Table 2 ######
 table(Time$pst0)
 table(Time$ngt0)
 mean(Time$pst0, na.rm = T)

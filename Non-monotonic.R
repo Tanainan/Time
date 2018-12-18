@@ -145,25 +145,35 @@ u02 <- ggplot(Time, aes(ngt)) +
   scale_y_continuous(limits = c(0,165)); u02
 
 u03 <- ggplot(Time, aes(total)) + 
-  geom_bar(fill = "gray", width = 5) +
+  geom_bar(color = "black", width = 2, fill = "white") +
   theme_bw() + 
-  ggtitle("Time and Reflection Effect") + 
+  ggtitle("Non-Monotonic (N = 234)") + 
   xlab("Percentages of Correct Predictions of the Reflection Effect") +
   ylab("Count") +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
-  scale_y_continuous(limits = c(0,50)); u03
+  scale_y_continuous(limits = c(0,80)) +
+  scale_x_continuous(limits = c(-5, 105)); u03
 
 grid.arrange(u01, u02)
+grid.arrange(u03, u3)
 
 mean(Time$pst)
+sd(Time$pst)
 mean(Time$ngt) # #48 has 0 for both numerator and denominator
 which(Time$ngt == "NaN")
 Time[48,c("neg", "negresponse")]
+mean(Time$ngt, na.rm = T)
+sd(Time$ngt, na.rm = T)
 mean(Time$total)
 t.test(Time$pst, y = NULL, mu = 50)
 t.test(Time$ngt, y = NULL, mu = 50) # not significant
 t.test(Time$total, y = NULL, mu = 50)
 
+table(Time$pst)
+table(Time$ngt)
+table(Time$total)
+
+length(which((Time$posi + Time$neg) > 0))
 
 
 ##########Risk behavior patterns###############

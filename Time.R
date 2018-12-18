@@ -181,6 +181,8 @@ Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
 Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
 
 ###### For Table 2 ######
+length(which(Time$posi0 > 0))
+length(which(Time$neg0 > 0))
 table(Time$pst0)
 table(Time$ngt0)
 mean(Time$pst0, na.rm = T)
@@ -207,13 +209,16 @@ u2 <- ggplot(Time, aes(ngt0)) +
   scale_y_continuous(limits = c(0,200)); u2
 
 u3 <- ggplot(Time, aes(total0)) + 
-  geom_bar(fill = "gray", width = 5) +
+  geom_bar(color = "black", width = 2, fill = "white") +
   theme_bw() + 
-  ggtitle("Time and Reflection Effect") + 
+  ggtitle("Monotonic (N = 233)") + 
   xlab("Percentages of Correct Predictions of the Reflection Effect") +
   ylab("Count") +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
-  scale_y_continuous(limits = c(0,65)); u3
+  scale_y_continuous(limits = c(0,80)) +
+  scale_x_continuous(limits = c(-5, 105)); u3
+
+table(Time$total0)
 
 grid.arrange(u1, u2)
 
@@ -221,6 +226,7 @@ t.test(Time$pst0, y = NULL, mu = 50)
 t.test(Time$ngt0, y = NULL, mu = 50) # not significant
 t.test(Time$total0, y = NULL, mu = 50)
 
+length(which((Time$posi0 + Time$neg0) > 0))
 
 ############# Risk behavior pattern for each activity
 
@@ -1671,6 +1677,11 @@ sd(Time$dneup, na.rm = T)
 
 
 ####################### WTP positive - negative 
+
+t.test(gd9$gdw)
+t.test(mv9$mvw)
+t.test(st9$stw)
+
 gd9$gd0.0 <- NA
 mv9$mv0.0 <- NA
 st9$st0.0 <- NA

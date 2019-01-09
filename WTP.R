@@ -36,5 +36,3 @@ summary(actw)
 
 anova(nullw, domw, actw)
 
-#hi
-

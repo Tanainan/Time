@@ -64,6 +64,26 @@ percent(Time$t89)
 percent(Time$v89)
 percent(Time$d89)
 
+
+# percent certain activities without monotonicity
+percent(Time$g45)
+percent(Time$s45)
+percent(Time$m45)
+percent(Time$v45)
+percent(Time$t45)
+percent(Time$d45)
+
+# change the gamble option == 0
+binom.test(nrow(Time[which(Time$g45 == 1),]), nrow(Time), p = 0.5)
+binom.test(nrow(Time[which(Time$m45 == 1),]), nrow(Time), p = 0.5)
+binom.test(nrow(Time[which(Time$s45 == 1),]), nrow(Time), p = 0.5)
+binom.test(nrow(Time[which(Time$t45 == 0),]), nrow(Time), p = 0.5)
+binom.test(nrow(Time[which(Time$v45 == 0),]), nrow(Time), p = 0.5)
+binom.test(nrow(Time[which(Time$d45 == 0),]), nrow(Time), p = 0.5)
+
+
+
+
 # monotonicity*************************************************************************************
 # gain or loss (risk behaviors)
 Time$gg0 <- NA
@@ -107,6 +127,8 @@ for(i in 1:nrow(Time)){
   else {Time$dd0[i] <- 0}
 }
 print(Time$dd0)
+
+
 
 Time$posi0 <- rowSums(Time[,c("gg0","mm0","ss0")])
 print(Time$posi0)
@@ -862,12 +884,12 @@ mixed <- rbind(pts, pvm, pgd)
 mixed$type <- factor(c(rep(c("Traffic Jam & Sports"), times = 9),rep(c("Vacuum & Music"), times = 9),rep(c("Dishes & Games"), times = 9))) 
 
 ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
+  geom_point() + 
   scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
-  geom_line(aes(col = type)) +
+  geom_line(aes(linetype = type)) +
   scale_color_brewer(palette="Paired") + 
   theme_bw() +
-  labs(color = "Activity Pair", title = "Proportions People Who Chose Certain Options", subtitle = "for Disiked (Negative) and Liked (Positive) Activities")
+  labs(linetype = "Activity Pair", title = "Proportions People Who Chose Certain Options", subtitle = "for Disiked (Negative) and Liked (Positive) Activities")
 
 
 

@@ -3,6 +3,7 @@ g. <- Time[Time$g > 0 & Time$g01 == 2 & Time$g89 == 2,]
 s. <- Time[Time$s > 0 & Time$s01 == 2 & Time$s89 == 2,]
 m. <- Time[Time$m > 0 & Time$m01 == 2 & Time$m89 == 2,]
 
+
 #g.
 g.$g1 <- NA
 g.$g2 <- NA
@@ -373,13 +374,13 @@ positive$type <- factor(c(rep(c("Games"), times = 9),rep(c("Music"), times = 9),
 
 
 oo01 <- ggplot(data = positive, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
+  geom_point() + 
   scale_x_discrete(limits=c("10","20","30","40","45","50","60","70","80")) +
-  geom_line(aes(col = type)) +
+  geom_line(aes(linetype = type)) +
   theme(plot.title = element_text(hjust=0.5)) + 
   theme_bw() + 
   scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Liked (Positive) Activities")
+  labs(linetype = "Activity", title = "Proportions People Who Chose Certain Options for Liked (Positive) Activities"); oo01
 
 
 #####graph for negative activity combined
@@ -387,14 +388,57 @@ negative <- rbind(t.0, v.0, d.0)
 negative$type <- factor(c(rep(c("Traffic Jam"), times = 9),rep(c("Vacuum"), times = 9),rep(c("Dishes"), times = 9))) 
 
 oo02 <- ggplot(data = negative, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
+  geom_point() + 
   scale_x_discrete(limits=c("10","20","30","40","45","50","60","70","80")) +
-  geom_line(aes(col = type)) +
+  geom_line(aes(linetype = type)) +
   theme(plot.title = element_text(hjust=0.5)) +
   scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) + 
   theme_bw() +
   scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities")
+  labs(linetype = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities"); oo02
 
 library(patchwork)
 (oo01/oo02)
+
+
+
+# percent certain activities with monotonicity
+percent(g.$g45)
+percent(s.$s45)
+percent(m.$m45)
+percent(v.$v45)
+percent(t.$t45)
+percent(d.$d45)
+
+# change the gamble option == 0
+binom.test(nrow(g.[which(g.$g45 == 1),]), nrow(g.), p = 0.5)
+binom.test(nrow(m.[which(m.$m45 == 1),]), nrow(m.), p = 0.5)
+binom.test(nrow(s.[which(s.$s45 == 1),]), nrow(s.), p = 0.5)
+binom.test(nrow(t.[which(t.$t45 == 0),]), nrow(t.), p = 0.5)
+binom.test(nrow(v.[which(v.$v45 == 0),]), nrow(v.), p = 0.5)
+binom.test(nrow(d.[which(d.$d45 == 0),]), nrow(d.), p = 0.5)
+
+
+# percent certain activities with monotonicity
+g.1 <- Time[Time$g > 0,]
+m.1 <- Time[Time$m > 0,]
+s.1 <- Time[Time$s > 0,]
+t.1 <- Time[Time$t < 0,]
+v.1 <- Time[Time$v < 0,]
+d.1 <- Time[Time$d < 0,]
+
+percent(g.1$g45)
+percent(s.1$s45)
+percent(m.1$m45)
+percent(v.1$v45)
+percent(t.1$t45)
+percent(d.1$d45)
+
+# change the gamble option == 0
+binom.test(nrow(g.1[which(g.1$g45 == 1),]), nrow(g.1), p = 0.5)
+binom.test(nrow(m.1[which(m.1$m45 == 1),]), nrow(m.1), p = 0.5)
+binom.test(nrow(s.1[which(s.1$s45 == 1),]), nrow(s.1), p = 0.5)
+binom.test(nrow(t.1[which(t.1$t45 == 0),]), nrow(t.1), p = 0.5)
+binom.test(nrow(v.1[which(v.1$v45 == 0),]), nrow(v.1), p = 0.5)
+binom.test(nrow(d.1[which(d.1$d45 == 0),]), nrow(d.1), p = 0.5)
+

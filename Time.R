@@ -1981,6 +1981,25 @@ grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to 
 
 
 
+# combine all positive and negative in one graph
+v.0 <- data.frame(Time = c("-80","-70","-60","-50","-40","-30","-20","-10"), Proportion = c(v88,v77,v66,v55,v44,v33,v22,v11)) 
+t.0 <- data.frame(Time = c("-80","-70","-60","-50","-40","-30","-20","-10"), Proportion = c(t88,t77,t66,t55,t44,t33,t22,t11)) 
+d.0 <- data.frame(Time = c("-80","-70","-60","-50","-40","-30","-20","-10"), Proportion = c(d88,d77,d66,d55,d44,d33,d22,d11)) 
 
+all <- rbind(g.0, m.0, s.0, t.0, v.0, d.0)
+all$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c("Sports"), times = 8),
+                          rep(c("Traffic Jam"), times = 8),rep(c("Vacuum"), times = 8),rep(c("Dishes"), times = 8))) 
+
+allall <- ggplot(data = all, aes(x = Time, y = Proportion, group = type)) + 
+  geom_point(aes(col = type)) + 
+  scale_x_discrete(limits=c("-80","-70","-60","-50","-40","-30","-20","-10","10","20","30","40","50","60","70","80")) +
+  geom_line(aes(linetype = type)) +
+  theme(plot.title = element_text(hjust=0.5)) +
+  theme_bw() +
+  scale_y_continuous(limits = c(0,1)) +
+  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities"); allall
+
+rbind(g.0)
+positive$type <- factor(c()) 
 
 

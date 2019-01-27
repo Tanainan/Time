@@ -184,7 +184,7 @@ q20 <- ggplot(stwp1, aes(x = st0)) +
   labs(x = "", y = "Count", title = "Sports > Traffic Jam") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
-  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q200
+  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q20
 
 
 q220 <- ggplot(stwz1, aes(x = st0)) + 

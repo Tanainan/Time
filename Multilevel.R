@@ -76,6 +76,7 @@ dom0 <- glmer(choice ~ 1 + domain + (1| id),
               data = new0, family = binomial("logit"),
               control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
 summary(dom0)
+
 dom1 <- mixed(choice ~ 1 + domain + (1| id),
       data = new0, family = binomial(link="logit"), method="LRT")
 summary(dom1) ##### same result as well

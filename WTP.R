@@ -15,6 +15,8 @@ neww <- rbind(cw1, cw2, cw3, cw4, cw5, cw6)
 neww$activity <- as.integer(c(rep(1, nrow(cw1)), rep(2, nrow(cw2)),
                              rep(3, nrow(cw3)), rep(4, nrow(cw4)),
                              rep(5, nrow(cw5)), rep(6, nrow(cw6))))
+
+# 0 = positive and 1 = negative
 neww$domain <- as.integer(c(rep(0, nrow(cw1) + nrow(cw2) + nrow(cw3)),
                            rep(1, nrow(cw4) + nrow(cw5) + nrow(cw6))))
 
@@ -52,3 +54,10 @@ par(mfrow = c(1,1))
 plot(neww$eva, neww$wtp, xlab = "Evaluation Score", ylab = " Willingness-to-Pay", main = "Relationship between Evaluation Score and WTP")
 plot(neww$activity, neww$wtp, xlab = "Evaluation Score", ylab = " Willingness-to-Pay", main = "Relationship between Evaluation Score and WTP")
 plot(neww$domain, neww$wtp, xlab = "Evaluation Score", ylab = " Willingness-to-Pay", main = "Relationship between Evaluation Score and WTP")
+
+
+# eva as dv and domain as iv
+
+# cc <- lmer(eva ~ 1 + domain + (1|id),
+#            data = neww)
+# summary(cc)

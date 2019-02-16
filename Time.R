@@ -1791,12 +1791,12 @@ gd99 <- data.frame(sapply(gd99, function(x) as.numeric(as.character(x))))
 
 
 #bubble for gd
-ggplot(gd99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
-  geom_point(alpha = 0.08, color = "#0066cc") +
-  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
-  theme_bw() +
-  coord_cartesian(xlim = NULL) +
-  labs(x = "Time", y = "Difference of WTP (Games - Dishes)", size = "Gamble Proportion x Difference of WTP") 
+# ggplot(gd99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+#   geom_point(alpha = 0.08, color = "#0066cc") +
+#   scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+#   theme_bw() +
+#   coord_cartesian(xlim = NULL) +
+#   labs(x = "Time", y = "Difference of WTP (Games - Dishes)", size = "Gamble Proportion x Difference of WTP") 
 
 
 ##### for mv
@@ -1854,13 +1854,13 @@ mv99 <- data.frame(sapply(mv99, function(x) as.numeric(as.character(x))))
 
 
 #bubble for mv
-ggplot(mv99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
-  geom_point(alpha = 0.08, color = "#ff6666") +
-  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
-  theme_bw() +
-  coord_cartesian(xlim = NULL) +
-  labs(x = "Time", y = "Difference of WTP (Music - Vacuum)", size = "Gamble Proportion x Difference of WTP") 
-
+# ggplot(mv99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+#   geom_point(alpha = 0.08, color = "#ff6666") +
+#   scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+#   theme_bw() +
+#   coord_cartesian(xlim = NULL) +
+#   labs(x = "Time", y = "Difference of WTP (Music - Vacuum)", size = "Gamble Proportion x Difference of WTP") 
+# 
 
 
 ###### for st
@@ -1918,12 +1918,12 @@ st99 <- data.frame(sapply(st99, function(x) as.numeric(as.character(x))))
 
 
 #bubble for st
-ggplot(st99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
-  geom_point(alpha = 0.08, color = "#339966") +
-  scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
-  theme_bw() +
-  coord_cartesian(xlim = NULL) +
-  labs(x = "Time", y = "Difference of WTP (Sports - Traffic Jam)", size = "Gamble Proportion x Difference of WTP") 
+# ggplot(st99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
+#   geom_point(alpha = 0.08, color = "#339966") +
+#   scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
+#   theme_bw() +
+#   coord_cartesian(xlim = NULL) +
+#   labs(x = "Time", y = "Difference of WTP (Sports - Traffic Jam)", size = "Gamble Proportion x Difference of WTP") 
 
 
 

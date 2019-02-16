@@ -1,3 +1,6 @@
+library(devtools)
+library(ggplot2)
+library(ggridges)
 
 Time$tr10 <- NA
 Time$dr10 <- NA
@@ -214,23 +217,88 @@ ngt60 <- data.frame(nt = (100*Time$negresponse60/Time$neg0)); ngt60
 ngt70 <- data.frame(nt = (100*Time$negresponse70/Time$neg0)); ngt70
 ngt80 <- data.frame(nt = (100*Time$negresponse80/Time$neg0)); ngt80
 
+ngt10$freq <- NA
+ngt20$freq <- NA
+ngt30$freq <- NA
+ngt40$freq <- NA
+ngt50$freq <- NA
+ngt60$freq <- NA
+ngt70$freq <- NA
+ngt80$freq <- NA
+
+for (i in 1:length(ngt10)){
+  if (ngt10$nt[i] == 0){ngt10$freq <- 224}
+}
 
 ntdf <- rbind(ngt10, ngt20, ngt30, ngt40, ngt50, ngt60, ngt70, ngt80)
-ntdf$time <- (seq(10, 80, 234))
+ntdf$time <- rep(c(10,20,30,40,50,60,70,80), each = 234)
+round(ntdf$nt, digits = 2)
+
+
 length(which(Time$neg0 > 0))
+
 table(ngt10)
+table(ngt20)
+table(ngt30)
+table(ngt40)
+table(ngt50)
+table(ngt60)
+table(ngt70)
+table(ngt80)
 
 
-mean(Time$ngt0, na.rm = T)
-sd(Time$ngt0, na.rm = T)
+# mean(Time$ngt0, na.rm = T)
+# sd(Time$ngt0, na.rm = T)
 
-u2 <- ggplot(Time, aes(ngt0)) + 
-  geom_bar(fill = "light blue", width = 5) +
-  theme_bw() + 
-  ggtitle("Time Loss and Risk-Seeking") + 
-  xlab("Participants' Percentages of Choosing a Gamble Option for Time Loss") +
-  ylab("Count") +
-  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
-  scale_y_continuous(limits = c(0,200)); u2
+ggplot(ntdf, aes(y = as.character(time), x = nt)) +
+  geom_density_ridges(scale = 2, alpha = 0.8) + 
+  #scale_fill_brewer(palette = 5) +
+  theme_ridges() +
+  #scale_x_discrete(limits = c("0","33.33","50","66.67","100")) +
+  #scale_y_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  labs(y = "Time", x = "Proportion", title = "Risk-seeking for Disliked Activities")
+
+ggplot(ntdf, aes(x = nt, y = as.character(time))) +
+  geom_point(alpha = 0.08, color = "#339966") +
+  #scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) +
+  theme_bw() +
+  coord_cartesian(xlim = NULL) +
+  #scale_x_discrete(limits = c("0.00","33.33","50.00","66.67","100.00")) +
+  labs(x = "Proportion", y = "Time")
+
+#I count the occurence of each couple of values. Eg : number of time a=1 and b=1, number of time a=1 and b=2 etc...
+BB=xyTable(ntdf$nt,ntdf$time)
+
+par(mfrow = c(1,1))
+
+#Now I can plot this ! I represent the dots as big as the couple occurs often
+coeff_bigger=0.08
+plot(BB$x , BB$y , cex=BB$number*coeff_bigger  , pch=16 , col=rgb(0,0,1,0.5),
+     main = "Percentage of Risk-Seeking for Doing Disliked Activities" , ylab="Minutes", xlab = "Percentage")
+abline(h = 45, lty = 5)
+abline(h = 10, lty = 3)
+abline(h = 20, lty = 3)
+abline(h = 30, lty = 3)
+abline(h = 40, lty = 3)
+abline(h = 50, lty = 3)
+abline(h = 60, lty = 3)
+abline(h = 70, lty = 3)
+abline(h = 80, lty = 3)
+
+
+
+#text (BB$x , BB$y , BB$number )
+
+
+
+# normal graph
+# u2 <- ggplot(Time, aes(ngt0)) + 
+#   geom_bar(fill = "light blue", width = 5) +
+#   theme_bw() + 
+#   ggtitle("Time Loss and Risk-Seeking") + 
+#   xlab("Participants' Percentages of Choosing a Gamble Option for Time Loss") +
+#   ylab("Count") +
+#   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
+#   scale_y_continuous(limits = c(0,200)); u2
 
 t.test(Time$ngt0, y = NULL, mu = 50) 

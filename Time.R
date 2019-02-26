@@ -69,18 +69,77 @@ percent(Time$d89)
 percent(Time$g45)
 percent(Time$s45)
 percent(Time$m45)
-percent(Time$v45)
-percent(Time$t45)
 percent(Time$d45)
+percent(Time$t45)
+percent(Time$v45)
+
+
+#Look at responses (1 = sure and 2 = gamble) change to (1 = sure and 0 = gamble) -- including negative activities because some people might rate positive activity as negative
+Time$g45[Time$g45 == 2] <- "0"
+Time$m45[Time$m45 == 2] <- "0"
+Time$s45[Time$s45 == 2] <- "0"
+Time$v45[Time$v45 == 2] <- "0"
+Time$t45[Time$t45 == 2] <- "0"
+Time$d45[Time$d45 == 2] <- "0"
+print(Time$g45)
+
 
 # change the gamble option == 0
-binom.test(nrow(Time[which(Time$g45 == 1),]), nrow(Time), p = 0.5)
-binom.test(nrow(Time[which(Time$m45 == 1),]), nrow(Time), p = 0.5)
-binom.test(nrow(Time[which(Time$s45 == 1),]), nrow(Time), p = 0.5)
-binom.test(nrow(Time[which(Time$t45 == 0),]), nrow(Time), p = 0.5)
-binom.test(nrow(Time[which(Time$v45 == 0),]), nrow(Time), p = 0.5)
-binom.test(nrow(Time[which(Time$d45 == 0),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$g45 == 1),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$m45 == 1),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$s45 == 1),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$t45 == 0),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$v45 == 0),]), nrow(Time), p = 0.5)
+# binom.test(nrow(Time[which(Time$d45 == 0),]), nrow(Time), p = 0.5)
 
+t.test(as.numeric(Time$g45), mu = 0.5)
+t.test(as.numeric(Time$s45), mu = 0.5)
+t.test(as.numeric(Time$m45), mu = 0.5)
+t.test(as.numeric(Time$d45), mu = 0.5)
+t.test(as.numeric(Time$t45), mu = 0.5)
+t.test(as.numeric(Time$v45), mu = 0.5)
+
+table(Time$g45)
+table(Time$s45)
+table(Time$m45)
+table(Time$d45)
+table(Time$t45)
+table(Time$v45)
+
+
+# exclude incongruent evaluation
+
+table(as.numeric(Time[which(Time$g > 0),c("g45")]))
+table(as.numeric(Time[which(Time$s > 0),c("s45")]))
+table(as.numeric(Time[which(Time$m > 0),c("m45")]))
+table(as.numeric(Time[which(Time$d < 0),c("d45")]))
+table(as.numeric(Time[which(Time$t < 0),c("t45")]))
+table(as.numeric(Time[which(Time$v < 0),c("v45")]))
+
+t.test(as.numeric(Time[which(Time$g > 0),c("g45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$s > 0),c("s45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$m > 0),c("m45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$d < 0),c("d45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$t < 0),c("t45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$v < 0),c("v45")]), mu = 0.5)
+
+
+
+# exclude non-monotonic
+
+table(as.numeric(Time[which(Time$g > 0 & Time$g01 == 2 & Time$g89 == 2),c("g45")]))
+table(as.numeric(Time[which(Time$s > 0 & Time$s01 == 2 & Time$s89 == 2),c("s45")]))
+table(as.numeric(Time[which(Time$m > 0 & Time$m01 == 2 & Time$m89 == 2),c("m45")]))
+table(as.numeric(Time[which(Time$d < 0 & Time$d01 == 1 & Time$d89 == 1),c("d45")]))
+table(as.numeric(Time[which(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1),c("t45")]))
+table(as.numeric(Time[which(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1),c("v45")]))
+
+t.test(as.numeric(Time[which(Time$g > 0 & Time$g01 == 2 & Time$g89 == 2),c("g45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$s > 0 & Time$s01 == 2 & Time$s89 == 2),c("s45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$m > 0 & Time$m01 == 2 & Time$m89 == 2),c("m45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$d < 0 & Time$d01 == 1 & Time$d89 == 1),c("d45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1),c("t45")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1),c("v45")]), mu = 0.5)
 
 
 
@@ -135,14 +194,7 @@ print(Time$posi0)
 Time$neg0 <- rowSums(Time[,c("vv0","tt0","dd0")])
 print(Time$neg0)
 
-#Look at responses (1 = sure and 2 = gamble) change to (1 = sure and 0 = gamble) -- including negative activities because some people might rate positive activity as negative
-Time$g45[Time$g45 == 2] <- "0"
-Time$m45[Time$m45 == 2] <- "0"
-Time$s45[Time$s45 == 2] <- "0"
-Time$v45[Time$v45 == 2] <- "0"
-Time$t45[Time$t45 == 2] <- "0"
-Time$d45[Time$d45 == 2] <- "0"
-print(Time$g45)
+
 
 #create result of countings
 Time$gr0 <- NA

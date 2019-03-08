@@ -1,8 +1,8 @@
 # consistency for evaluation and mixed gamble
 # separate when WTP diff is positive vs negative
-gdwp <- gd9[(which(gd9$gde > 0)),]
-gdwn <- gd9[(which(gd9$gde < 0)),]
-gdwz <- gd9[(which(gd9$gde == 0)),]
+gdwp <- gd9[(which(gd9$gd > 0)),]
+gdwn <- gd9[(which(gd9$gd < 0)),]
+gdwz <- gd9[(which(gd9$gd == 0)),]
 
 
 # when g > d
@@ -24,7 +24,7 @@ g.10sp <- ggplot(g.10s, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Games > Dishes") +
-  theme(plot.title = element_text(hjust=0.5)); g.10sp 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when g = d
 g11z <- nrow(gdwz[gdwz$gd.40 == 1,])/nrow(gdwz); g11z
@@ -45,7 +45,7 @@ g.10sz <- ggplot(g.10z, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Games = Dishes") +
-  theme(plot.title = element_text(hjust=0.5)); g.10sz 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when g < d
 g11n <- nrow(gdwn[gdwn$gd.40 == 1,])/nrow(gdwn); g11n
@@ -66,7 +66,7 @@ g.10sn <- ggplot(g.10n, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Games < Dishes") +
-  theme(plot.title = element_text(hjust=0.5)); g.10sn 
+  theme(plot.title = element_text(hjust=0.5))
 
 
 

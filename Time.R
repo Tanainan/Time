@@ -1718,9 +1718,9 @@ for (i in 1:nrow(st9)) {
 
 ############## 
 
-f <- data.frame(gd = Time$g - Time$d, # evaluations
-                mv = Time$m - Time$v,
-                st = Time$s - Time$t,
+f <- data.frame(gd = Time$g + Time$d, # evaluations
+                mv = Time$m + Time$v,
+                st = Time$s + Time$t,
                 gdw = Time$gp - Time$dn, #wtp to do - wtp to avoid
                 mvw = Time$mp - Time$vn,
                 stw = Time$sp - Time$tn,
@@ -1744,7 +1744,8 @@ gd9 <- data.frame(gdw = f[which(complete.cases(f$gdw) == T), c("gdw")], gd0 = f[
                   gd30 = f[which(complete.cases(f$gdw) == T), c("Time.gd30")],
                   gd40 = f[which(complete.cases(f$gdw) == T), c("Time.gd40")],
                   g = f[which(complete.cases(f$gdw) == T), c("Time.g")],
-                  d = f[which(complete.cases(f$gdw) == T), c("Time.d")])
+                  d = f[which(complete.cases(f$gdw) == T), c("Time.d")],
+                  gd = f[which(complete.cases(f$gdw) == T), c("gd")])
  
 
 gd10 <-  data.frame(Choice = gd9$gd10, Evaluation = gd9$gdw)
@@ -1798,7 +1799,8 @@ mv9 <- data.frame(mvw = f[which(complete.cases(f$mvw) == T), c("mvw")], mv0 = f[
                   mv30 = f[which(complete.cases(f$mvw) == T), c("Time.mv30")],
                   mv40 = f[which(complete.cases(f$mvw) == T), c("Time.mv40")], 
                   m = f[which(complete.cases(f$mvw) == T), c("Time.m")],
-                  v = f[which(complete.cases(f$mvw) == T), c("Time.v")])
+                  v = f[which(complete.cases(f$mvw) == T), c("Time.v")],
+                  mv = f[which(complete.cases(f$mvw) == T), c("mv")])
 
 
 mv10 <-  data.frame(Choice = mv9$mv10, Evaluation = mv9$mvw)
@@ -1863,7 +1865,8 @@ st9 <- data.frame(stw = f[which(complete.cases(f$stw) == T), c("stw")], st0 = f[
                   st30 = f[which(complete.cases(f$stw) == T), c("Time.st30")],
                   st40 = f[which(complete.cases(f$stw) == T), c("Time.st40")], 
                   s = f[which(complete.cases(f$stw) == T), c("Time.s")],
-                  t = f[which(complete.cases(f$stw) == T), c("Time.t")])
+                  t = f[which(complete.cases(f$stw) == T), c("Time.t")],
+                  st = f[which(complete.cases(f$stw) == T), c("st")])
 
 st10 <-  data.frame(Choice = st9$st10, Evaluation = st9$stw)
 st20 <-  data.frame(Choice = st9$st20, Evaluation = st9$stw)
@@ -1938,34 +1941,34 @@ percent(st9$st0.0 == 1)
 
 ################## Difference of WTP for mixed gamble pairs
 
-o1 <- ggplot(gd9, aes(x = gd9$gdw)) + 
-  geom_bar() +
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Games & Dishes") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Games - Dishes)"); o1
+# o1 <- ggplot(gd9, aes(x = gd9$gdw)) + 
+#   geom_bar() +
+#   scale_y_continuous(limits=c(0,45)) +
+#   scale_x_continuous(limits=c(-75,75)) +
+#   theme_bw() +
+#   ggtitle("Games & Dishes") + 
+#   theme(plot.title = element_text(size=10)) + 
+#   labs(x = "Difference of WTPs (Games - Dishes)"); o1
 
-o2 <- ggplot(mv9, aes(x = mv9$mvw)) + 
-  geom_bar() +
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Music & Vacuum") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Music - Vacuum)"); o2
+# o2 <- ggplot(mv9, aes(x = mv9$mvw)) + 
+#   geom_bar() +
+#   scale_y_continuous(limits=c(0,45)) +
+#   scale_x_continuous(limits=c(-75,75)) +
+#   theme_bw() +
+#   ggtitle("Music & Vacuum") + 
+#   theme(plot.title = element_text(size=10)) + 
+#   labs(x = "Difference of WTPs (Music - Vacuum)"); o2
 
-o3 <- ggplot(st9, aes(x = st9$stw)) + 
-  geom_bar() + 
-  scale_y_continuous(limits=c(0,45)) +
-  scale_x_continuous(limits=c(-75,75)) +
-  theme_bw() +
-  ggtitle("Sports & Traffic Jam") + 
-  theme(plot.title = element_text(size=10)) + 
-  labs(x = "Difference of WTPs (Sports - Traffic Jam)"); o3
-
-grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to Avoid Doing a Negative Activity"))
+# o3 <- ggplot(st9, aes(x = st9$stw)) + 
+#   geom_bar() + 
+#   scale_y_continuous(limits=c(0,45)) +
+#   scale_x_continuous(limits=c(-75,75)) +
+#   theme_bw() +
+#   ggtitle("Sports & Traffic Jam") + 
+#   theme(plot.title = element_text(size=10)) + 
+#   labs(x = "Difference of WTPs (Sports - Traffic Jam)"); o3
+# 
+# grid.arrange(o1, o2, o3, top = textGrob("WTP to Do a Positive Activity - WTP to Avoid Doing a Negative Activity"))
 
 
 

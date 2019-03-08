@@ -1,8 +1,8 @@
 # consistency for evaluation and mixed gamble
 # separate when WTP diff is positive vs negative
-mvwp <- mv9[(which(mv9$mve > 0)),]
-mvwn <- mv9[(which(mv9$mve < 0)),]
-mvwz <- mv9[(which(mv9$mve == 0)),]
+mvwp <- mv9[(which(mv9$mv > 0)),]
+mvwn <- mv9[(which(mv9$mv < 0)),]
+mvwz <- mv9[(which(mv9$mv == 0)),]
 
 
 # when m > v
@@ -24,7 +24,7 @@ m.10sp <- ggplot(m.10s, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Music > Vacuum") +
-  theme(plot.title = element_text(hjust=0.5)); m.10sp 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when m = v
 m11z <- nrow(mvwz[mvwz$mv.40 == 1,])/nrow(mvwz); m11z
@@ -45,7 +45,7 @@ m.10sz <- ggplot(m.10z, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Music = Vacuum") +
-  theme(plot.title = element_text(hjust=0.5)); m.10sz 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when m < v
 m11n <- nrow(mvwn[mvwn$mv.40 == 1,])/nrow(mvwn); m11n
@@ -66,7 +66,7 @@ m.10sn <- ggplot(m.10n, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Music < Vacuum") +
-  theme(plot.title = element_text(hjust=0.5)); m.10sn 
+  theme(plot.title = element_text(hjust=0.5))
 
 
 

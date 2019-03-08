@@ -1,8 +1,8 @@
 # consistency for evaluation and mixed gamble
 # separate when WTP diff is positive vs negative
-stwp <- st9[(which(st9$ste > 0)),]
-stwn <- st9[(which(st9$ste < 0)),]
-stwz <- st9[(which(st9$ste == 0)),]
+stwp <- st9[(which(st9$st > 0)),]
+stwn <- st9[(which(st9$st < 0)),]
+stwz <- st9[(which(st9$st == 0)),]
 
 
 # when s > t
@@ -24,7 +24,7 @@ s.10sp <- ggplot(s.10s, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Sports > Traffic") +
-  theme(plot.title = element_text(hjust=0.5)); s.10sp 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when s = t
 s11z <- nrow(stwz[stwz$st.40 == 1,])/nrow(stwz); s11z
@@ -45,7 +45,7 @@ s.10sz <- ggplot(s.10z, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Sports = Traffic") +
-  theme(plot.title = element_text(hjust=0.5)); s.10sz 
+  theme(plot.title = element_text(hjust=0.5))
 
 # when s < t
 s11n <- nrow(stwn[stwn$st.40 == 1,])/nrow(stwn); s11n
@@ -66,7 +66,7 @@ s.10sn <- ggplot(s.10n, aes(Time, Proportion, group = 1)) +
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
   geom_line() +
   ggtitle("Proportions People That Chose Certain Options When Sports < Traffic") +
-  theme(plot.title = element_text(hjust=0.5)); s.10sn 
+  theme(plot.title = element_text(hjust=0.5))
 
 
 

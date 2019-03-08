@@ -14,8 +14,6 @@ for (i in 1:234) {
 
 
 
-
-
 # Those who answer neither activity
 for (i in 1:234) {
   if(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1) {if(Time$gd0[i] == 1){Mix$gd[i] <- 1} else {Mix$gd[i] <- 0}}
@@ -31,7 +29,7 @@ for (i in 1:234) {
 Mix$ans <- rowSums(Mix[,c("gd","mv","st")])
 Mix$all <- rowSums(Mix[,c("gd1","mv1","st1")])
 
-Mix$per <- 100*Mix$ans/Mix$all; Mix$per
+Mix$per <- 100*Mix$ans/Mix$all; Mix$per # monotonic
 table(Mix$per)
 mean(Mix$per, na.rm = T)
 sd(Mix$per, na.rm = T)
@@ -41,7 +39,7 @@ t.test(Mix$per, mu = 50, y = NULL)
 length(which(Mix$all > 0))
 
 
-#### non-monotonic ####
+#### non-monotonic #### all
 for (i in 1:234) {
   if(Time$g[i] > 0 & Time$d[i] < 0) {Mix$gd1.[i] <- 1} else {Mix$gd1.[i] <- 0}}
 for (i in 1:234) {
@@ -51,9 +49,7 @@ for (i in 1:234) {
 
 
 
-
-
-# Those who answer neither activity
+# Those who answer neither activity # ans
 for (i in 1:234) {
   if(Time$g[i] > 0 & Time$d[i] < 0) {if(Time$gd0[i] == 1){Mix$gd.[i] <- 1} else {Mix$gd.[i] <- 0}}
   else{Mix$gd.[i] <- 0}}
@@ -68,7 +64,7 @@ for (i in 1:234) {
 Mix$ans. <- rowSums(Mix[,c("gd.","mv.","st.")])
 Mix$all. <- rowSums(Mix[,c("gd1.","mv1.","st1.")])
 
-Mix$per. <- 100*Mix$ans./Mix$all.; Mix$per.
+Mix$per. <- 100*Mix$ans./Mix$all.; Mix$per. # non-monotonic
 table(Mix$per.)
 mean(Mix$per., na.rm = T)
 sd(Mix$per., na.rm = T)

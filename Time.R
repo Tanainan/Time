@@ -74,7 +74,7 @@ percent(Time$t45)
 percent(Time$v45)
 
 
-#Look at responses (1 = sure and 2 = gamble) change to (1 = sure and 0 = gamble) -- including negative activities because some people might rate positive activity as negative
+#Look at responses (1 = sure and 2 = gamble) to (1 = sure and 0 = gamble) -- including negative activities because some people might rate positive activity as negative
 Time$g45[Time$g45 == 2] <- "0"
 Time$m45[Time$m45 == 2] <- "0"
 Time$s45[Time$s45 == 2] <- "0"
@@ -83,8 +83,13 @@ Time$t45[Time$t45 == 2] <- "0"
 Time$d45[Time$d45 == 2] <- "0"
 print(Time$g45)
 
+# for mixed gamble
+Time$mv0[Time$mv0 == 2] <- "0"
+Time$st0[Time$st0 == 2] <- "0"
+Time$gd0[Time$gd0 == 2] <- "0"
 
-# change the gamble option == 0
+
+# the gamble option == 0
 # binom.test(nrow(Time[which(Time$g45 == 1),]), nrow(Time), p = 0.5)
 # binom.test(nrow(Time[which(Time$m45 == 1),]), nrow(Time), p = 0.5)
 # binom.test(nrow(Time[which(Time$s45 == 1),]), nrow(Time), p = 0.5)
@@ -252,9 +257,9 @@ print(Time$negresponse0)
 #positive -- predicting risk-aversion -- choosing sure option
 Time$pst0 <- 100*Time$posiresponse0/Time$posi0; Time$pst0
 Time$ngt0 <- 100*Time$negresponse0/Time$neg0; Time$ngt0
-Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
+#Time$total0 <- 100*(Time$posiresponse0 + Time$negresponse0)/(Time$posi0 + Time$neg0); Time$total0     
 
-###### For Table 2 ######
+###### For weighted percentage mean ######
 length(which(Time$posi0 > 0))
 length(which(Time$neg0 > 0))
 table(Time$pst0)
@@ -282,23 +287,23 @@ u2 <- ggplot(Time, aes(ngt0)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
   scale_y_continuous(limits = c(0,200)); u2
 
-u3 <- ggplot(Time, aes(total0)) + 
-  geom_bar(color = "black", width = 2, fill = "white") +
-  theme_bw() + 
-  ggtitle("Monotonic (N = 233)") + 
-  xlab("Percentages of Correct Predictions of the Reflection Effect") +
-  ylab("Count") +
-  geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
-  scale_y_continuous(limits = c(0,80)) +
-  scale_x_continuous(limits = c(-5, 105)); u3
+# u3 <- ggplot(Time, aes(total0)) + 
+#   geom_bar(color = "black", width = 2, fill = "white") +
+#   theme_bw() + 
+#   ggtitle("Monotonic (N = 233)") + 
+#   xlab("Percentages of Correct Predictions of the Reflection Effect") +
+#   ylab("Count") +
+#   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1) + 
+#   scale_y_continuous(limits = c(0,80)) +
+#   scale_x_continuous(limits = c(-5, 105)); u3
 
-table(Time$total0)
+#table(Time$total0)
 
 grid.arrange(u1, u2)
 
 t.test(Time$pst0, y = NULL, mu = 50)
 t.test(Time$ngt0, y = NULL, mu = 50) # not significant
-t.test(Time$total0, y = NULL, mu = 50)
+#t.test(Time$total0, y = NULL, mu = 50)
 
 length(which((Time$posi0 + Time$neg0) > 0))
 
@@ -555,66 +560,6 @@ d <- barplot(table(Time$da00), ylim = c(0,130), col = "light blue", main = "Risk
         names = c("2222.2222", "2221.1122", "2122.2222", "2111.2222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
 text(d, table(Time$da00), pos = 3, cex = 1, labels=as.character(table(Time$da00)))
 
-
-#Loss aversion
-# 1 = neither actitiyies and 2 = gamble
-Time$l10 <- NA
-Time$l20 <- NA
-Time$l30 <- NA
-#choosing a sure option = loss averse
-for(i in 1:nrow(Time)){
-  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$g89[i] == 2 & Time$d01[i] == 1 & Time$d89[i] == 1){Time$l10[i] <- 1} else
-  {Time$l10[i] <- 0}
-}
-print(Time$l10)
-
-for(i in 1:nrow(Time)){
-  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$s89[i] == 2 & Time$t01[i] == 1 & Time$t89[i] == 1){Time$l20[i] <- 1} else
-  {Time$l20[i] <- 0}
-}
-print(Time$l20)
-
-for(i in 1:nrow(Time)){
-  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$m89[i] == 2 & Time$v01[i] == 1 & Time$v89[i] == 1){Time$l30[i] <- 1} else
-  {Time$l30[i] <- 0}
-}
-print(Time$l30)
-
-Time$loss0 <- Time$l10 + Time$l20 + Time$l30; Time$loss0
-Time$lp0 <- 100*Time$loss0/3; Time$lp0
-
-hist(Time$lp0, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
-t.test(Time$lp0, y = NULL, mu = 50)
-
-#Mixed gamble with 0 vs 10 
-# 1 = neither actitiyies and 2 = gamble
-Time$l100 <- NA
-Time$l200 <- NA
-Time$l300 <- NA
-#choosing a sure option = loss averse
-for(i in 1:nrow(Time)){
-  if(Time$gd0[i] == 1 & Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1){Time$l100[i] <- 1} else
-  {Time$l100[i] <- 0}
-}
-print(Time$l100)
-
-for(i in 1:nrow(Time)){
-  if(Time$st0[i] == 1 & Time$s[i] > 0 & Time$t[i] < 0 & Time$s01[i] == 2 & Time$t01[i] == 1){Time$l200[i] <- 1} else
-  {Time$l200[i] <- 0}
-}
-print(Time$l200)
-
-for(i in 1:nrow(Time)){
-  if(Time$mv0[i] == 1 & Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1){Time$l300[i] <- 1} else
-  {Time$l300[i] <- 0}
-}
-print(Time$l300)
-
-Time$loss00 <- Time$l100 + Time$l200 + Time$l300; Time$loss00
-Time$lp00 <- 100*Time$loss00/3; Time$lp00
-
-hist(Time$lp00, main = "Loss Aversion & Time", xlab = "Participants' Percentages of Loss Aversion")
-t.test(Time$lp00, y = NULL, mu = 50) # not significant!
 
 
 #Consistency Mixed Gamble Excluding 80 vs 90 mins
@@ -944,375 +889,375 @@ ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) +
   labs(linetype = "Activity Pair", title = "Proportions People Who Chose Certain Options", subtitle = "for Disiked (Negative) and Liked (Positive) Activities")
 
 
+# go to 45 mins file ************************
+#####positive activities only
+# g. <- Time[Time$g > 0 & Time$g01 == 2 & Time$g89 == 2,]
+# s. <- Time[Time$s > 0 & Time$s01 == 2 & Time$s89 == 2,]
+# m. <- Time[Time$m > 0 & Time$m01 == 2 & Time$m89 == 2,]
+# 
+# #g.
+# g.$g1 <- NA
+# g.$g2 <- NA
+# g.$g3 <- NA
+# g.$g4 <- NA
+# g.$g5 <- NA
+# g.$g6 <- NA
+# g.$g7 <- NA
+# g.$g8 <- NA
+# 
+# for(i in 1:nrow(g.)){
+#   if(g.$g10[i] == 1) {g.$g1[i] <- 1} else {g.$g1[i] <- 0}}
+# print(g.$g1)
+# for(i in 1:nrow(g.)){
+#   if(g.$g20[i] == 1) {g.$g2[i] <- 1} else {g.$g2[i] <- 0}}
+# print(g.$g2)
+# for(i in 1:nrow(g.)){
+#   if(g.$g30[i] == 1) {g.$g3[i] <- 1} else {g.$g3[i] <- 0}}
+# print(g.$g3)
+# for(i in 1:nrow(g.)){
+#   if(g.$g40[i] == 1) {g.$g4[i] <- 1} else {g.$g4[i] <- 0}}
+# print(g.$g4)
+# for(i in 1:nrow(g.)){
+#   if(g.$g50[i] == 1) {g.$g5[i] <- 1} else {g.$g5[i] <- 0}}
+# print(g.$g5)
+# for(i in 1:nrow(g.)){
+#   if(g.$g60[i] == 1) {g.$g6[i] <- 1} else {g.$g6[i] <- 0}}
+# print(g.$g6)
+# for(i in 1:nrow(g.)){
+#   if(g.$g70[i] == 1) {g.$g7[i] <- 1} else {g.$g7[i] <- 0}}
+# print(g.$g7)
+# for(i in 1:nrow(g.)){
+#   if(g.$g80[i] == 1) {g.$g8[i] <- 1} else {g.$g8[i] <- 0}}
+# print(g.$g8)
+# 
+# #calculate proportion
+# g11 <- nrow(g.[g.$g1 == 1,])/nrow(g.); g11
+# g22 <- nrow(g.[g.$g2 == 1,])/nrow(g.); g22
+# g33 <- nrow(g.[g.$g3 == 1,])/nrow(g.); g33
+# g44 <- nrow(g.[g.$g4 == 1,])/nrow(g.); g44
+# g55 <- nrow(g.[g.$g5 == 1,])/nrow(g.); g55
+# g66 <- nrow(g.[g.$g6 == 1,])/nrow(g.); g66
+# g77 <- nrow(g.[g.$g7 == 1,])/nrow(g.); g77
+# g88 <- nrow(g.[g.$g8 == 1,])/nrow(g.); g88
+# 
+# g.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(g11,g22,g33,g44,g55,g66,g77,g88)) 
+# ggplot(g.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Games") +
+#   theme(plot.title = element_text(hjust=0.5))
+# 
+# #s.
+# s.$s1 <- NA
+# s.$s2 <- NA
+# s.$s3 <- NA
+# s.$s4 <- NA
+# s.$s5 <- NA
+# s.$s6 <- NA
+# s.$s7 <- NA
+# s.$s8 <- NA
+# 
+# for(i in 1:nrow(s.)){
+#   if(s.$s10[i] == 1) {s.$s1[i] <- 1} else {s.$s1[i] <- 0}}
+# print(s.$s1)
+# for(i in 1:nrow(s.)){
+#   if(s.$s20[i] == 1) {s.$s2[i] <- 1} else {s.$s2[i] <- 0}}
+# print(s.$s2)
+# for(i in 1:nrow(s.)){
+#   if(s.$s30[i] == 1) {s.$s3[i] <- 1} else {s.$s3[i] <- 0}}
+# print(s.$s3)
+# for(i in 1:nrow(s.)){
+#   if(s.$s40[i] == 1) {s.$s4[i] <- 1} else {s.$s4[i] <- 0}}
+# print(s.$s4)
+# for(i in 1:nrow(s.)){
+#   if(s.$s50[i] == 1) {s.$s5[i] <- 1} else {s.$s5[i] <- 0}}
+# print(s.$s5)
+# for(i in 1:nrow(s.)){
+#   if(s.$s60[i] == 1) {s.$s6[i] <- 1} else {s.$s6[i] <- 0}}
+# print(s.$s6)
+# for(i in 1:nrow(s.)){
+#   if(s.$s70[i] == 1) {s.$s7[i] <- 1} else {s.$s7[i] <- 0}}
+# print(s.$s7)
+# for(i in 1:nrow(s.)){
+#   if(s.$s80[i] == 1) {s.$s8[i] <- 1} else {s.$s8[i] <- 0}}
+# print(s.$s8)
+# 
+# 
+# #calculate proportion
+# s11 <- nrow(s.[s.$s1 == 1,])/nrow(s.); s11
+# s22 <- nrow(s.[s.$s2 == 1,])/nrow(s.); s22
+# s33 <- nrow(s.[s.$s3 == 1,])/nrow(s.); s33
+# s44 <- nrow(s.[s.$s4 == 1,])/nrow(s.); s44
+# s55 <- nrow(s.[s.$s5 == 1,])/nrow(s.); s55
+# s66 <- nrow(s.[s.$s6 == 1,])/nrow(s.); s66
+# s77 <- nrow(s.[s.$s7 == 1,])/nrow(s.); s77
+# s88 <- nrow(s.[s.$s8 == 1,])/nrow(s.); s88
+# 
+# 
+# 
+# s.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(s11,s22,s33,s44,s55,s66,s77,s88)) 
+# ggplot(s.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Sports") +
+#   theme(plot.title = element_text(hjust=0.5))
+# 
+# #m.
+# m.$m1 <- NA
+# m.$m2 <- NA
+# m.$m3 <- NA
+# m.$m4 <- NA
+# m.$m5 <- NA
+# m.$m6 <- NA
+# m.$m7 <- NA
+# m.$m8 <- NA
+# 
+# for(i in 1:nrow(m.)){
+#   if(m.$m10[i] == 1) {m.$m1[i] <- 1} else {m.$m1[i] <- 0}}
+# print(m.$m1)
+# for(i in 1:nrow(m.)){
+#   if(m.$m20[i] == 1) {m.$m2[i] <- 1} else {m.$m2[i] <- 0}}
+# print(m.$m2)
+# for(i in 1:nrow(m.)){
+#   if(m.$m30[i] == 1) {m.$m3[i] <- 1} else {m.$m3[i] <- 0}}
+# print(m.$m3)
+# for(i in 1:nrow(m.)){
+#   if(m.$m40[i] == 1) {m.$m4[i] <- 1} else {m.$m4[i] <- 0}}
+# print(m.$m4)
+# for(i in 1:nrow(m.)){
+#   if(m.$m50[i] == 1) {m.$m5[i] <- 1} else {m.$m5[i] <- 0}}
+# print(m.$m5)
+# for(i in 1:nrow(m.)){
+#   if(m.$m60[i] == 1) {m.$m6[i] <- 1} else {m.$m6[i] <- 0}}
+# print(m.$m6)
+# for(i in 1:nrow(m.)){
+#   if(m.$m70[i] == 1) {m.$m7[i] <- 1} else {m.$m7[i] <- 0}}
+# print(m.$m7)
+# for(i in 1:nrow(m.)){
+#   if(m.$m80[i] == 1) {m.$m8[i] <- 1} else {m.$m8[i] <- 0}}
+# print(m.$m8)
+# 
+# #calculate proportion
+# m11 <- nrow(m.[m.$m1 == 1,])/nrow(m.); m11
+# m22 <- nrow(m.[m.$m2 == 1,])/nrow(m.); m22
+# m33 <- nrow(m.[m.$m3 == 1,])/nrow(m.); m33
+# m44 <- nrow(m.[m.$m4 == 1,])/nrow(m.); m44
+# m55 <- nrow(m.[m.$m5 == 1,])/nrow(m.); m55
+# m66 <- nrow(m.[m.$m6 == 1,])/nrow(m.); m66
+# m77 <- nrow(m.[m.$m7 == 1,])/nrow(m.); m77
+# m88 <- nrow(m.[m.$m8 == 1,])/nrow(m.); m88
+# 
+# m.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(m11,m22,m33,m44,m55,m66,m77,m88)) 
+# ggplot(m.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Music") +
+#   theme(plot.title = element_text(hjust=0.5))
+# 
+# 
+# #####negative activities only
+# t. <- Time[Time$t < 0 & Time$t01 == 1 & Time$t89 == 1,]
+# v. <- Time[Time$v < 0 & Time$v01 == 1 & Time$v89 == 1,]
+# d. <- Time[Time$d < 0 & Time$d01 == 1 & Time$d89 == 1,]
+# 
+# #t.
+# t.$t1 <- NA
+# t.$t2 <- NA
+# t.$t3 <- NA
+# t.$t4 <- NA
+# t.$t5 <- NA
+# t.$t6 <- NA
+# t.$t7 <- NA
+# t.$t8 <- NA
+# 
+# for(i in 1:nrow(t.)){
+#   if(t.$t10[i] == 1) {t.$t1[i] <- 1} else {t.$t1[i] <- 0}}
+# print(t.$t1)
+# for(i in 1:nrow(t.)){
+#   if(t.$t20[i] == 1) {t.$t2[i] <- 1} else {t.$t2[i] <- 0}}
+# print(t.$t2)
+# for(i in 1:nrow(t.)){
+#   if(t.$t30[i] == 1) {t.$t3[i] <- 1} else {t.$t3[i] <- 0}}
+# print(t.$t3)
+# for(i in 1:nrow(t.)){
+#   if(t.$t40[i] == 1) {t.$t4[i] <- 1} else {t.$t4[i] <- 0}}
+# print(t.$t4)
+# for(i in 1:nrow(t.)){
+#   if(t.$t50[i] == 1) {t.$t5[i] <- 1} else {t.$t5[i] <- 0}}
+# print(t.$t5)
+# for(i in 1:nrow(t.)){
+#   if(t.$t60[i] == 1) {t.$t6[i] <- 1} else {t.$t6[i] <- 0}}
+# print(t.$t6)
+# for(i in 1:nrow(t.)){
+#   if(t.$t70[i] == 1) {t.$t7[i] <- 1} else {t.$t7[i] <- 0}}
+# print(t.$t7)
+# for(i in 1:nrow(t.)){
+#   if(t.$t80[i] == 1) {t.$t8[i] <- 1} else {t.$t8[i] <- 0}}
+# print(t.$t8)
+# 
+# 
+# #calculate proportion
+# t11 <- nrow(t.[t.$t1 == 1,])/nrow(t.); t11
+# t22 <- nrow(t.[t.$t2 == 1,])/nrow(t.); t22
+# t33 <- nrow(t.[t.$t3 == 1,])/nrow(t.); t33
+# t44 <- nrow(t.[t.$t4 == 1,])/nrow(t.); t44
+# t55 <- nrow(t.[t.$t5 == 1,])/nrow(t.); t55
+# t66 <- nrow(t.[t.$t6 == 1,])/nrow(t.); t66
+# t77 <- nrow(t.[t.$t7 == 1,])/nrow(t.); t77
+# t88 <- nrow(t.[t.$t8 == 1,])/nrow(t.); t88
+# 
+# t.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(t11,t22,t33,t44,t55,t66,t77,t88)) 
+# ggplot(t.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Traffic Jam") +
+#   theme(plot.title = element_text(hjust=0.5))
+# 
+# 
+# #v.
+# v.$v1 <- NA
+# v.$v2 <- NA
+# v.$v3 <- NA
+# v.$v4 <- NA
+# v.$v5 <- NA
+# v.$v6 <- NA
+# v.$v7 <- NA
+# v.$v8 <- NA
+# 
+# for(i in 1:nrow(v.)){
+#   if(v.$v10[i] == 1) {v.$v1[i] <- 1} else {v.$v1[i] <- 0}}
+# print(v.$v1)
+# for(i in 1:nrow(v.)){
+#   if(v.$v20[i] == 1) {v.$v2[i] <- 1} else {v.$v2[i] <- 0}}
+# print(v.$v2)
+# for(i in 1:nrow(v.)){
+#   if(v.$v30[i] == 1) {v.$v3[i] <- 1} else {v.$v3[i] <- 0}}
+# print(v.$v3)
+# for(i in 1:nrow(v.)){
+#   if(v.$v40[i] == 1) {v.$v4[i] <- 1} else {v.$v4[i] <- 0}}
+# print(v.$v4)
+# for(i in 1:nrow(v.)){
+#   if(v.$v50[i] == 1) {v.$v5[i] <- 1} else {v.$v5[i] <- 0}}
+# print(v.$v5)
+# for(i in 1:nrow(v.)){
+#   if(v.$v60[i] == 1) {v.$v6[i] <- 1} else {v.$v6[i] <- 0}}
+# print(v.$v6)
+# for(i in 1:nrow(v.)){
+#   if(v.$v70[i] == 1) {v.$v7[i] <- 1} else {v.$v7[i] <- 0}}
+# print(v.$v7)
+# for(i in 1:nrow(v.)){
+#   if(v.$v80[i] == 1) {v.$v8[i] <- 1} else {v.$v8[i] <- 0}}
+# print(v.$v8)
+# 
+# #calculate proportion
+# v11 <- nrow(v.[v.$v1 == 1,])/nrow(v.); v11
+# v22 <- nrow(v.[v.$v2 == 1,])/nrow(v.); v22
+# v33 <- nrow(v.[v.$v3 == 1,])/nrow(v.); v33
+# v44 <- nrow(v.[v.$v4 == 1,])/nrow(v.); v44
+# v55 <- nrow(v.[v.$v5 == 1,])/nrow(v.); v55
+# v66 <- nrow(v.[v.$v6 == 1,])/nrow(v.); v66
+# v77 <- nrow(v.[v.$v7 == 1,])/nrow(v.); v77
+# v88 <- nrow(v.[v.$v8 == 1,])/nrow(v.); v88
+# 
+# v.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(v11,v22,v33,v44,v55,v66,v77,v88)) 
+# ggplot(v.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Vacuum") +
+#   theme(plot.title = element_text(hjust=0.5))
+# 
+# #d.
+# d.$d1 <- NA
+# d.$d2 <- NA
+# d.$d3 <- NA
+# d.$d4 <- NA
+# d.$d5 <- NA
+# d.$d6 <- NA
+# d.$d7 <- NA
+# d.$d8 <- NA
+# 
+# for(i in 1:nrow(d.)){
+#   if(d.$d10[i] == 1) {d.$d1[i] <- 1} else {d.$d1[i] <- 0}}
+# print(d.$d1)
+# for(i in 1:nrow(d.)){
+#   if(d.$d20[i] == 1) {d.$d2[i] <- 1} else {d.$d2[i] <- 0}}
+# print(d.$d2)
+# for(i in 1:nrow(d.)){
+#   if(d.$d30[i] == 1) {d.$d3[i] <- 1} else {d.$d3[i] <- 0}}
+# print(d.$d3)
+# for(i in 1:nrow(d.)){
+#   if(d.$d40[i] == 1) {d.$d4[i] <- 1} else {d.$d4[i] <- 0}}
+# print(d.$d4)
+# for(i in 1:nrow(d.)){
+#   if(d.$d50[i] == 1) {d.$d5[i] <- 1} else {d.$d5[i] <- 0}}
+# print(d.$d5)
+# for(i in 1:nrow(d.)){
+#   if(d.$d60[i] == 1) {d.$d6[i] <- 1} else {d.$d6[i] <- 0}}
+# print(d.$d6)
+# for(i in 1:nrow(d.)){
+#   if(d.$d70[i] == 1) {d.$d7[i] <- 1} else {d.$d7[i] <- 0}}
+# print(d.$d7)
+# for(i in 1:nrow(d.)){
+#   if(d.$d80[i] == 1) {d.$d8[i] <- 1} else {d.$d8[i] <- 0}}
+# print(d.$d8)
 
-#####Gain only
-g. <- Time[Time$g > 0 & Time$g01 == 2 & Time$g89 == 2,]
-s. <- Time[Time$s > 0 & Time$s01 == 2 & Time$s89 == 2,]
-m. <- Time[Time$m > 0 & Time$m01 == 2 & Time$m89 == 2,]
-
-#g.
-g.$g1 <- NA
-g.$g2 <- NA
-g.$g3 <- NA
-g.$g4 <- NA
-g.$g5 <- NA
-g.$g6 <- NA
-g.$g7 <- NA
-g.$g8 <- NA
-
-for(i in 1:nrow(g.)){
-  if(g.$g10[i] == 1) {g.$g1[i] <- 1} else {g.$g1[i] <- 0}}
-print(g.$g1)
-for(i in 1:nrow(g.)){
-  if(g.$g20[i] == 1) {g.$g2[i] <- 1} else {g.$g2[i] <- 0}}
-print(g.$g2)
-for(i in 1:nrow(g.)){
-  if(g.$g30[i] == 1) {g.$g3[i] <- 1} else {g.$g3[i] <- 0}}
-print(g.$g3)
-for(i in 1:nrow(g.)){
-  if(g.$g40[i] == 1) {g.$g4[i] <- 1} else {g.$g4[i] <- 0}}
-print(g.$g4)
-for(i in 1:nrow(g.)){
-  if(g.$g50[i] == 1) {g.$g5[i] <- 1} else {g.$g5[i] <- 0}}
-print(g.$g5)
-for(i in 1:nrow(g.)){
-  if(g.$g60[i] == 1) {g.$g6[i] <- 1} else {g.$g6[i] <- 0}}
-print(g.$g6)
-for(i in 1:nrow(g.)){
-  if(g.$g70[i] == 1) {g.$g7[i] <- 1} else {g.$g7[i] <- 0}}
-print(g.$g7)
-for(i in 1:nrow(g.)){
-  if(g.$g80[i] == 1) {g.$g8[i] <- 1} else {g.$g8[i] <- 0}}
-print(g.$g8)
 
 #calculate proportion
-g11 <- nrow(g.[g.$g1 == 1,])/nrow(g.); g11
-g22 <- nrow(g.[g.$g2 == 1,])/nrow(g.); g22
-g33 <- nrow(g.[g.$g3 == 1,])/nrow(g.); g33
-g44 <- nrow(g.[g.$g4 == 1,])/nrow(g.); g44
-g55 <- nrow(g.[g.$g5 == 1,])/nrow(g.); g55
-g66 <- nrow(g.[g.$g6 == 1,])/nrow(g.); g66
-g77 <- nrow(g.[g.$g7 == 1,])/nrow(g.); g77
-g88 <- nrow(g.[g.$g8 == 1,])/nrow(g.); g88
+# d11 <- nrow(d.[d.$d1 == 1,])/nrow(d.); d11
+# d22 <- nrow(d.[d.$d2 == 1,])/nrow(d.); d22
+# d33 <- nrow(d.[d.$d3 == 1,])/nrow(d.); d33
+# d44 <- nrow(d.[d.$d4 == 1,])/nrow(d.); d44
+# d55 <- nrow(d.[d.$d5 == 1,])/nrow(d.); d55
+# d66 <- nrow(d.[d.$d6 == 1,])/nrow(d.); d66
+# d77 <- nrow(d.[d.$d7 == 1,])/nrow(d.); d77
+# d88 <- nrow(d.[d.$d8 == 1,])/nrow(d.); d88
+# 
+# d.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(d11,d22,d33,d44,d55,d66,d77,d88)) 
+# ggplot(d.0, aes(Time, Proportion, group = 1)) + 
+#   geom_point() + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line() +
+#   ggtitle("Proportions People That Chose Certain Options for Dishes") +
+#   theme(plot.title = element_text(hjust=0.5))
 
-g.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(g11,g22,g33,g44,g55,g66,g77,g88)) 
-ggplot(g.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Games") +
-  theme(plot.title = element_text(hjust=0.5))
-
-#s.
-s.$s1 <- NA
-s.$s2 <- NA
-s.$s3 <- NA
-s.$s4 <- NA
-s.$s5 <- NA
-s.$s6 <- NA
-s.$s7 <- NA
-s.$s8 <- NA
-
-for(i in 1:nrow(s.)){
-  if(s.$s10[i] == 1) {s.$s1[i] <- 1} else {s.$s1[i] <- 0}}
-print(s.$s1)
-for(i in 1:nrow(s.)){
-  if(s.$s20[i] == 1) {s.$s2[i] <- 1} else {s.$s2[i] <- 0}}
-print(s.$s2)
-for(i in 1:nrow(s.)){
-  if(s.$s30[i] == 1) {s.$s3[i] <- 1} else {s.$s3[i] <- 0}}
-print(s.$s3)
-for(i in 1:nrow(s.)){
-  if(s.$s40[i] == 1) {s.$s4[i] <- 1} else {s.$s4[i] <- 0}}
-print(s.$s4)
-for(i in 1:nrow(s.)){
-  if(s.$s50[i] == 1) {s.$s5[i] <- 1} else {s.$s5[i] <- 0}}
-print(s.$s5)
-for(i in 1:nrow(s.)){
-  if(s.$s60[i] == 1) {s.$s6[i] <- 1} else {s.$s6[i] <- 0}}
-print(s.$s6)
-for(i in 1:nrow(s.)){
-  if(s.$s70[i] == 1) {s.$s7[i] <- 1} else {s.$s7[i] <- 0}}
-print(s.$s7)
-for(i in 1:nrow(s.)){
-  if(s.$s80[i] == 1) {s.$s8[i] <- 1} else {s.$s8[i] <- 0}}
-print(s.$s8)
-
-
-#calculate proportion
-s11 <- nrow(s.[s.$s1 == 1,])/nrow(s.); s11
-s22 <- nrow(s.[s.$s2 == 1,])/nrow(s.); s22
-s33 <- nrow(s.[s.$s3 == 1,])/nrow(s.); s33
-s44 <- nrow(s.[s.$s4 == 1,])/nrow(s.); s44
-s55 <- nrow(s.[s.$s5 == 1,])/nrow(s.); s55
-s66 <- nrow(s.[s.$s6 == 1,])/nrow(s.); s66
-s77 <- nrow(s.[s.$s7 == 1,])/nrow(s.); s77
-s88 <- nrow(s.[s.$s8 == 1,])/nrow(s.); s88
-
-
-
-s.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(s11,s22,s33,s44,s55,s66,s77,s88)) 
-ggplot(s.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Sports") +
-  theme(plot.title = element_text(hjust=0.5))
-
-#m.
-m.$m1 <- NA
-m.$m2 <- NA
-m.$m3 <- NA
-m.$m4 <- NA
-m.$m5 <- NA
-m.$m6 <- NA
-m.$m7 <- NA
-m.$m8 <- NA
-
-for(i in 1:nrow(m.)){
-  if(m.$m10[i] == 1) {m.$m1[i] <- 1} else {m.$m1[i] <- 0}}
-print(m.$m1)
-for(i in 1:nrow(m.)){
-  if(m.$m20[i] == 1) {m.$m2[i] <- 1} else {m.$m2[i] <- 0}}
-print(m.$m2)
-for(i in 1:nrow(m.)){
-  if(m.$m30[i] == 1) {m.$m3[i] <- 1} else {m.$m3[i] <- 0}}
-print(m.$m3)
-for(i in 1:nrow(m.)){
-  if(m.$m40[i] == 1) {m.$m4[i] <- 1} else {m.$m4[i] <- 0}}
-print(m.$m4)
-for(i in 1:nrow(m.)){
-  if(m.$m50[i] == 1) {m.$m5[i] <- 1} else {m.$m5[i] <- 0}}
-print(m.$m5)
-for(i in 1:nrow(m.)){
-  if(m.$m60[i] == 1) {m.$m6[i] <- 1} else {m.$m6[i] <- 0}}
-print(m.$m6)
-for(i in 1:nrow(m.)){
-  if(m.$m70[i] == 1) {m.$m7[i] <- 1} else {m.$m7[i] <- 0}}
-print(m.$m7)
-for(i in 1:nrow(m.)){
-  if(m.$m80[i] == 1) {m.$m8[i] <- 1} else {m.$m8[i] <- 0}}
-print(m.$m8)
-
-#calculate proportion
-m11 <- nrow(m.[m.$m1 == 1,])/nrow(m.); m11
-m22 <- nrow(m.[m.$m2 == 1,])/nrow(m.); m22
-m33 <- nrow(m.[m.$m3 == 1,])/nrow(m.); m33
-m44 <- nrow(m.[m.$m4 == 1,])/nrow(m.); m44
-m55 <- nrow(m.[m.$m5 == 1,])/nrow(m.); m55
-m66 <- nrow(m.[m.$m6 == 1,])/nrow(m.); m66
-m77 <- nrow(m.[m.$m7 == 1,])/nrow(m.); m77
-m88 <- nrow(m.[m.$m8 == 1,])/nrow(m.); m88
-
-m.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(m11,m22,m33,m44,m55,m66,m77,m88)) 
-ggplot(m.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Music") +
-  theme(plot.title = element_text(hjust=0.5))
-
-
-#####Loss only
-t. <- Time[Time$t < 0 & Time$t01 == 1 & Time$t89 == 1,]
-v. <- Time[Time$v < 0 & Time$v01 == 1 & Time$v89 == 1,]
-d. <- Time[Time$d < 0 & Time$d01 == 1 & Time$d89 == 1,]
-
-#t.
-t.$t1 <- NA
-t.$t2 <- NA
-t.$t3 <- NA
-t.$t4 <- NA
-t.$t5 <- NA
-t.$t6 <- NA
-t.$t7 <- NA
-t.$t8 <- NA
-
-for(i in 1:nrow(t.)){
-  if(t.$t10[i] == 1) {t.$t1[i] <- 1} else {t.$t1[i] <- 0}}
-print(t.$t1)
-for(i in 1:nrow(t.)){
-  if(t.$t20[i] == 1) {t.$t2[i] <- 1} else {t.$t2[i] <- 0}}
-print(t.$t2)
-for(i in 1:nrow(t.)){
-  if(t.$t30[i] == 1) {t.$t3[i] <- 1} else {t.$t3[i] <- 0}}
-print(t.$t3)
-for(i in 1:nrow(t.)){
-  if(t.$t40[i] == 1) {t.$t4[i] <- 1} else {t.$t4[i] <- 0}}
-print(t.$t4)
-for(i in 1:nrow(t.)){
-  if(t.$t50[i] == 1) {t.$t5[i] <- 1} else {t.$t5[i] <- 0}}
-print(t.$t5)
-for(i in 1:nrow(t.)){
-  if(t.$t60[i] == 1) {t.$t6[i] <- 1} else {t.$t6[i] <- 0}}
-print(t.$t6)
-for(i in 1:nrow(t.)){
-  if(t.$t70[i] == 1) {t.$t7[i] <- 1} else {t.$t7[i] <- 0}}
-print(t.$t7)
-for(i in 1:nrow(t.)){
-  if(t.$t80[i] == 1) {t.$t8[i] <- 1} else {t.$t8[i] <- 0}}
-print(t.$t8)
-
-
-#calculate proportion
-t11 <- nrow(t.[t.$t1 == 1,])/nrow(t.); t11
-t22 <- nrow(t.[t.$t2 == 1,])/nrow(t.); t22
-t33 <- nrow(t.[t.$t3 == 1,])/nrow(t.); t33
-t44 <- nrow(t.[t.$t4 == 1,])/nrow(t.); t44
-t55 <- nrow(t.[t.$t5 == 1,])/nrow(t.); t55
-t66 <- nrow(t.[t.$t6 == 1,])/nrow(t.); t66
-t77 <- nrow(t.[t.$t7 == 1,])/nrow(t.); t77
-t88 <- nrow(t.[t.$t8 == 1,])/nrow(t.); t88
-
-t.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(t11,t22,t33,t44,t55,t66,t77,t88)) 
-ggplot(t.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Traffic Jam") +
-  theme(plot.title = element_text(hjust=0.5))
-
-
-#v.
-v.$v1 <- NA
-v.$v2 <- NA
-v.$v3 <- NA
-v.$v4 <- NA
-v.$v5 <- NA
-v.$v6 <- NA
-v.$v7 <- NA
-v.$v8 <- NA
-
-for(i in 1:nrow(v.)){
-  if(v.$v10[i] == 1) {v.$v1[i] <- 1} else {v.$v1[i] <- 0}}
-print(v.$v1)
-for(i in 1:nrow(v.)){
-  if(v.$v20[i] == 1) {v.$v2[i] <- 1} else {v.$v2[i] <- 0}}
-print(v.$v2)
-for(i in 1:nrow(v.)){
-  if(v.$v30[i] == 1) {v.$v3[i] <- 1} else {v.$v3[i] <- 0}}
-print(v.$v3)
-for(i in 1:nrow(v.)){
-  if(v.$v40[i] == 1) {v.$v4[i] <- 1} else {v.$v4[i] <- 0}}
-print(v.$v4)
-for(i in 1:nrow(v.)){
-  if(v.$v50[i] == 1) {v.$v5[i] <- 1} else {v.$v5[i] <- 0}}
-print(v.$v5)
-for(i in 1:nrow(v.)){
-  if(v.$v60[i] == 1) {v.$v6[i] <- 1} else {v.$v6[i] <- 0}}
-print(v.$v6)
-for(i in 1:nrow(v.)){
-  if(v.$v70[i] == 1) {v.$v7[i] <- 1} else {v.$v7[i] <- 0}}
-print(v.$v7)
-for(i in 1:nrow(v.)){
-  if(v.$v80[i] == 1) {v.$v8[i] <- 1} else {v.$v8[i] <- 0}}
-print(v.$v8)
-
-#calculate proportion
-v11 <- nrow(v.[v.$v1 == 1,])/nrow(v.); v11
-v22 <- nrow(v.[v.$v2 == 1,])/nrow(v.); v22
-v33 <- nrow(v.[v.$v3 == 1,])/nrow(v.); v33
-v44 <- nrow(v.[v.$v4 == 1,])/nrow(v.); v44
-v55 <- nrow(v.[v.$v5 == 1,])/nrow(v.); v55
-v66 <- nrow(v.[v.$v6 == 1,])/nrow(v.); v66
-v77 <- nrow(v.[v.$v7 == 1,])/nrow(v.); v77
-v88 <- nrow(v.[v.$v8 == 1,])/nrow(v.); v88
-
-v.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(v11,v22,v33,v44,v55,v66,v77,v88)) 
-ggplot(v.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Vacuum") +
-  theme(plot.title = element_text(hjust=0.5))
-
-#d.
-d.$d1 <- NA
-d.$d2 <- NA
-d.$d3 <- NA
-d.$d4 <- NA
-d.$d5 <- NA
-d.$d6 <- NA
-d.$d7 <- NA
-d.$d8 <- NA
-
-for(i in 1:nrow(d.)){
-  if(d.$d10[i] == 1) {d.$d1[i] <- 1} else {d.$d1[i] <- 0}}
-print(d.$d1)
-for(i in 1:nrow(d.)){
-  if(d.$d20[i] == 1) {d.$d2[i] <- 1} else {d.$d2[i] <- 0}}
-print(d.$d2)
-for(i in 1:nrow(d.)){
-  if(d.$d30[i] == 1) {d.$d3[i] <- 1} else {d.$d3[i] <- 0}}
-print(d.$d3)
-for(i in 1:nrow(d.)){
-  if(d.$d40[i] == 1) {d.$d4[i] <- 1} else {d.$d4[i] <- 0}}
-print(d.$d4)
-for(i in 1:nrow(d.)){
-  if(d.$d50[i] == 1) {d.$d5[i] <- 1} else {d.$d5[i] <- 0}}
-print(d.$d5)
-for(i in 1:nrow(d.)){
-  if(d.$d60[i] == 1) {d.$d6[i] <- 1} else {d.$d6[i] <- 0}}
-print(d.$d6)
-for(i in 1:nrow(d.)){
-  if(d.$d70[i] == 1) {d.$d7[i] <- 1} else {d.$d7[i] <- 0}}
-print(d.$d7)
-for(i in 1:nrow(d.)){
-  if(d.$d80[i] == 1) {d.$d8[i] <- 1} else {d.$d8[i] <- 0}}
-print(d.$d8)
-
-
-#calculate proportion
-d11 <- nrow(d.[d.$d1 == 1,])/nrow(d.); d11
-d22 <- nrow(d.[d.$d2 == 1,])/nrow(d.); d22
-d33 <- nrow(d.[d.$d3 == 1,])/nrow(d.); d33
-d44 <- nrow(d.[d.$d4 == 1,])/nrow(d.); d44
-d55 <- nrow(d.[d.$d5 == 1,])/nrow(d.); d55
-d66 <- nrow(d.[d.$d6 == 1,])/nrow(d.); d66
-d77 <- nrow(d.[d.$d7 == 1,])/nrow(d.); d77
-d88 <- nrow(d.[d.$d8 == 1,])/nrow(d.); d88
-
-d.0 <- data.frame(Time = c("10","20","30","40","50","60","70","80"), Proportion = c(d11,d22,d33,d44,d55,d66,d77,d88)) 
-ggplot(d.0, aes(Time, Proportion, group = 1)) + 
-  geom_point() + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line() +
-  ggtitle("Proportions People That Chose Certain Options for Dishes") +
-  theme(plot.title = element_text(hjust=0.5))
-
-
-#####graph for positive activities combined#######################
-positive <- rbind(g.0, m.0, s.0)
-positive$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c("Sports"), times = 8))) 
-
-
-oo01 <- ggplot(data = positive, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line(aes(col = type)) +
-  theme(plot.title = element_text(hjust=0.5)) + 
-  theme_bw() + 
-  scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Liked (Positive) Activities")
-
-
-#####graph for negative activity combined
-negative <- rbind(t.0, v.0, d.0)
-negative$type <- factor(c(rep(c("Traffic Jam"), times = 8),rep(c("Vacuum"), times = 8),rep(c("Dishes"), times = 8))) 
-
-oo02 <- ggplot(data = negative, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
-  scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
-  geom_line(aes(col = type)) +
-  theme(plot.title = element_text(hjust=0.5)) +
-  scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) + 
-  theme_bw() +
-  scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities")
-
-
-library(patchwork)
-(oo01/oo02)
+# graph not include 45 mins
+# #####graph for positive activities combined #######################
+# positive <- rbind(g.0, m.0, s.0)
+# positive$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c("Sports"), times = 8))) 
+# 
+# 
+# oo01 <- ggplot(data = positive, aes(x = Time, y = Proportion, group = type)) + 
+#   geom_point(aes(col = type)) + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line(aes(col = type)) +
+#   theme(plot.title = element_text(hjust=0.5)) + 
+#   theme_bw() + 
+#   scale_y_continuous(limits = c(0,1)) +
+#   labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Liked (Positive) Activities")
+# 
+# 
+# #####graph for negative activity combined
+# negative <- rbind(t.0, v.0, d.0)
+# negative$type <- factor(c(rep(c("Traffic Jam"), times = 8),rep(c("Vacuum"), times = 8),rep(c("Dishes"), times = 8))) 
+# 
+# oo02 <- ggplot(data = negative, aes(x = Time, y = Proportion, group = type)) + 
+#   geom_point(aes(col = type)) + 
+#   scale_x_discrete(limits=c("10","20","30","40","50","60","70","80")) +
+#   geom_line(aes(col = type)) +
+#   theme(plot.title = element_text(hjust=0.5)) +
+#   scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) + 
+#   theme_bw() +
+#   scale_y_continuous(limits = c(0,1)) +
+#   labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities")
+# 
+# 
+# library(patchwork)
+# (oo01/oo02)
 
 
 #calculate total amount of participants after excluding the monotonicity
@@ -1353,9 +1298,9 @@ length(which(Time$v < 0 & Time$v89 == 1)) #207
 
 ########################### Descriptive 
 #Evaluation for all
-c1 <- data.frame(Evaluation = Time$g)
-c2 <- data.frame(Evaluation = Time$s)
-c3 <- data.frame(Evaluation = Time$m)
+# c1 <- data.frame(Evaluation = Time$g)
+# c2 <- data.frame(Evaluation = Time$s)
+# c3 <- data.frame(Evaluation = Time$m)
 # cc <- rbind(c1, c2 ,c3)
 # cc$cond <- factor(c(rep(c("Games"), times = 234), rep(c("Sports"), times = 234), rep(c("Music"), times = 234)))
 # 
@@ -1417,98 +1362,98 @@ sd(Time[which(Time$d < 0), c("d")])
 
 
 ################### graphs evaluation
-# All g
-
-g1 <- ggplot(c1, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Playing Games") +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); g1
-
-# All s
-
-g2 <- ggplot(c2, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Playing Sports") +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); g2
-
-
-# All m
-
-g3 <- ggplot(c3, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Listening to Music") +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); g3
-
-
-
-c4 <- data.frame(Evaluation = Time$t)
-c5 <- data.frame(Evaluation = Time$v)
-c6 <- data.frame(Evaluation = Time$d)
-# ca <- rbind(c4, c5 ,c6)
-# ca$cond <- factor(c(rep(c("Traffic Jam"), times = 234), rep(c("Vacuum"), times = 234), rep(c("Dishes"), times = 234)))
+# # All g
 # 
-# ggplot(ca, aes(x = Evaluation, fill = cond)) +
-#   geom_density(alpha=.1) +
-#   theme_bw()
-
-# All t
-
-g4 <- ggplot(c4, aes(x = Evaluation)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)) +
-  ggtitle("Getting Stuck in a Traffic Jam"); g4
-
-
-# All v
-
-g5 <- ggplot(c5, aes(x = Evaluation)) +
-  theme_bw() +
-  ggtitle("Vacuuming a Movie Theater") +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); g5
-
-# All d
-
-g6 <- ggplot(c6, aes(x = Evaluation)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)) +
-  ggtitle("Washing Dishes"); g6
-
-bbb <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
-grid.arrange(g6, g1, g4, g2, g5, g3,
-             top = textGrob("Evaluations of Doing Each Activity for 45 Minutes", gp=gpar(fontsize=15)),
-             bottom = bbb)
+# g1 <- ggplot(c1, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Playing Games") +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); g1
+# 
+# # All s
+# 
+# g2 <- ggplot(c2, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Playing Sports") +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); g2
+# 
+# 
+# # All m
+# 
+# g3 <- ggplot(c3, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Listening to Music") +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); g3
+# 
+# 
+# 
+# c4 <- data.frame(Evaluation = Time$t)
+# c5 <- data.frame(Evaluation = Time$v)
+# c6 <- data.frame(Evaluation = Time$d)
+# # ca <- rbind(c4, c5 ,c6)
+# # ca$cond <- factor(c(rep(c("Traffic Jam"), times = 234), rep(c("Vacuum"), times = 234), rep(c("Dishes"), times = 234)))
+# # 
+# # ggplot(ca, aes(x = Evaluation, fill = cond)) +
+# #   geom_density(alpha=.1) +
+# #   theme_bw()
+# 
+# # All t
+# 
+# g4 <- ggplot(c4, aes(x = Evaluation)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)) +
+#   ggtitle("Getting Stuck in a Traffic Jam"); g4
+# 
+# 
+# # All v
+# 
+# g5 <- ggplot(c5, aes(x = Evaluation)) +
+#   theme_bw() +
+#   ggtitle("Vacuuming a Movie Theater") +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); g5
+# 
+# # All d
+# 
+# g6 <- ggplot(c6, aes(x = Evaluation)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)) +
+#   ggtitle("Washing Dishes"); g6
+# 
+# bbb <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
+# grid.arrange(g6, g1, g4, g2, g5, g3,
+#              top = textGrob("Evaluations of Doing Each Activity for 45 Minutes", gp=gpar(fontsize=15)),
+#              bottom = bbb)
 
 
 ################################ evaluation graphs for only positive or negative
 
-z1 <- data.frame(Evaluation = Time[which(Time$g > 0), c("g")])
-z2 <- data.frame(Evaluation = Time[which(Time$s > 0), c("s")])
-z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
+# z1 <- data.frame(Evaluation = Time[which(Time$g > 0), c("g")])
+# z2 <- data.frame(Evaluation = Time[which(Time$s > 0), c("s")])
+# z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
 # zz <- rbind(z1, z2 ,z3)
 # zz$cond <- factor(c(rep(c("Games"), times = 229), rep(c("Sports"), times = 228), rep(c("Music"), times = 234)))
 # 
@@ -1520,43 +1465,43 @@ z3 <- data.frame(Evaluation = Time[which(Time$m > 0), c("m")])
 
 #g evaluation
 
-a4 <- ggplot(z1, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Playing Games") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(0,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a4
+# a4 <- ggplot(z1, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Playing Games") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(0,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a4
 
 
 #s evaluation
 
-a5 <- ggplot(z2, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Playing Sports") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(0,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a5
+# a5 <- ggplot(z2, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Playing Sports") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(0,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a5
 
 
 #m evaluation
-
-a6 <- ggplot(z3, aes(x = Evaluation)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  ggtitle("Listening to Music") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(0,103)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a6
-
-
-z4 <- data.frame(Evaluation = Time[which(Time$t < 0), c("t")])
-z5 <- data.frame(Evaluation = Time[which(Time$v < 0), c("v")])
-z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
+# 
+# a6 <- ggplot(z3, aes(x = Evaluation)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Listening to Music") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(0,103)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a6
+# 
+# 
+# z4 <- data.frame(Evaluation = Time[which(Time$t < 0), c("t")])
+# z5 <- data.frame(Evaluation = Time[which(Time$v < 0), c("v")])
+# z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
 # zzz <- rbind(z4, z5 ,z6)
 # zzz$cond <- factor(c(rep(c("Traffic Jam"), times = 218), rep(c("Vacuum"), times = 208), rep(c("Dishes"), times = 223)))
 # 
@@ -1569,141 +1514,141 @@ z6 <- data.frame(Evaluation = Time[which(Time$d < 0), c("d")])
 #t evaluation
 
 
-a1 <- ggplot(z4, aes(x = Evaluation)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  ggtitle("Getting Stuck in a Traffic Jam") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,0)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a1
-
-
-#d evaluation
-
-a2 <- ggplot(z5, aes(x = Evaluation)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  ggtitle("Washing Dishes") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,0)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a2
-
-
-#v evaluation
-
-a3 <- ggplot(z6, aes(x = Evaluation)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  theme_bw() +
-  ggtitle("Vacuuming a Movie Theater") + 
-  scale_y_continuous(limits=c(0,125)) +
-  scale_x_continuous(limits=c(-103,0)) +
-  xlab("") +
-  theme(plot.title = element_text(size=12)); a3
-
-aaa <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
-grid.arrange(arrangeGrob(a2, top = "Negatively Rated Activities"), arrangeGrob(a4, top = "Positively Rated Activities"), a1, a5, a3, a6, 
-             top = textGrob("Evaluations of Doing Positive Activity and Negative Activities for 45 Minutes", gp=gpar(fontsize=15)),
-             bottom = aaa)
+# a1 <- ggplot(z4, aes(x = Evaluation)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Getting Stuck in a Traffic Jam") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,0)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a1
+# 
+# 
+# #d evaluation
+# 
+# a2 <- ggplot(z5, aes(x = Evaluation)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Washing Dishes") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,0)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a2
+# 
+# 
+# #v evaluation
+# 
+# a3 <- ggplot(z6, aes(x = Evaluation)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   theme_bw() +
+#   ggtitle("Vacuuming a Movie Theater") + 
+#   scale_y_continuous(limits=c(0,125)) +
+#   scale_x_continuous(limits=c(-103,0)) +
+#   xlab("") +
+#   theme(plot.title = element_text(size=12)); a3
+# 
+# aaa <- paste("Evaluations", "(-100 = Absolutely Dislike and 100 = Absolutely Like)", sep="\n")
+# grid.arrange(arrangeGrob(a2, top = "Negatively Rated Activities"), arrangeGrob(a4, top = "Positively Rated Activities"), a1, a5, a3, a6, 
+#              top = textGrob("Evaluations of Doing Positive Activity and Negative Activities for 45 Minutes", gp=gpar(fontsize=15)),
+#              bottom = aaa)
 
 
 ######################################### WTdo for positive
-# g WTP
-mean(Time$gp, na.rm = T)
-sd(Time$gp, na.rm = T)
-
-b1 <- data.frame(WTP_to_do = Time$gp, na.rm = T)
-
-e1 <- ggplot(b1, aes(x = WTP_to_do)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  xlab("") +
-  ggtitle("Play Games") + 
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme(plot.title = element_text(size=10)); e1
-
-# s WTP
-mean(Time$sp, na.rm = T)
-sd(Time$sp, na.rm = T)
-
-b2 <- data.frame(WTP_to_do = Time$sp, na.rm = T)
-
-e2 <- ggplot(b2, aes(x = WTP_to_do)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  xlab("") +
-  ggtitle("Play Sports") + 
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme(plot.title = element_text(size=10)); e2
-
-# m WTP
-mean(Time$mp, na.rm = T)
-sd(Time$mp, na.rm = T)
-
-b3 <- data.frame(WTP_to_do = Time$mp, na.rm = T)
-
-e3 <- ggplot(b3, aes(x = WTP_to_do)) +
-  geom_bar(fill="#00cccc", alpha=.5) +
-  theme_bw() +
-  xlab("") +
-  ggtitle("Listen to Music") + 
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme(plot.title = element_text(size=10)); e3
-
+# # g WTP
+# mean(Time$gp, na.rm = T)
+# sd(Time$gp, na.rm = T)
+# 
+# b1 <- data.frame(WTP_to_do = Time$gp, na.rm = T)
+# 
+# e1 <- ggplot(b1, aes(x = WTP_to_do)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   xlab("") +
+#   ggtitle("Play Games") + 
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme(plot.title = element_text(size=10)); e1
+# 
+# # s WTP
+# mean(Time$sp, na.rm = T)
+# sd(Time$sp, na.rm = T)
+# 
+# b2 <- data.frame(WTP_to_do = Time$sp, na.rm = T)
+# 
+# e2 <- ggplot(b2, aes(x = WTP_to_do)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   xlab("") +
+#   ggtitle("Play Sports") + 
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme(plot.title = element_text(size=10)); e2
+# 
+# # m WTP
+# mean(Time$mp, na.rm = T)
+# sd(Time$mp, na.rm = T)
+# 
+# b3 <- data.frame(WTP_to_do = Time$mp, na.rm = T)
+# 
+# e3 <- ggplot(b3, aes(x = WTP_to_do)) +
+#   geom_bar(fill="#00cccc", alpha=.5) +
+#   theme_bw() +
+#   xlab("") +
+#   ggtitle("Listen to Music") + 
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme(plot.title = element_text(size=10)); e3
+# 
 
 #WTavoid for negative
 # t WTP
-mean(Time$tn, na.rm = T)
-sd(Time$tn, na.rm = T)
-
-b4 <- data.frame(WTP_to_avoid = Time$tn, na.rm = T)
-
-e4 <- ggplot(b4, aes(x = WTP_to_avoid)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme_bw() +
-  xlab("") +
-  ggtitle("Getting Stuck in a Traffic Jam") + 
-  theme(plot.title = element_text(size=10)); e4
-
-
-# v WTP
-mean(Time$vn, na.rm = T)
-sd(Time$vn, na.rm = T)
-
-b5 <- data.frame(WTP_to_avoid = Time$vn, na.rm = T)
-
-e5 <- ggplot(b5, aes(x = WTP_to_avoid)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme_bw() +
-  xlab("") +
-  ggtitle("Vacuuming a Movie Theater") + 
-  theme(plot.title = element_text(size=10)); e5
-
-
-# d WTP
-mean(Time$dn, na.rm = T)
-sd(Time$dn, na.rm = T)
-
-b6 <- data.frame(WTP_to_avoid = Time$dn, na.rm = T)
-
-e6 <- ggplot(b6, aes(x = WTP_to_avoid)) +
-  geom_bar(fill="#996666", alpha=.5) +
-  scale_y_continuous(limits=c(0,60)) +
-  scale_x_continuous(limits=c(-1,101)) +
-  theme_bw() +
-  ggtitle("Washing Dishes") + 
-  xlab("") +
-  theme(plot.title = element_text(size=10)); e6
-
-grid.arrange(arrangeGrob(e6, top = "Negatively Rated Activities"), arrangeGrob(e1, top = "Positively Rated Activities"), e4, e2, arrangeGrob(e5, bottom = "WTP to Avoid"), arrangeGrob(e3, bottom = "WTP to Do"), top = textGrob("WTP to Do a Positive Activity or to Avoid Doing a Negative Activity for 45 Minutes", gp=gpar(fontsize=15)))
+# mean(Time$tn, na.rm = T)
+# sd(Time$tn, na.rm = T)
+# 
+# b4 <- data.frame(WTP_to_avoid = Time$tn, na.rm = T)
+# 
+# e4 <- ggplot(b4, aes(x = WTP_to_avoid)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme_bw() +
+#   xlab("") +
+#   ggtitle("Getting Stuck in a Traffic Jam") + 
+#   theme(plot.title = element_text(size=10)); e4
+# 
+# 
+# # v WTP
+# mean(Time$vn, na.rm = T)
+# sd(Time$vn, na.rm = T)
+# 
+# b5 <- data.frame(WTP_to_avoid = Time$vn, na.rm = T)
+# 
+# e5 <- ggplot(b5, aes(x = WTP_to_avoid)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme_bw() +
+#   xlab("") +
+#   ggtitle("Vacuuming a Movie Theater") + 
+#   theme(plot.title = element_text(size=10)); e5
+# 
+# 
+# # d WTP
+# mean(Time$dn, na.rm = T)
+# sd(Time$dn, na.rm = T)
+# 
+# b6 <- data.frame(WTP_to_avoid = Time$dn, na.rm = T)
+# 
+# e6 <- ggplot(b6, aes(x = WTP_to_avoid)) +
+#   geom_bar(fill="#996666", alpha=.5) +
+#   scale_y_continuous(limits=c(0,60)) +
+#   scale_x_continuous(limits=c(-1,101)) +
+#   theme_bw() +
+#   ggtitle("Washing Dishes") + 
+#   xlab("") +
+#   theme(plot.title = element_text(size=10)); e6
+# 
+# grid.arrange(arrangeGrob(e6, top = "Negatively Rated Activities"), arrangeGrob(e1, top = "Positively Rated Activities"), e4, e2, arrangeGrob(e5, bottom = "WTP to Avoid"), arrangeGrob(e3, bottom = "WTP to Do"), top = textGrob("WTP to Do a Positive Activity or to Avoid Doing a Negative Activity for 45 Minutes", gp=gpar(fontsize=15)))
 
 ######## reverse evaluation results
 nrow(Time[complete.cases(Time$gn),])
@@ -1771,7 +1716,7 @@ for (i in 1:nrow(st9)) {
 
 
 
-############## Bubbles (with time, choice, and WTP differences)
+############## 
 
 f <- data.frame(gd = Time$g - Time$d, # evaluations
                 mv = Time$m - Time$v,
@@ -1840,15 +1785,6 @@ gd99 <- data.frame(sapply(gd99, function(x) as.numeric(as.character(x))))
   
 gd99$Weight_Choice = gd99$Eva_Proportion * gd99$Choice_Proportion #weighted the choice and the evaluation proportion
 gd99 <- data.frame(sapply(gd99, function(x) as.numeric(as.character(x))))
-
-
-#bubble for gd
-# ggplot(gd99, aes(x = as.character(Time), y = Evaluation, size = Weight_Choice)) +
-#   geom_point(alpha = 0.08, color = "#0066cc") +
-#   scale_x_discrete(limits=c("-40","-30","-20","-10","0","10","20","30","40")) + 
-#   theme_bw() +
-#   coord_cartesian(xlim = NULL) +
-#   labs(x = "Time", y = "Difference of WTP (Games - Dishes)", size = "Gamble Proportion x Difference of WTP") 
 
 
 ##### for mv
@@ -2042,14 +1978,14 @@ all <- rbind(g.0, m.0, s.0, t.0, v.0, d.0)
 all$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c("Sports"), times = 8),
                           rep(c("Traffic Jam"), times = 8),rep(c("Vacuum"), times = 8),rep(c("Dishes"), times = 8))) 
 
-allall <- ggplot(data = all, aes(x = Time, y = Proportion, group = type)) + 
-  geom_point(aes(col = type)) + 
-  scale_x_discrete(limits=c("-80","-70","-60","-50","-40","-30","-20","-10","10","20","30","40","50","60","70","80")) +
-  geom_line(aes(linetype = type)) +
-  theme(plot.title = element_text(hjust=0.5)) +
-  theme_bw() +
-  scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities"); allall
+# allall <- ggplot(data = all, aes(x = Time, y = Proportion, group = type)) + 
+#   geom_point(aes(col = type)) + 
+#   scale_x_discrete(limits=c("-80","-70","-60","-50","-40","-30","-20","-10","10","20","30","40","50","60","70","80")) +
+#   geom_line(aes(linetype = type)) +
+#   theme(plot.title = element_text(hjust=0.5)) +
+#   theme_bw() +
+#   scale_y_continuous(limits = c(0,1)) +
+#   labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities"); allall
 
 rbind(g.0)
 

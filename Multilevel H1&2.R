@@ -18,30 +18,32 @@ new$activity <- as.integer(c(rep(1, nrow(ch1)), rep(2, nrow(ch2)),
 new$domain <- as.integer(c(rep(0, nrow(ch1) + nrow(ch2) + nrow(ch3)),
                        rep(1, nrow(ch4) + nrow(ch5) + nrow(ch6))))
 
-# null model # choose 1 = certain, choose 0 = gamble
-null <- glmer(choice ~ 1 + (1| id),
-            data = new, family = binomial("logit"))
-summary(null)
+# # null model # choose 1 = certain, choose 0 = gamble
+# null <- glmer(choice ~ 1 + (1| id),
+#             data = new, family = binomial("logit"))
+# summary(null)
+# 
+# 
+# # model with domain
+# dom <- glmer(choice ~ 1 + domain + (1| id),
+#             data = new, family = binomial("logit"),
+#             control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
+# summary(dom)
+# 
+# # model with activity
+# act <- glmer(choice ~ 1 + activity + (1| id),
+#              data = new, family = binomial("logit"))
+# summary(act)
+# 
+# both <- glmer(choice ~ 1 + activity + domain + (1| id),
+#              data = new, family = binomial("logit"),
+#              control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
+# 
+# summary(both)
+# 
+# anova(null, dom, act, both)
 
 
-# model with domain
-dom <- glmer(choice ~ 1 + domain + (1| id),
-            data = new, family = binomial("logit"),
-            control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-summary(dom)
-
-# model with activity
-act <- glmer(choice ~ 1 + activity + (1| id),
-             data = new, family = binomial("logit"))
-summary(act)
-
-both <- glmer(choice ~ 1 + activity + domain + (1| id),
-             data = new, family = binomial("logit"),
-             control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-
-summary(both)
-
-anova(null, dom, act, both)
 
 ##### monotonic
 # create a new data frame without monotonicity
@@ -103,64 +105,3 @@ rand <- glmer(choice ~ 1 + domain + activity + (1 + domain| id),
 summary(rand)
 
 
-##### If evaluation influence choice in mixed gamble
-# gain - loss
-
-# recode 0 = gamble, 1 = certain
-Time$gd0[Time$gd0 == 2] <- "0"
-Time$mv0[Time$mv0 == 2] <- "0"
-Time$st0[Time$st0 == 2] <- "0"
-
-mx1 <- data.frame(evaluation = Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("g")] + 
-                                Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("d")], 
-                  choice = Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("gd0")],
-                  id = Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("id")],
-                  wtp = Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("gp")] -
-                        Time[Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1, c("dn")])
-
-mx2 <- data.frame(evaluation = Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("m")] + 
-                                Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("v")], 
-                  choice = Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("mv0")],
-                  id = Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("id")],
-                  wtp = Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("mp")] -
-                        Time[Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1, c("vn")])
-
-mx3 <- data.frame(evaluation = Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("s")] + 
-                    Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("t")], 
-                  choice = Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("st0")],
-                  id = Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("id")],
-                  wtp = Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("sp")] - 
-                        Time[Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1, c("tn")])
-mxx <- rbind(mx1,mx2,mx3)
-
-mxx$pair <- factor(c(rep(1, nrow(mx1)), rep(2, nrow(mx2)), rep(3, nrow(mx3))))
-
-# multilevel
-# null
-mxx0 <- glmer(choice ~ 1 + (1| id),
-               data = mxx, family = binomial("logit"),
-               control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-summary(mxx0)
-
-# with evaluation difference
-mxx1 <- glmer(choice ~ 1 + evaluation + (1| id),
-              data = mxx, family = binomial("logit"),
-              control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-summary(mxx1)
-
-
-# with wtp difference
-mxx2 <- glmer(choice ~ 1 + wtp + (1| id),
-              data = mxx, family = binomial("logit"),
-              control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-summary(mxx2)
-
-
-# with both
-mxx3 <- glmer(choice ~ 1 + evaluation + wtp + (1| id),
-              data = mxx, family = binomial("logit"),
-              control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)))
-summary(mxx3)
-
-anova(mxx0,mxx1,mxx2,mxx3)
-anova(mxx1,mxx2)

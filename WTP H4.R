@@ -32,19 +32,19 @@ domw <- lmer(wtp ~ 1 + domain + (1| id),
 summary(domw)
 
 # model with activity
-actw <- lmer(wtp ~ 1 + activity + (1| id),
-            data = neww)
-summary(actw)
+# actw <- lmer(wtp ~ 1 + activity + (1| id),
+#             data = neww)
+# summary(actw)
 
 # model with evaluation
 evaw <- lmer(wtp ~ 1 + eva + (1| id),
              data = neww)
 summary(evaw)
 
-# model with evaluation and domain
-evadw <- lmer(wtp ~ 1 + eva + domain + (1| id),
-             data = neww)
-summary(evadw)
+# # model with evaluation and domain
+# evadw <- lmer(wtp ~ 1 + eva + domain + (1| id),
+#              data = neww)
+# summary(evadw)
 
 
 anova(nullw, domw, actw, evaw)

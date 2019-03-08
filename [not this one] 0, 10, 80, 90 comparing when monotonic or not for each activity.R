@@ -1,5 +1,6 @@
 par(mfrow = c(1,1))
 
+# see at time = 10 and time = 80 risk behaviors
 #consistency for g
 gg011 <- NA
 gg0111 <- NA

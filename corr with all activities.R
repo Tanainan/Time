@@ -7,10 +7,17 @@ data <- Time[, c("g", "gp", "g45",
                  "m", "mp", "m45",
                  "d", "dn", "d45",
                  "t", "tn", "t45",
-                 "v", "vn", "v45")]
+                 "v", "vn", "v45",
+                 "gd0", "st0", "mv0")]
 
-res <- rcorr(as.matrix(data), type = "pearson")
+res <- rcorr(as.matrix(data[,1:9]), type = "pearson")
 res
+
+res2 <- rcorr(as.matrix(data[,10:18]), type = "pearson")
+res2
+
+res3 <- rcorr(as.matrix(data[,19:21]), type = "pearson")
+res3
 
 # flattenCorrMatrix <- function(cormat, pmat) {
 #   ut <- upper.tri(cormat)
@@ -72,7 +79,8 @@ corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper"
   }
 } 
 
-corstars(as.matrix(data))
+corstars(as.matrix(data[,1:9]))
+corstars(as.matrix(data[,10:18]))
 
 res1 <- round(cor(as.numeric(data)),2)
 upper.tri(data, diag = FALSE)
@@ -81,3 +89,4 @@ upper[upper.tri(res1)]<-""
 upper<-as.data.frame(upper)
 upper
 
+corstars(as.matrix(data[,19:21])) # for mixed gamble

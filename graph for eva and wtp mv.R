@@ -1,9 +1,13 @@
 # consistency for evaluation and mixed gamble
-# separate when WTP diff is positive vs negative
+# separate when eva diff is positive vs negative
 mvwp <- mv9[(which(mv9$mv > 0)),]
 mvwn <- mv9[(which(mv9$mv < 0)),]
 mvwz <- mv9[(which(mv9$mv == 0)),]
 
+# separate when WTP diff is positive vs negative
+mvwp <- mv9[(which(mv9$mvw > 0)),]
+mvwn <- mv9[(which(mv9$mvw < 0)),]
+mvwz <- mv9[(which(mv9$mvw == 0)),]
 
 # when m > v
 m11 <- nrow(mvwp[mvwp$mv.40 == 1,])/nrow(mvwp); m11

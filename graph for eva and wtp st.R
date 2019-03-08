@@ -1,8 +1,13 @@
 # consistency for evaluation and mixed gamble
-# separate when WTP diff is positive vs negative
+# separate when eva diff is positive vs negative
 stwp <- st9[(which(st9$st > 0)),]
 stwn <- st9[(which(st9$st < 0)),]
 stwz <- st9[(which(st9$st == 0)),]
+
+# separate when WTP diff is positive vs negative
+stwp <- st9[(which(st9$stw > 0)),]
+stwn <- st9[(which(st9$stw < 0)),]
+stwz <- st9[(which(st9$stw == 0)),]
 
 
 # when s > t

@@ -1,9 +1,13 @@
 # consistency for evaluation and mixed gamble
-# separate when WTP diff is positive vs negative
+# separate when eva diff is positive vs negative
 gdwp <- gd9[(which(gd9$gd > 0)),]
 gdwn <- gd9[(which(gd9$gd < 0)),]
 gdwz <- gd9[(which(gd9$gd == 0)),]
 
+# separate when wtp diff is positive vs negative
+gdwp <- gd9[(which(gd9$gdw > 0)),]
+gdwn <- gd9[(which(gd9$gdw < 0)),]
+gdwz <- gd9[(which(gd9$gdw == 0)),]
 
 # when g > d
 g11 <- nrow(gdwp[gdwp$gd.40 == 1,])/nrow(gdwp); g11

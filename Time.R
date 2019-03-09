@@ -147,7 +147,6 @@ t.test(as.numeric(Time[which(Time$t < 0 & Time$t01 == 1 & Time$t89 == 1),c("t45"
 t.test(as.numeric(Time[which(Time$v < 0 & Time$v01 == 1 & Time$v89 == 1),c("v45")]), mu = 0.5)
 
 
-
 # monotonicity*************************************************************************************
 # gain or loss (risk behaviors)
 Time$gg0 <- NA
@@ -606,6 +605,8 @@ c <- barplot(table(Time$gda.), ylim = c(0,100), las = 2, width = 0.1, main = "Ri
         names = c("2222.2222", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2221", 
                   "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(c, table(Time$gda.), pos = 3, cex = 1, labels=as.character(table(Time$gda.)))
+
+length(Time[which(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1),])
 
 #mv
 Time$mvn4. <- NA

@@ -1,5 +1,6 @@
 library(lme4)
 library(lmerTest)
+library(MuMIn)
 Time$id <- c(1:nrow(Time)) # adding subject id
 
 # create a new data frame without monotonicity
@@ -11,10 +12,23 @@ cw5 <- data.frame(wtp = Time[(Time$v) < 0, c("vn")], id = Time[(Time$v) < 0, c("
 cw6 <- data.frame(wtp = Time[(Time$d) < 0, c("dn")], id = Time[(Time$d) < 0, c("id")], eva = Time[(Time$d) < 0, c("d")])
 
 neww <- rbind(cw1, cw2, cw3, cw4, cw5, cw6)
-# effect coding for activity
-neww$activity <- as.integer(c(rep(1, nrow(cw1)), rep(2, nrow(cw2)),
-                             rep(3, nrow(cw3)), rep(4, nrow(cw4)),
-                             rep(5, nrow(cw5)), rep(6, nrow(cw6))))
+# dummy coding for activity 
+# games is the ref group
+neww$act1 <- as.integer(c(rep(0, nrow(cw1)), rep(1, nrow(cw2)),
+                             rep(0, nrow(cw3)), rep(0, nrow(cw4)),
+                             rep(0, nrow(cw5)), rep(0, nrow(cw6))))
+neww$act2 <- as.integer(c(rep(0, nrow(cw1)), rep(0, nrow(cw2)),
+                          rep(1, nrow(cw3)), rep(0, nrow(cw4)),
+                          rep(0, nrow(cw5)), rep(0, nrow(cw6))))
+neww$act3 <- as.integer(c(rep(0, nrow(cw1)), rep(0, nrow(cw2)),
+                          rep(0, nrow(cw3)), rep(1, nrow(cw4)),
+                          rep(0, nrow(cw5)), rep(0, nrow(cw6))))
+neww$act4 <- as.integer(c(rep(0, nrow(cw1)), rep(0, nrow(cw2)),
+                          rep(0, nrow(cw3)), rep(0, nrow(cw4)),
+                          rep(1, nrow(cw5)), rep(0, nrow(cw6))))
+neww$act5 <- as.integer(c(rep(0, nrow(cw1)), rep(0, nrow(cw2)),
+                          rep(0, nrow(cw3)), rep(0, nrow(cw4)),
+                          rep(0, nrow(cw5)), rep(1, nrow(cw6))))
 
 # 0 = positive and 1 = negative
 neww$domain <- as.integer(c(rep(0, nrow(cw1) + nrow(cw2) + nrow(cw3)),
@@ -32,7 +46,7 @@ domw <- lmer(wtp ~ 1 + domain + (1| id),
 summary(domw)
 
 # model with activity
-# actw <- lmer(wtp ~ 1 + activity + (1| id),
+# actw <- lmer(wtp ~ 1 + act1 + act2 + act3 + act4 + act5 + (1| id),
 #             data = neww)
 # summary(actw)
 
@@ -41,14 +55,18 @@ evaw <- lmer(wtp ~ 1 + eva + (1| id),
              data = neww)
 summary(evaw)
 
-# # model with evaluation and domain
-# evadw <- lmer(wtp ~ 1 + eva + domain + (1| id),
+# # model with evaluation and domain and activities
+# evadw <- lmer(wtp ~ 1 + eva + domain + (1| id)
 #              data = neww)
 # summary(evadw)
 
 
-anova(nullw, domw, actw, evaw)
-
+anova(nullw, domw, evaw)
+r.squaredGLMM(nullw)
+r.squaredGLMM(domw)
+0.00014671505/(1-0.00014671505)
+r.squaredGLMM(evaw)
+0.00043737731/(1-0.00043737731)
 
 par(mfrow = c(1,1))
 plot(neww$eva, neww$wtp, xlab = "Evaluation Score", ylab = " Willingness-to-Pay", main = "Relationship between Evaluation Score and WTP")

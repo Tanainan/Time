@@ -780,6 +780,43 @@ ggplot(data = mixed, aes(x = Time, y = Proportion, group = type)) +
   labs(color = "Activity Pair", title = "Proportions People Who Chose Certain Options", subtitle = "for Disiked (Negative) and Liked (Positive) Activities")
 
 
+# descriptive of risk beh for mixed gamble
+gdz <- nrow(dg[dg$dgz == 1,])/nrow(dg); gdz
+tsz <- nrow(ts[ts$tsz == 1,])/nrow(ts); tsz
+vmz <- nrow(vm[vm$vmz == 1,])/nrow(vm); vmz
+
+# overall
+# certain option for overall
+nrow(Time[which(Time$gd0 == 1),])/234
+nrow(Time[which(Time$st0 == 1),])/234
+nrow(Time[which(Time$mv0 == 1),])/234
+t.test(as.numeric(Time$gd0), mu = 0.5)
+t.test(as.numeric(Time$st0), mu = 0.5)
+t.test(as.numeric(Time$mv0), mu = 0.5)
+
+
+
+# congruent responses
+nrow(Time[which(Time$g > 0 & Time$d < 0),])
+t.test(as.numeric(Time[which(Time$g > 0 & Time$d < 0),c("gd0")]), mu = 0.5)
+nrow(Time[which(Time$s > 0 & Time$t < 0),])
+t.test(as.numeric(Time[which(Time$s > 0 & Time$t < 0),c("st0")]), mu = 0.5)
+nrow(Time[which(Time$m > 0 & Time$v < 0),])
+t.test(as.numeric(Time[which(Time$m > 0 & Time$v < 0),c("mv0")]), mu = 0.5)
+
+# congruent certain option
+nrow(Time[which(Time$g > 0 & Time$d < 0 & Time$gd0 == 1),])/218
+nrow(Time[which(Time$s > 0 & Time$t < 0 & Time$st0 == 1),])/213
+nrow(Time[which(Time$m > 0 & Time$v < 0 & Time$mv0 == 1),])/208
+
+# monotonic
+nrow(Time[which(Time$g > 0 & Time$d < 0 & Time$gd0 == 1 & Time$g01 == 2 & Time$d01 == 1),])/168
+nrow(Time[which(Time$s > 0 & Time$t < 0 & Time$st0 == 1 & Time$s01 == 2 & Time$t01 == 1),])/167
+nrow(Time[which(Time$m > 0 & Time$v < 0 & Time$mv0 == 1 & Time$m01 == 2 & Time$v01 == 1),])/201
+t.test(as.numeric(Time[which(Time$g > 0 & Time$d < 0 & Time$g01 == 2 & Time$d01 == 1),c("gd0")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$s > 0 & Time$t < 0 & Time$s01 == 2 & Time$t01 == 1),c("st0")]), mu = 0.5)
+t.test(as.numeric(Time[which(Time$m > 0 & Time$v < 0 & Time$m01 == 2 & Time$v01 == 1),c("mv0")]), mu = 0.5)
+
 
 #####Gain only
 g. <- Time[Time$g > 0,]

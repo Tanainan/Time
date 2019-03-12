@@ -10,6 +10,40 @@ data <- Time[, c("g", "gp", "g45",
                  "v", "vn", "v45",
                  "gd0", "st0", "mv0")]
 
+#when monotonic for risk-aversion
+data <- Time[, c("g", "gp", "gr0",
+                 "s", "sp", "sr0",
+                 "m", "mp", "mr0",
+                 "d", "dn", "dr0",
+                 "t", "tn", "tr0",
+                 "v", "vn", "vr0",
+                 "gd0", "st0", "mv0")]
+
+#when wtp is for all
+data <- Time[, c("g", "g45",
+                 "s", "s45",
+                 "m", "m45",
+                 "d", "d45",
+                 "t", "t45",
+                 "v", "v45",
+                 "gd0", "st0", "mv0")]
+
+data$gw <- ggo$t
+data$sw <- sso$t
+data$mw <- mmo$t 
+data$dw <- ddo$t
+data$tw <- tto$t
+data$vw <- vvo$t
+
+# reorder
+data <- data[c("g", "gw", "g45",
+                 "s", "sw", "s45",
+                 "m", "mw", "m45",
+                 "d", "dw", "d45",
+                 "t", "tw", "t45",
+                 "v", "vw", "v45",
+                 "gd0", "st0", "mv0")]
+
 res <- rcorr(as.matrix(data[,1:9]), type = "pearson")
 res
 
@@ -81,12 +115,13 @@ corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper"
 
 corstars(as.matrix(data[,1:9]))
 corstars(as.matrix(data[,10:18]))
-
-res1 <- round(cor(as.numeric(data)),2)
-upper.tri(data, diag = FALSE)
-upper<-res1
-upper[upper.tri(res1)]<-""
-upper<-as.data.frame(upper)
-upper
-
 corstars(as.matrix(data[,19:21])) # for mixed gamble
+
+
+# res1 <- round(cor(as.numeric(data)),2)
+# upper.tri(data, diag = FALSE)
+# upper<-res1
+# upper[upper.tri(res1)]<-""
+# upper<-as.data.frame(upper)
+# upper
+

@@ -1,23 +1,23 @@
 library("Hmisc")
-
+library(tidyverse)
 library(xtable)
 
-data <- Time[, c("g", "gp", "g45",
-                 "s", "sp", "s45",
-                 "m", "mp", "m45",
-                 "d", "dn", "d45",
-                 "t", "tn", "t45",
-                 "v", "vn", "v45",
-                 "gd0", "st0", "mv0")]
+# data <- Time[, c("g", "gp", "g45",
+#                  "s", "sp", "s45",
+#                  "m", "mp", "m45",
+#                  "d", "dn", "d45",
+#                  "t", "tn", "t45",
+#                  "v", "vn", "v45",
+#                  "gd0", "st0", "mv0")]
 
 #when monotonic for risk-aversion
-data <- Time[, c("g", "gp", "gr0",
-                 "s", "sp", "sr0",
-                 "m", "mp", "mr0",
-                 "d", "dn", "dr0",
-                 "t", "tn", "tr0",
-                 "v", "vn", "vr0",
-                 "gd0", "st0", "mv0")]
+# data <- Time[, c("g", "gp", "gr0",
+#                  "s", "sp", "sr0",
+#                  "m", "mp", "mr0",
+#                  "d", "dn", "dr0",
+#                  "t", "tn", "tr0",
+#                  "v", "vn", "vr0",
+#                  "gd0", "st0", "mv0")]
 
 #when wtp is for all
 data <- Time[, c("g", "g45",
@@ -34,6 +34,11 @@ data$mw <- mmo$t
 data$dw <- ddo$t
 data$tw <- tto$t
 data$vw <- vvo$t
+
+
+data$v <- data$v %>% abs()
+data$t <- data$t %>% abs()
+data$d <- data$d %>% abs()
 
 # reorder
 data <- data[c("g", "gw", "g45",

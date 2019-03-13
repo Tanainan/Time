@@ -5,9 +5,9 @@ stwn <- st9[(which(st9$st < 0)),]
 stwz <- st9[(which(st9$st == 0)),]
 
 # separate when WTP diff is positive vs negative
-stwp <- st9[(which(st9$stw > 0)),]
-stwn <- st9[(which(st9$stw < 0)),]
-stwz <- st9[(which(st9$stw == 0)),]
+# stwp <- st9[(which(st9$stw > 0)),]
+# stwn <- st9[(which(st9$stw < 0)),]
+# stwz <- st9[(which(st9$stw == 0)),]
 
 
 # when s > t
@@ -77,17 +77,18 @@ s.10sn <- ggplot(s.10n, aes(Time, Proportion, group = 1)) +
 
 #combined st
 posist <- rbind(s.10s, s.10z, s.10n)
-posist$type <- factor(c(rep(c("more"), times = 9),rep(c("equal"), times = 9),rep(c("less"), times = 9))) 
+posist$type <- factor(c(rep(c("More"), times = 9),rep(c("Equal"), times = 9),rep(c("Less"), times = 9))) 
 
 
 oo01st <- ggplot(data = posist, aes(x = Time, y = Proportion, group = type)) + 
   geom_point() + 
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
+  scale_linetype_discrete(limits = c("More","Equal","Less")) +
   geom_line(aes(linetype = type)) +
   theme(plot.title = element_text(hjust=0.5)) + 
   theme_bw() + 
   scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options Between Sports and Traffic"); oo01st
+  labs(linetype = "Activity", title = "Sports and Traffic", y = "", x = ""); oo01st
 
 
 

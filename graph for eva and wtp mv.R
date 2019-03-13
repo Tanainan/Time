@@ -5,9 +5,9 @@ mvwn <- mv9[(which(mv9$mv < 0)),]
 mvwz <- mv9[(which(mv9$mv == 0)),]
 
 # separate when WTP diff is positive vs negative
-mvwp <- mv9[(which(mv9$mvw > 0)),]
-mvwn <- mv9[(which(mv9$mvw < 0)),]
-mvwz <- mv9[(which(mv9$mvw == 0)),]
+# mvwp <- mv9[(which(mv9$mvw > 0)),]
+# mvwn <- mv9[(which(mv9$mvw < 0)),]
+# mvwz <- mv9[(which(mv9$mvw == 0)),]
 
 # when m > v
 m11 <- nrow(mvwp[mvwp$mv.40 == 1,])/nrow(mvwp); m11
@@ -76,17 +76,21 @@ m.10sn <- ggplot(m.10n, aes(Time, Proportion, group = 1)) +
 
 #combined mv
 posimv <- rbind(m.10s, m.10z, m.10n)
-posimv$type <- factor(c(rep(c("more"), times = 9),rep(c("equal"), times = 9),rep(c("less"), times = 9))) 
+posimv$type <- factor(c(rep(c("More"), times = 9),rep(c("Equal"), times = 9),rep(c("Less"), times = 9))) 
 
 
 oo01mv <- ggplot(data = posimv, aes(x = Time, y = Proportion, group = type)) + 
   geom_point() + 
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
+  scale_linetype_discrete(limits = c("More","Equal","Less")) +
   geom_line(aes(linetype = type)) +
   theme(plot.title = element_text(hjust=0.5)) + 
   theme_bw() + 
   scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options Between Music and Vacuum"); oo01mv
+  labs(linetype = "Activity", title = "Music and Vacuum", y = "", x = "Time"); oo01mv
 
 
 
+grid.arrange(oo01gd,oo01st,oo01mv, nrow = 3, 
+             top = textGrob("Risk-Aversion Proportions in Mixed Gamble", gp=gpar(fontsize=15)),
+             left = "Proportion")

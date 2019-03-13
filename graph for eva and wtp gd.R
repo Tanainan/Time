@@ -5,9 +5,9 @@ gdwn <- gd9[(which(gd9$gd < 0)),]
 gdwz <- gd9[(which(gd9$gd == 0)),]
 
 # separate when wtp diff is positive vs negative
-gdwp <- gd9[(which(gd9$gdw > 0)),]
-gdwn <- gd9[(which(gd9$gdw < 0)),]
-gdwz <- gd9[(which(gd9$gdw == 0)),]
+# gdwp <- gd9[(which(gd9$gdw > 0)),]
+# gdwn <- gd9[(which(gd9$gdw < 0)),]
+# gdwz <- gd9[(which(gd9$gdw == 0)),]
 
 # when g > d
 g11 <- nrow(gdwp[gdwp$gd.40 == 1,])/nrow(gdwp); g11
@@ -76,17 +76,18 @@ g.10sn <- ggplot(g.10n, aes(Time, Proportion, group = 1)) +
 
 #combined gd
 posigd <- rbind(g.10s, g.10z, g.10n)
-posigd$type <- factor(c(rep(c("more"), times = 9),rep(c("equal"), times = 9),rep(c("less"), times = 9))) 
+posigd$type <- factor(c(rep(c("More"), times = 9),rep(c("Equal"), times = 9),rep(c("Less"), times = 9))) 
 
 
 oo01gd <- ggplot(data = posigd, aes(x = Time, y = Proportion, group = type)) + 
   geom_point() + 
   scale_x_discrete(limits=c("-40", "-30", "-20", "-10", "0", "10", "20", "30", "40")) +
+  scale_linetype_discrete(limits = c("More","Equal","Less")) +
   geom_line(aes(linetype = type)) +
   theme(plot.title = element_text(hjust=0.5)) + 
   theme_bw() + 
   scale_y_continuous(limits = c(0,1)) +
-  labs(color = "Activity", title = "Proportions People Who Chose Certain Options Between Games and Dishes"); oo01gd
+  labs(linetype = "Activity", title = "Games and Dishes", y = "", x = ""); oo01gd
 
 
 

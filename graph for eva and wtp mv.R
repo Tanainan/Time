@@ -90,7 +90,10 @@ oo01mv <- ggplot(data = posimv, aes(x = Time, y = Proportion, group = type)) +
   labs(linetype = "Activity", title = "Music and Vacuum", y = "", x = "Time"); oo01mv
 
 
-
-grid.arrange(oo01gd,oo01st,oo01mv, nrow = 3, 
-             top = textGrob("Risk-Aversion Proportions in Mixed Gamble", gp=gpar(fontsize=15)),
+title <- grobTree(textGrob("Risk-Aversion Proportions in Mixed Gamble", gp=gpar(fontsize=15), vjust=-2),
+                  textGrob("Based on Evaluation Score Difference", gp=gpar(fontsize=12)))
+                           
+grid.arrange(top = paste("Risk-Aversion Proportions in Mixed Gamble",
+             "Based on Evaluation Score Difference", sep = "\n"),
+             oo01gd,oo01st,oo01mv, nrow = 3, 
              left = "Proportion")

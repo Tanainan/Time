@@ -35,7 +35,9 @@ data$dw <- ddo$t
 data$tw <- tto$t
 data$vw <- vvo$t
 
-
+data$g <- data$g %>% abs()
+data$s <- data$s %>% abs()
+data$m <- data$m %>% abs()
 data$v <- data$v %>% abs()
 data$t <- data$t %>% abs()
 data$d <- data$d %>% abs()

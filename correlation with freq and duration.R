@@ -27,18 +27,37 @@ Time[which(Time$dishhr == 8), c("dishhr")] <- NA
 Time[which(Time$vacuumhr == 8), c("vacuumhr")] <- NA
 # 1 = less than 15 mins, 7 = more than 90 mins, NA = mot applicable
 
-# wtp
-lm(Time$gp ~ Time$game + Time$gamehr) %>% summary()
-lm(Time$sp ~ Time$sports + Time$sportshr) %>% summary()
-lm(Time$mp ~ Time$music + Time$musichr) %>% summary()
-lm(Time$tn ~ Time$traffic + Time$traffichr) %>% summary()
-lm(Time$vn ~ Time$vacuum + Time$vacuumhr) %>% summary()
-lm(Time$dn ~ Time$dish + Time$dishhr) %>% summary()
+freq <- (Time[,c("g","game", "gamehr",
+                 "s","sports","sportshr",
+                 "m","music","musichr",
+                 "d","dish","dishhr",
+                 "t","traffic","traffichr",
+                 "v","vacuum","vacuumhr")])
 
-# evaluation
-lm(Time$g ~ Time$game + Time$gamehr) %>% summary()
-lm(Time$s ~ Time$sports + Time$sportshr) %>% summary()
-lm(Time$m ~ Time$music + Time$musichr) %>% summary()
-lm(Time$t ~ Time$traffic + Time$traffichr) %>% summary()
-lm(Time$v ~ Time$vacuum + Time$vacuumhr) %>% summary()
-lm(Time$d ~ Time$dish + Time$dishhr) %>% summary()
+# eva
+corstars(as.matrix(freq[,c("g","game", "gamehr")]))
+corstars(as.matrix(freq[,c("s","sports","sportshr")]))
+corstars(as.matrix(freq[,c("m","music","musichr")]))
+corstars(as.matrix(freq[,c("d","dish","dishhr")]))
+corstars(as.matrix(freq[,c("t","traffic","traffichr")]))
+corstars(as.matrix(freq[,c("v","vacuum","vacuumhr")]))
+
+# wtp
+freq$gw <- ggo$t
+freq$sw <- sso$t
+freq$mw <- mmo$t 
+freq$dw <- ddo$t
+freq$tw <- tto$t
+freq$vw <- vvo$t
+
+corstars(as.matrix(freq[,c("gw","game", "gamehr")]))
+corstars(as.matrix(freq[,c("sw","sports","sportshr")]))
+corstars(as.matrix(freq[,c("mw","music","musichr")]))
+corstars(as.matrix(freq[,c("dw","dish","dishhr")]))
+corstars(as.matrix(freq[,c("tw","traffic","traffichr")]))
+corstars(as.matrix(freq[,c("vw","vacuum","vacuumhr")]))
+
+
+res <- rcorr(freq$sportshr, freq$sw, type = "pearson")
+res
+

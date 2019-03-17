@@ -75,7 +75,7 @@ binom.test(nrow(gdwn[which(gdwn$gd0 == 1),]), nrow(gdwn), p = 0.5)
 q1 <- ggplot(gdwp, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Games > Dishes") +
+  labs(x = "", y = "Count", title = "Dishes < Games") +
   theme_bw() + 
   scale_y_continuous(limits = c(0, 100)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q1
@@ -85,7 +85,7 @@ q1 <- ggplot(gdwp, aes(x = as.numeric(gd0))) +
 q12 <- ggplot(gdwn, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Games < Dishes") +
+  labs(x = "", y = "Count", title = "Dishes > Games") +
   theme_bw() +
   scale_y_continuous(limits = c(0, 100)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q12
@@ -96,7 +96,7 @@ q12 <- ggplot(gdwn, aes(x = as.numeric(gd0))) +
 q13 <- ggplot(gdwz, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = " Games = Dishes") +
+  labs(x = "", y = "Count", title = " Dishes = Games") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q13
@@ -115,7 +115,7 @@ binom.test(nrow(stwn[which(stwn$st0 == 1),]), nrow(stwn), p = 0.5)
 q2 <- ggplot(stwp, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports > Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam < Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q2
@@ -124,7 +124,7 @@ q2 <- ggplot(stwp, aes(x = as.numeric(st0))) +
 q22 <- ggplot(stwz, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports = Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam = Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q22
@@ -133,7 +133,7 @@ q22 <- ggplot(stwz, aes(x = as.numeric(st0))) +
 q23 <- ggplot(stwn, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports < Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam > Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q23
@@ -152,7 +152,7 @@ binom.test(nrow(mvwn[which(mvwn$mv0 == 1),]), nrow(mvwn), p = 0.5)
 q3 <- ggplot(mvwp, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music > Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum < Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q3
@@ -161,7 +161,7 @@ q3 <- ggplot(mvwp, aes(x = as.numeric(mv0))) +
 q31 <- ggplot(mvwz, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music = Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum = Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q31
@@ -170,7 +170,7 @@ q31 <- ggplot(mvwz, aes(x = as.numeric(mv0))) +
 q32 <- ggplot(mvwn, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music < Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum > Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q32
@@ -202,7 +202,7 @@ binom.test(nrow(gdwn1[which(gdwn1$gd0 == 1),]), nrow(gdwn1), p = 0.5)
 q10 <- ggplot(gdwp1, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Games > Dishes") +
+  labs(x = "", y = "Count", title = "Dishes < Games") +
   theme_bw() + 
   scale_y_continuous(limits = c(0, 100)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q10
@@ -212,7 +212,7 @@ q10 <- ggplot(gdwp1, aes(x = as.numeric(gd0))) +
 q120 <- ggplot(gdwn1, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Games < Dishes") +
+  labs(x = "", y = "Count", title = "Dishes > Games") +
   theme_bw() +
   scale_y_continuous(limits = c(0, 100)) +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q120
@@ -223,7 +223,7 @@ q120 <- ggplot(gdwn1, aes(x = as.numeric(gd0))) +
 q130 <- ggplot(gdwz1, aes(x = as.numeric(gd0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark red") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = " Games = Dishes") +
+  labs(x = "", y = "Count", title = " Dishes = Games") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q130
@@ -242,7 +242,7 @@ binom.test(nrow(stwn1[which(stwn1$st0 == 1),]), nrow(stwn1), p = 0.5)
 q20 <- ggplot(stwp1, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports > Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam < Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q20
@@ -251,7 +251,7 @@ q20 <- ggplot(stwp1, aes(x = as.numeric(st0))) +
 q220 <- ggplot(stwz1, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports = Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam = Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q220
@@ -260,7 +260,7 @@ q220 <- ggplot(stwz1, aes(x = as.numeric(st0))) +
 q230 <- ggplot(stwn1, aes(x = as.numeric(st0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark blue") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Sports < Traffic Jam") +
+  labs(x = "", y = "Count", title = "Traffic Jam > Sports") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q230
@@ -279,7 +279,7 @@ binom.test(nrow(mvwn1[which(mvwn1$mv0 == 1),]), nrow(mvwn1), p = 0.5)
 q30 <- ggplot(mvwp1, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music > Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum < Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q30
@@ -288,7 +288,7 @@ q30 <- ggplot(mvwp1, aes(x = as.numeric(mv0))) +
 q310 <- ggplot(mvwz1, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music = Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum = Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q310
@@ -297,7 +297,7 @@ q310 <- ggplot(mvwz1, aes(x = as.numeric(mv0))) +
 q320 <- ggplot(mvwn1, aes(x = as.numeric(mv0))) + 
   geom_bar(width = 0.4, fill = "white", col = "dark green") + 
   scale_x_discrete(limits = c("Neither", "Gamble 50/50")) + 
-  labs(x = "", y = "Count", title = "Music < Vacuum") +
+  labs(x = "", y = "Count", title = "Vacuum > Music") +
   scale_y_continuous(limits = c(0, 100)) +
   theme_bw() +
   geom_text(stat = "count", aes(label = ..count.., y = ..count..), vjust = -1); q320

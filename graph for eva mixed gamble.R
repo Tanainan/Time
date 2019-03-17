@@ -5,6 +5,10 @@ gdwp <- gd9[(which(gd9$gd > 0)),]
 gdwn <- gd9[(which(gd9$gd < 0)),]
 gdwz <- gd9[(which(gd9$gd == 0)),]
 
+nrow(gdwp)
+nrow(gdwn)
+nrow(gdwz)
+
 
 # when g > d
 g11 <- nrow(gdwp[gdwp$gd.40 == 1,])/nrow(gdwp); g11
@@ -92,7 +96,9 @@ stwp <- st9[(which(st9$st > 0)),]
 stwn <- st9[(which(st9$st < 0)),]
 stwz <- st9[(which(st9$st == 0)),]
 
-
+nrow(stwp)
+nrow(stwn)
+nrow(stwz)
 
 # when s > t
 s11 <- nrow(stwp[stwp$st.40 == 1,])/nrow(stwp); s11
@@ -184,6 +190,10 @@ oo01st <- ggplot(data = posist, aes(x = Time, y = Proportion, group = type)) +
 mvwp <- mv9[(which(mv9$mv > 0)),]
 mvwn <- mv9[(which(mv9$mv < 0)),]
 mvwz <- mv9[(which(mv9$mv == 0)),]
+
+nrow(mvwp)
+nrow(mvwn)
+nrow(mvwz)
 
 
 # when m > v

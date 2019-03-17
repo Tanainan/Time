@@ -51,9 +51,9 @@ summary(domw)
 # summary(actw)
 
 # model with evaluation
-evaw <- lmer(wtp ~ 1 + eva + (1| id),
-             data = neww)
-summary(evaw)
+# evaw <- lmer(wtp ~ 1 + eva + (1| id),
+#              data = neww)
+# summary(evaw)
 
 # # model with evaluation and domain and activities
 # evadw <- lmer(wtp ~ 1 + eva + domain + (1| id)

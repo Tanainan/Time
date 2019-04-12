@@ -2,6 +2,61 @@ library("Hmisc")
 library(tidyverse)
 library(xtable)
 
+#game wtp and eva
+ggp <- data.frame(t = Time$gn)
+ggo <- data.frame(t = Time$gp)
+
+ggo$t[is.na(ggo$t)] <- ggp$t[is.na(ggo$t)]
+
+# sports wtp and eva
+ssp <- data.frame(t = Time$sn)
+sso <- data.frame(t = Time$sp)
+ssm <- data.frame(t = Time$sneun)
+ssn <- data.frame(t = Time$sneup)
+
+sso$t[is.na(sso$t)] <- ssp$t[is.na(sso$t)]
+sso$t[is.na(sso$t)] <- ssm$t[is.na(sso$t)]
+sso$t[is.na(sso$t)] <- ssn$t[is.na(sso$t)]
+
+
+#music wtp and eva
+mmp <- data.frame(t = Time$mn)
+mmo <- data.frame(t = Time$mp)
+
+mmo$t[is.na(mmo$t)] <- mmp$t[is.na(mmo$t)]
+
+
+#traffic wtp and eva
+ttp <- data.frame(t = Time$tn)
+tto <- data.frame(t = Time$tp)
+ttm <- data.frame(t = Time$tneun)
+ttn <- data.frame(t = Time$tneup)
+
+tto$t[is.na(tto$t)] <- ttp$t[is.na(tto$t)]
+tto$t[is.na(tto$t)] <- ttm$t[is.na(tto$t)]
+tto$t[is.na(tto$t)] <- ttn$t[is.na(tto$t)]
+
+#dishes wtp and eva
+ddp <- data.frame(t = Time$dn)
+ddo <- data.frame(t = Time$dp)
+ddm <- data.frame(t = Time$dneun)
+ddn <- data.frame(t = Time$dneup)
+
+ddo$t[is.na(ddo$t)] <- ddp$t[is.na(ddo$t)]
+ddo$t[is.na(ddo$t)] <- ddm$t[is.na(ddo$t)]
+ddo$t[is.na(ddo$t)] <- ddn$t[is.na(ddo$t)]
+
+# vacuum wtp and eva
+vvp <- data.frame(t = Time$vn)
+vvo <- data.frame(t = Time$vp)
+vvm <- data.frame(t = Time$vneun)
+vvn <- data.frame(t = Time$vneup)
+
+vvo$t[is.na(vvo$t)] <- vvp$t[is.na(vvo$t)]
+vvo$t[is.na(vvo$t)] <- vvm$t[is.na(vvo$t)]
+vvo$t[is.na(vvo$t)] <- vvn$t[is.na(vvo$t)]
+
+
 # data <- Time[, c("g", "gp", "g45",
 #                  "s", "sp", "s45",
 #                  "m", "mp", "m45",

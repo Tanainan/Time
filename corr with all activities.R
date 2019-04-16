@@ -1,6 +1,7 @@
 library("Hmisc")
 library(tidyverse)
 library(xtable)
+library(ltm)
 
 #game wtp and eva
 ggp <- data.frame(t = Time$gn)
@@ -106,6 +107,23 @@ data <- data[c("g", "gw", "g45",
                  "v", "vw", "v45",
                  "gd0", "st0", "mv0")]
 
+
+#biserial correlation
+# ref group is 2 because risk aversion - risk seeking
+biserial.cor(data$g, data$g45, use = "complete.obs", level = 2)
+biserial.cor(data$gw, data$g45, use = "complete.obs", level = 2)
+biserial.cor(data$s, data$s45, use = "complete.obs", level = 2)
+biserial.cor(data$sw, data$s45, use = "complete.obs", level = 2)
+biserial.cor(data$m, data$m45, use = "complete.obs", level = 2)
+biserial.cor(data$mw, data$m45, use = "complete.obs", level = 2)
+biserial.cor(data$t, data$t45, use = "complete.obs", level = 2)
+biserial.cor(data$tw, data$t45, use = "complete.obs", level = 2)
+biserial.cor(data$d, data$d45, use = "complete.obs", level = 2)
+biserial.cor(data$dw, data$d45, use = "complete.obs", level = 2)
+biserial.cor(data$v, data$v45, use = "complete.obs", level = 2)
+biserial.cor(data$vw, data$v45, use = "complete.obs", level = 2)
+
+rcorr(as.matrix(data[,c(2,3)]), type = "pearson")
 res <- rcorr(as.matrix(data[,1:9]), type = "pearson")
 res
 
@@ -114,6 +132,11 @@ res2
 
 res3 <- rcorr(as.matrix(data[,19:21]), type = "pearson")
 res3
+
+aov(as.matrix(data$g45) ~ as.matrix(data$s45)) %>% eta_sq()
+aov(as.matrix(data$g45) ~ as.matrix(data$m45)) %>% eta_sq()
+aov(as.matrix(data$s45) ~ as.matrix(data$m45)) %>% eta_sq()
+
 
 # flattenCorrMatrix <- function(cormat, pmat) {
 #   ut <- upper.tri(cormat)

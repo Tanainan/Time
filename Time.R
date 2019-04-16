@@ -1634,9 +1634,5 @@ all$type <- factor(c(rep(c("Games"), times = 8),rep(c("Music"), times = 8),rep(c
 #   scale_y_continuous(limits = c(0,1)) +
 #   labs(color = "Activity", title = "Proportions People Who Chose Certain Options for Disiked (Negative) Activities"); allall
 
-rbind(g.0)
-
-
-
-
+par(mfrow = c(1,1))
 

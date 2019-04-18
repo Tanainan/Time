@@ -96,10 +96,10 @@ ggplot(dt1, aes(x,y)) +
   theme_bw() + 
   scale_x_continuous(limits = c(-80,80),
                      breaks = c(-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80),
-                     expand = c(0, 0)) +
+                     expand = c(0, 0), position = "top") +
   scale_y_continuous(limits = c(-90,90),
                      breaks = c(-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90), expand = c(0, 0)) +
-  labs(x = "Time", y = "Utility", title = "Mixed Gamble \n Disliked and Liked Activities") +
+  labs(title = "Mixed Gamble \n Disliked and Liked Activities", x = "Utility", y = "Time") +
   theme(plot.title = element_text(hjust = 0.5), panel.border = element_blank(), panel.grid.minor = element_blank()) +
   geom_vline(xintercept = 0, alpha = 0.5) +
   geom_hline(yintercept = 0, alpha = 0.5) +
@@ -125,8 +125,6 @@ ggplot(dt1, aes(x,y)) +
   geom_segment(aes(x = 0, xend = -1, y = -80, yend = -80.1)) +
   annotate("text", y = c(-80, -60, -40, -20, 20, 40, 60, 80), x = -5, 
            label = c("-80", "-60", "-40", "-20", "20", "40", "60", "80")) 
-
-  
   
   
   

@@ -104,9 +104,9 @@ ggplot(dt1, aes(x,y)) +
   geom_vline(xintercept = 0, alpha = 0.5) +
   geom_hline(yintercept = 0, alpha = 0.5) +
   theme(axis.text = element_blank(), axis.ticks = element_blank()) +
-  geom_rect(xmin = 0, xmax = 80, ymin = 45, ymax = 90, fill = "gray", alpha = 0.5) +
-  geom_rect(xmin = -20, xmax = 0, ymin = -45, ymax = 0, fill = "gray", alpha = 0.5) +
-  geom_rect(xmin = -80, xmax = -20, ymin = -90, ymax = -45, fill = "gray", alpha = 0.5) +
+  geom_rect(xmin = 0, xmax = 80, ymin = 0, ymax = 90, fill = "gray", alpha = 0.5) +
+  geom_rect(xmin = -20, xmax = 0, ymin = 0, ymax = 90, fill = "gray", alpha = 0.5) +
+  geom_rect(xmin = -80, xmax = -20, ymin = -90, ymax = 0, fill = "gray", alpha = 0.5) +
   geom_segment(aes(x = -60, xend = -60.1, y = 0, yend = -2)) + 
   geom_segment(aes(x = -40, xend = -40.1, y = 0, yend = -2)) + 
   geom_segment(aes(x = -20, xend = -20.1, y = 0, yend = -2)) + 

@@ -2,6 +2,7 @@ library("Hmisc")
 library(tidyverse)
 library(xtable)
 library(ltm)
+library(sjstats)
 
 #game wtp and eva
 ggp <- data.frame(t = Time$gn)
@@ -123,20 +124,31 @@ biserial.cor(data$dw, data$d45, use = "complete.obs", level = 2)
 biserial.cor(data$v, data$v45, use = "complete.obs", level = 2)
 biserial.cor(data$vw, data$v45, use = "complete.obs", level = 2)
 
-rcorr(as.matrix(data[,c(2,3)]), type = "pearson")
-res <- rcorr(as.matrix(data[,1:9]), type = "pearson")
-res
+# rcorr(as.matrix(data[,c(2,3)]), type = "pearson")
+# res <- rcorr(as.matrix(data[,1:9]), type = "pearson")
+# res
+# 
+# res2 <- rcorr(as.matrix(data[,10:18]), type = "pearson")
+# res2
+# 
+# res3 <- rcorr(as.matrix(data[,19:21]), type = "pearson")
+# res3
 
-res2 <- rcorr(as.matrix(data[,10:18]), type = "pearson")
-res2
+# risk aversion positive activities
+aov(as.matrix(data$g45) ~ as.matrix(data$s45)) %>% anova_stats()
+aov(as.matrix(data$g45) ~ as.matrix(data$m45)) %>% anova_stats()
+aov(as.matrix(data$s45) ~ as.matrix(data$m45)) %>% anova_stats()
 
-res3 <- rcorr(as.matrix(data[,19:21]), type = "pearson")
-res3
+# risk aversion negative activities
+aov(as.matrix(data$d45) ~ as.matrix(data$t45)) %>% anova_stats()
+aov(as.matrix(data$d45) ~ as.matrix(data$v45)) %>% anova_stats()
+aov(as.matrix(data$t45) ~ as.matrix(data$v45)) %>% anova_stats()
 
-aov(as.matrix(data$g45) ~ as.matrix(data$s45)) %>% eta_sq()
-aov(as.matrix(data$g45) ~ as.matrix(data$m45)) %>% eta_sq()
-aov(as.matrix(data$s45) ~ as.matrix(data$m45)) %>% eta_sq()
 
+# risk aversion negative activities
+aov(as.matrix(data$gd0) ~ as.matrix(data$st0)) %>% anova_stats()
+aov(as.matrix(data$gd0) ~ as.matrix(data$mv0)) %>% anova_stats()
+aov(as.matrix(data$st0) ~ as.matrix(data$mv0)) %>% anova_stats()
 
 # flattenCorrMatrix <- function(cormat, pmat) {
 #   ut <- upper.tri(cormat)

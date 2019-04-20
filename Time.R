@@ -341,9 +341,6 @@ t.test(Time$ngt0, y = NULL, mu = 50) # not significant
 length(which((Time$posi0 + Time$neg0) > 0))
 
 ############# Risk behavior pattern for each activity
-
-par(mfrow = c(3,2)) # then rerun each barplot individually
-
 #consistency for g
 Time$gg45 <- NA
 Time$gg01 <- NA
@@ -383,15 +380,6 @@ for(i in 1:nrow(Time)){
   else{Time$gg08[i] <- 0}}
 Time$ga00 <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg04*1 + Time$gg03*10 + Time$gg02*100 + Time$gg01*1000)
 options(digits=8)
-i <- barplot(table(Time$ga00), col = "white", width = 0.1, ylim = c(0,130), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2, 
-        names = c("NA", "1111.1111", "1111.1221", "1111.1222", "2111.1111", "2111.1122", "2211.1111", "2211.2111", "2221.1111", "2222.1111", "2222.2111", "2222.2222"))
-text(i, table(Time$ga00), pos = 3, cex = 1, labels=as.character(table(Time$ga00)))
-
-#with 45 mins
-Time$ga00a <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg45*1 + Time$gg04*10 + Time$gg03*100 + Time$gg02*1000 + Time$gg01*10000)
-options(digits=9)
-ia <- barplot(table(Time$ga00a), col = "white", width = 0.1, ylim = c(0,130), main = "Risk Behavior Patterns for Playing Games", ylab = "Counts", las = 2)
-text(ia, table(Time$ga00a), pos = 3, cex = 1, labels=as.character(table(Time$ga00a)))
 
 
 # consistency for s
@@ -433,15 +421,6 @@ for(i in 1:nrow(Time)){
   else{Time$ss08[i] <- 0}}
 Time$sa00 <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss04*1 + Time$ss03*10 + Time$ss02*100 + Time$ss01*1000)
 options(digits=8)
-h <- barplot(table(Time$sa00), ylim = c(0,130), col = "white", width = 0.1, main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2,
-        names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.2222", "2111.1111", "2111.1122", "2211.1111", "2211.1122", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
-text(h, table(Time$sa00), pos = 3, cex = 1, labels=as.character(table(Time$sa00)))
-
-#with 45 mins
-Time$sa00a <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss45*1 + Time$ss04*10 + Time$ss03*100 + Time$ss02*1000 + Time$ss01*10000)
-options(digits=9)
-ha <- barplot(table(Time$sa00a), ylim = c(0,130), col = "white", width = 0.1, main = "Risk Behavior Patterns for Playing Sports", ylab = "Counts", las = 2)
-text(ha, table(Time$sa00a), pos = 3, cex = 1, labels=as.character(table(Time$sa00a)))
 
 
 # consistency for m
@@ -483,18 +462,9 @@ for(i in 1:nrow(Time)){
   else{Time$mm08[i] <- 0}}
 Time$ma00 <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm04*1 + Time$mm03*10 + Time$mm02*100 + Time$mm01*1000)
 options(digits=8)
-g <- barplot(table(Time$ma00), col = "white", ylim = c(0,130), width = 0.1, main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2, 
-        names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.1222", "1111.2221", "1122.2111", "1211.1111", "1221.1111", "2111.1111", "2211.1111", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
-text(g, table(Time$ma00), pos = 3, cex = 1, labels=as.character(table(Time$ma00)))
-
-#with 45 mins
-Time$ma00a <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm45*1 + Time$mm04*10 + Time$mm03*100 + Time$mm02*1000 + Time$mm01*10000)
-options(digits=9)
-gaaa <- barplot(table(Time$ma00a), col = "white", ylim = c(0,130), width = 0.1, main = "Risk Behavior Patterns for Listening to Music", ylab = "Counts", las = 2)
-text(gaaa, table(Time$ma00a), pos = 3, cex = 1, labels=as.character(table(Time$ma00a)))
 
 
-par(mfrow = c(3,1)) # then rerun each barplot individually
+#par(mfrow = c(3,1)) # then rerun each barplot individually
 
 
 # consistency for t
@@ -537,15 +507,7 @@ for(i in 1:nrow(Time)){
 print(Time$tt05)
 options(digits=8)
 Time$ta00 <- (Time$tt08*.0001 + Time$tt07*.001 + Time$tt06*.01 + Time$tt05*.1 + Time$tt04*1 + Time$tt03*10 + Time$tt02*100 + Time$tt01*1000); Time$ta00
-f <- barplot(table(Time$ta00), ylim = c(0,130), width = 0.1, col = "light blue", main = "Risk Behavior Patterns for Getting Stuck in a Traffic Jam", ylab = "Counts", las = 2, 
-        names = c("2222.2222", "2222.1111", "2111.2222", "1222.2222", "1221.1122", "1122.2222", "1112.2222", "1112.2221", "1111.2222", "1111.2122", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
-text(f, table(Time$ta00), pos = 3, cex = 1, labels=as.character(table(Time$ta00)))
 
-
-#with 45 mins
-Time$ta00a <- (Time$tt08*.0001 + Time$tt07*.001 + Time$tt06*.01 + Time$tt05*.1 + Time$tt45*1 + Time$tt04*10 + Time$tt03*100 + Time$tt02*1000 + Time$tt01*10000)
-faa <- barplot(table(Time$ta00a), ylim = c(0,130), width = 0.1, col = "light blue", main = "Risk Behavior Patterns for Getting Stuck in a Traffic Jam", ylab = "Counts", las = 2) 
-text(faa, table(Time$ta00a), pos = 3, cex = 1, labels=as.character(table(Time$ta00a)))
 
 # consistency for v
 Time$vv45 <- NA
@@ -586,15 +548,6 @@ for(i in 1:nrow(Time)){
   else{Time$vv08[i] <- 0}}
 options(digits=8)
 Time$va00 <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv04*1 + Time$vv03*10 + Time$vv02*100 + Time$vv01*1000); Time$va00
-e <- barplot(table(Time$va00), ylim = c(0, 130), width = 0.1, col = "light blue", main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2, 
-        names = c("2221.1111", "2122.2222", "1222.2222", "1221.1222", "1122.2222", "1112.2222", "1112.2122", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
-text(e, table(Time$va00), pos = 3, cex = 1, labels=as.character(table(Time$va00)))
-
-#with 45 mins
-options(digits=9)
-Time$va00a <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv45*1 + Time$vv04*10 + Time$vv03*100 + Time$vv02*1000 + Time$vv01*10000)
-ea <- barplot(table(Time$va00a), ylim = c(0, 130), width = 0.1, col = "light blue", main = "Risk Behavior Patterns for Vacuuming the Theater", ylab = "Counts", las = 2)
-text(ea, table(Time$va00a), pos = 3, cex = 1, labels=as.character(table(Time$va00a)))
 
 
 # consistency for d
@@ -636,19 +589,92 @@ for(i in 1:nrow(Time)){
   else{Time$dd08[i] <- 0}}
 options(digits=8)
 Time$da00 <- (Time$dd08*.0001 + Time$dd07*.001 + Time$dd06*.01 + Time$dd05*.1 + Time$dd04*1 + Time$dd03*10 + Time$dd02*100 + Time$dd01*1000); Time$da00
-d <- barplot(table(Time$da00), ylim = c(0,130), col = "light blue", main = "Risk Behavior Patterns for Washing Dishes", las = 2, 
+
+
+par(mfrow = c(3,2)) # then rerun each barplot individually
+mtext("Risk Behavior Patterns without 45 Minutes Question", outer = T, line=-0.2)
+i <- barplot(table(Time$ga00), col = "white", width = 0.1, ylim = c(0,130), main = "Games", ylab = "Counts", las = 2, 
+             names = c("NA", "1111.1111", "1111.1221", "1111.1222", "2111.1111", "2111.1122", "2211.1111", "2211.2111", "2221.1111", "2222.1111", "2222.2111", "2222.2222"))
+text(i, table(Time$ga00), pos = 3, cex = 1, labels=as.character(table(Time$ga00)))
+
+d <- barplot(table(Time$da00), ylim = c(0,130), col = "light blue", main = "Dishes", las = 2, 
         names = c("2222.2222", "2221.1122", "2122.2222", "2111.2222", "1222.2222", "1122.2222", "1112.2222", "1112.1222", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"), ylab = "Counts")
 text(d, table(Time$da00), pos = 3, cex = 1, labels=as.character(table(Time$da00)))
 
-#with 45 mins
+h <- barplot(table(Time$sa00), ylim = c(0,130), col = "white", width = 0.1, main = "Sports", ylab = "Counts", las = 2,
+             names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.2222", "2111.1111", "2111.1122", "2211.1111", "2211.1122", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
+text(h, table(Time$sa00), pos = 3, cex = 1, labels=as.character(table(Time$sa00)))
+
+f <- barplot(table(Time$ta00), ylim = c(0,130), width = 0.1, col = "light blue", main = "Traffic Jam", ylab = "Counts", las = 2, 
+             names = c("2222.2222", "2222.1111", "2111.2222", "1222.2222", "1221.1122", "1122.2222", "1112.2222", "1112.2221", "1111.2222", "1111.2122", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
+text(f, table(Time$ta00), pos = 3, cex = 1, labels=as.character(table(Time$ta00)))
+
+g <- barplot(table(Time$ma00), col = "white", ylim = c(0,130), width = 0.1, main = "Music", ylab = "Counts", las = 2, 
+             names = c("NA", "1111.1111", "1111.1112", "1111.1122", "1111.1222", "1111.2221", "1122.2111", "1211.1111", "1221.1111", "2111.1111", "2211.1111", "2221.1111", "2222.1111", "2222.2111", "2222.2211", "2222.2222"))
+text(g, table(Time$ma00), pos = 3, cex = 1, labels=as.character(table(Time$ma00)))
+
+e <- barplot(table(Time$va00), ylim = c(0, 130), width = 0.1, col = "light blue", main = "Vacuum", ylab = "Counts", las = 2, 
+             names = c("2221.1111", "2122.2222", "1222.2222", "1221.1222", "1122.2222", "1112.2222", "1112.2122", "1111.2222", "1111.1222", "1111.1122", "1111.1112", "1111.1111", "NA"))
+text(e, table(Time$va00), pos = 3, cex = 1, labels=as.character(table(Time$va00)))
+
+
+####### mixed gamble pattern with 45 mins ########
+par(mfrow = c(3,2), mai = c(0.8,0.6,0.5,0), oma = c(5, 0, 1, 1))
+
+#games with 45 mins
+Time$ga00a <- (Time$gg08*.0001 + Time$gg07*.001 + Time$gg06*.01 + Time$gg05*.1 + Time$gg45*1 + Time$gg04*10 + Time$gg03*100 + Time$gg02*1000 + Time$gg01*10000)
+options(digits=9)
+ia <- barplot(table(Time$ga00a), col = "white", width = 0.1, ylim = c(0,130), main = "Games", ylab = "Counts", las = 2,
+              names = c("NA", "1111.1.1111", "1111.1.1221", "1111.1.1222", "1111.2.1111", "2111.1.1111", "2111.1.1122", "2211.1.1111", "2211.1.2111", "2211.2.1111", "2221.1.1111", "2221.2.1111",
+                        "2222.1.1111", "2222.1.2111", "2222.1.2222", "2222.2.1111", "2222.2.2111", "2222.2.2222"))
+text(ia, table(Time$ga00a), pos = 3, cex = 1, labels=as.character(table(Time$ga00a)))
+
+#dishes with 45 mins
 options(digits=9)
 Time$da00a <- (Time$dd08*.0001 + Time$dd07*.001 + Time$dd06*.01 + Time$dd05*.1 + Time$dd45*1 + Time$dd04*10 + Time$dd03*100 + Time$dd02*1000 + Time$dd01*10000)
-daa <- barplot(table(Time$da00a), ylim = c(0,130), col = "light blue", main = "Risk Behavior Patterns for Washing Dishes", las = 2) 
+daa <- barplot(table(Time$da00a), ylim = c(0,130), col = "light blue", main = "Dishes", las = 2,
+               names = c("2222.2.2222", "2221.1.1122", "2122.2.2222", "2111.2.2222", "1222.2.2222", "1122.2.2222", "1122.1.2222", "1112.2.2222", "1112.2.1222", "1112.1.2222", "1111.2.2222",
+                         "1111.2.1222", "1111.2.1122", "1111.1.2222", "1111.1.1222", "1111.1.1122", "1111.1.1112", "1111.1.1111", "NA")) 
 text(daa, table(Time$da00a), pos = 3, cex = 1, labels=as.character(table(Time$da00a)))
 
+mtext("Risk Behavior Patterns with 45 Minutes Question", outer = T, line=-0.2)
+
+#sports with 45 mins
+Time$sa00a <- (Time$ss08*.0001 + Time$ss07*.001 + Time$ss06*.01 + Time$ss05*.1 + Time$ss45*1 + Time$ss04*10 + Time$ss03*100 + Time$ss02*1000 + Time$ss01*10000)
+options(digits=9)
+ha <- barplot(table(Time$sa00a), ylim = c(0,130), col = "white", width = 0.1, main = "Sports", ylab = "Counts", las = 2,
+              names = c("NA", "1111.1.1111", "1111.1.1112", "1111.1.1122", "1111.1.2222", "2111.1.1111", "2111.1.1122", "2211.1.1111", "2211.1.1122", "2221.1.1111", "2221.2.1111", "2222.1.1111",
+                        "2222.1.2111", "2222.2.1111", "2222.2.2111", "2222.2.2211", "2222.2.2222"))
+text(ha, table(Time$sa00a), pos = 3, cex = 1, labels=as.character(table(Time$sa00a)))
 
 
-#Consistency Mixed Gamble Excluding 80 vs 90 mins
+#traffic with 45 mins
+Time$ta00a <- (Time$tt08*.0001 + Time$tt07*.001 + Time$tt06*.01 + Time$tt05*.1 + Time$tt45*1 + Time$tt04*10 + Time$tt03*100 + Time$tt02*1000 + Time$tt01*10000)
+faa <- barplot(table(Time$ta00a), ylim = c(0,130), width = 0.1, col = "light blue", main = "Traffic Jam", ylab = "Counts", las = 2,
+               names = c("2222.2.2222", "2222.2.1111", "2111.2.2222", "1222.2.2222", "1222.1.2222", "1221.1.1122", "1122.2.2222", "1122.1.2222", "1112.2.2222", "1112.2.2221", "1112.1.2222",
+                         "1111.2.2222", "1111.2.1222", "1111.2.1122", "1111.1.2222", "1111.1.2122", "1111.1.1222", "1111.1.1122", "1111.1.1112", "1111.1.1111", "NA")) 
+text(faa, table(Time$ta00a), pos = 3, cex = 1, labels=as.character(table(Time$ta00a)))
+
+#music with 45 mins
+Time$ma00a <- (Time$mm08*.0001 + Time$mm07*.001 + Time$mm06*.01 + Time$mm05*.1 + Time$mm45*1 + Time$mm04*10 + Time$mm03*100 + Time$mm02*1000 + Time$mm01*10000)
+options(digits=9)
+gaaa <- barplot(table(Time$ma00a), col = "white", ylim = c(0,130), width = 0.1, main = "Music", ylab = "Counts", las = 2,
+                names = c("NA", "1111.1.1111", "1111.1.1112", "1111.1.1122", "1111.1.1222", "1111.1.2221", "1111.2.1222", "1122.1.2111", "1211.1.1111", "1221.1.1111", "2111.1.1111", "2211.1.1111",
+                          "2211.2.1111", "2221.1.1111", "2222.1.1111", "2222.1.2222", "2222.2.1111", "2222.2.2111", "2222.2.2211", "2222.2.2222"))
+text(gaaa, table(Time$ma00a), pos = 3, cex = 1, labels=as.character(table(Time$ma00a)))
+
+
+#vacuum with 45 mins
+options(digits=9)
+Time$va00a <- (Time$vv08*.0001 + Time$vv07*.001 + Time$vv06*.01 + Time$vv05*.1 + Time$vv45*1 + Time$vv04*10 + Time$vv03*100 + Time$vv02*1000 + Time$vv01*10000)
+ea <- barplot(table(Time$va00a), ylim = c(0, 130), width = 0.1, col = "light blue", main = "Vacuum", ylab = "Counts", las = 2,
+              names = c("2221.1.1111", "2122.2.2222", "1222.2.2222", "1222.1.2222", "1221.2.1222", "1122.2.2222", "1112.2.2222", "1112.2.2122", "1112.1.2222", "1111.2.2222", "1111.2.1222",
+                        "1111.1.2222", "1111.1.1222", "1111.1.1122", "1111.1.1112", "1111.1.1111", "NA"))
+text(ea, table(Time$va00a), pos = 3, cex = 1, labels=as.character(table(Time$va00a)))
+
+
+
+#########Consistency Mixed Gamble Excluding 80 vs 90 mins ##########
 
 par(mfrow = c(3,1)) # then rerun each barplot individually
 
@@ -692,69 +718,13 @@ for(i in 1:nrow(Time)){
   else{Time$gdp4.[i] <- 0}}
 options(digits=8)
 Time$gda. <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdn1.*1 + Time$gdn2.*10 + Time$gdn3.*100 + Time$gdn4.*1000); Time$gda.
-c <- barplot(table(Time$gda.), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "white", 
+c <- barplot(table(Time$gda.), ylim = c(0,100), las = 2, width = 0.1, main = "Dishes & Games", col = "white", 
         names = c("2222.2222", "2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1112", "2221.1111", "2211.2221", 
                   "2211.2211", "2211.2111", "2211.1112", "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(c, table(Time$gda.), pos = 3, cex = 1, labels=as.character(table(Time$gda.)))
 
-#with 0 mins
-options(digits=9)
-Time$gda.0 <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdz0*1 + Time$gdn1.*10 + Time$gdn2.*100 + Time$gdn3.*1000 + Time$gdn4.*10000)
-c0 <- barplot(table(Time$gda.0), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Playing Games and Washing Dishes", col = "white", ylab = "Counts")
-text(c0, table(Time$gda.0), pos = 3, cex = 1, labels=as.character(table(Time$gda.0)))
-
-
-length(Time[which(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1),])
-
-#mv
-Time$mvz0 <- NA
-Time$mvn4. <- NA
-Time$mvn3. <- NA
-Time$mvn2. <- NA
-Time$mvn1. <- NA
-Time$mvp1. <- NA
-Time$mvp2. <- NA
-Time$mvp3. <- NA
-Time$mvp4. <- NA
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv0[i] == 1){Time$mvz0[i] <- -1} else {Time$mvz0[i] <- -2}}
-  else{Time$mvz0[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.40[i] == 1){Time$mvn4.[i] <- -1} else {Time$mvn4.[i] <- -2}}
-  else{Time$mvn4.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.30[i] == 1){Time$mvn3.[i] <- -1} else {Time$mvn3.[i] <- -2}}
-  else{Time$mvn3.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.20[i] == 1){Time$mvn2.[i] <- -1} else {Time$mvn2.[i] <- -2}}
-  else{Time$mvn2.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.10[i] == 1){Time$mvn1.[i] <- -1} else {Time$mvn1.[i] <- -2}}
-  else{Time$mvn1.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv10[i] == 1){Time$mvp1.[i] <- -1} else {Time$mvp1.[i] <- -2}}
-  else{Time$mvp1.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv20[i] == 1){Time$mvp2.[i] <- -1} else {Time$mvp2.[i] <- -2}}
-  else{Time$mvp2.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv30[i] == 1){Time$mvp3.[i] <- -1} else {Time$mvp3.[i] <- -2}}
-  else{Time$mvp3.[i] <- 0}}
-for(i in 1:nrow(Time)){
-  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv40[i] == 1){Time$mvp4.[i] <- -1} else {Time$mvp4.[i] <- -2}}
-  else{Time$mvp4.[i] <- 0}}
-options(digits=8)
-Time$mva. <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvn1.*1 + Time$mvn2.*10 + Time$mvn3.*100 + Time$mvn4.*1000); Time$mva.
-b <- barplot(table(Time$mva.), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "white", 
-        names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112",
-                  "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
-text(b, table(Time$mva.), pos = 3, cex = 1, labels=as.character(table(Time$mva.)))
-
-#with 0 mins
-options(digits=9)
-Time$mva.0 <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvz0*1 + Time$mvn1.*10 + Time$mvn2.*100 + Time$mvn3.*1000 + Time$mvn4.*10000)
-b0 <- barplot(table(Time$mva.0), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Listening to Music and Vacuuming the Theater", col = "white", ylab = "Counts")
-text(b0, table(Time$mva.0), pos = 3, cex = 1, labels=as.character(table(Time$mva.0)))
+#length(Time[which(Time$g[i] > 0 & Time$d[i] < 0 & Time$g01[i] == 2 & Time$d01[i] == 1),])
+title("Risk Behavior Patterns without Doing Neither Activities Question", line = 4)
 
 #st
 Time$stz0 <- NA
@@ -795,20 +765,90 @@ for(i in 1:nrow(Time)){
   else{Time$stp4.[i] <- 0}}
 options(digits=8)
 Time$sta. <- (Time$stp4.*.0001 + Time$stp3.*.001 + Time$stp2.*.01 + Time$stp1.*.1 + Time$stn1.*1 + Time$stn2.*10 + Time$stn3.*100 + Time$stn4.*1000); Time$sta.
-a <- barplot(table(Time$sta.), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "white",
-        names = c("2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2222", "2211.2211", "2211.2111",
-                  "2211.1111", "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+a <- barplot(table(Time$sta.), ylim = c(0,100), las = 2, width = 0.1, main = "Traffic & Sports", col = "white",
+             names = c("2222.2211", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2222", "2211.2211", "2211.2111",
+                       "2211.1111", "2111.2111", "2111.1112", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
 text(a, table(Time$sta.), pos = 3, cex = 1, labels=as.character(table(Time$sta.)))
 
-#with 0 mins
+
+#mv
+Time$mvz0 <- NA
+Time$mvn4. <- NA
+Time$mvn3. <- NA
+Time$mvn2. <- NA
+Time$mvn1. <- NA
+Time$mvp1. <- NA
+Time$mvp2. <- NA
+Time$mvp3. <- NA
+Time$mvp4. <- NA
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv0[i] == 1){Time$mvz0[i] <- -1} else {Time$mvz0[i] <- -2}}
+  else{Time$mvz0[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.40[i] == 1){Time$mvn4.[i] <- -1} else {Time$mvn4.[i] <- -2}}
+  else{Time$mvn4.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.30[i] == 1){Time$mvn3.[i] <- -1} else {Time$mvn3.[i] <- -2}}
+  else{Time$mvn3.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.20[i] == 1){Time$mvn2.[i] <- -1} else {Time$mvn2.[i] <- -2}}
+  else{Time$mvn2.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv.10[i] == 1){Time$mvn1.[i] <- -1} else {Time$mvn1.[i] <- -2}}
+  else{Time$mvn1.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv10[i] == 1){Time$mvp1.[i] <- -1} else {Time$mvp1.[i] <- -2}}
+  else{Time$mvp1.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv20[i] == 1){Time$mvp2.[i] <- -1} else {Time$mvp2.[i] <- -2}}
+  else{Time$mvp2.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv30[i] == 1){Time$mvp3.[i] <- -1} else {Time$mvp3.[i] <- -2}}
+  else{Time$mvp3.[i] <- 0}}
+for(i in 1:nrow(Time)){
+  if(Time$m[i] > 0 & Time$v[i] < 0 & Time$m01[i] == 2 & Time$v01[i] == 1) {if(Time$mv40[i] == 1){Time$mvp4.[i] <- -1} else {Time$mvp4.[i] <- -2}}
+  else{Time$mvp4.[i] <- 0}}
+options(digits=8)
+Time$mva. <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvn1.*1 + Time$mvn2.*10 + Time$mvn3.*100 + Time$mvn4.*1000); Time$mva.
+b <- barplot(table(Time$mva.), ylim = c(0,100), las = 2, width = 0.1, main = "Vacuum & Music", col = "white", 
+        names = c("2222.2222", "2222.2111", "2222.1111", "2221.2211", "2221.2111", "2221.1111", "2211.2211", "2211.2111", "2211.1112",
+                  "2211.1111", "2111.2111", "2111.1111", "1111.1111", "NA"), ylab = "Counts")
+text(b, table(Time$mva.), pos = 3, cex = 1, labels=as.character(table(Time$mva.)))
+
+
+par(mfrow = c(3,1), mai=c(1,0.7,0.7,0.7))
+
+#gd with 0 mins
+options(digits=9)
+Time$gda.0 <- (Time$gdp4.*.0001 + Time$gdp3.*.001 + Time$gdp2.*.01 + Time$gdp1.*.1 + Time$gdz0*1 + Time$gdn1.*10 + Time$gdn2.*100 + Time$gdn3.*1000 + Time$gdn4.*10000)
+c0 <- barplot(table(Time$gda.0), ylim = c(0,100), las = 2, width = 0.1, main = "Dishes & Games", col = "white", ylab = "Counts",
+              names = c("2222.2.2211", "2222.2.2111", "2222.2.1111", "2222.1.2222", "2222.1.1111", "2221.2.2211", "2221.2.2111", "2221.2.1112", "2221.2.1111", "2221.1.2211",
+                        "2221.1.2111", "2221.1.1111", "2211.2.2221", "2211.2.2211", "2211.2.2111", "2211.2.1111", "2211.1.2211", "2211.1.2111", "2211.1.1112", "2211.1.1111",
+                        "2111.2.2111", "2111.2.1111", "2111.1.2111", "2111.1.1111", "1111.1.1111", "NA"))
+text(c0, table(Time$gda.0), pos = 3, cex = 1, labels=as.character(table(Time$gda.0)))
+
+title("Risk Behavior Patterns with Doing Neither Activities Question", line = 4)
+
+#st with 0 mins
 options(digits=9)
 Time$sta.0 <- (Time$stp4.*.0001 + Time$stp3.*.001 + Time$stp2.*.01 + Time$stp1.*.1 + Time$stz0*1 + Time$stn1.*10 + Time$stn2.*100 + Time$stn3.*1000 + Time$stn4.*10000)
-a00 <- barplot(table(Time$sta.0), ylim = c(0,100), las = 2, width = 0.1, main = "Risk Behavior Patterns for Playing Sports and Getting Stuck in a Traffic", col = "white", ylab = "Counts")
+a00 <- barplot(table(Time$sta.0), ylim = c(0,100), las = 2, width = 0.1, main = "Traffic & Sports", col = "white", ylab = "Counts",
+               names = c("2222.2.2211", "2222.2.2111", "2222.2.1111", "2222.1.2111", "2222.1.1111", "2221.2.2211", "2221.2.2111", "2221.2.1111",
+                         "2221.1.2211", "2221.1.2111", "2221.1.1111", "2211.2.2211", "2211.2.2111", "2211.2.1111", "2211.1.2222", "2211.1.2211", 
+                         "2211.1.2111", "2211.1.1111", "2111.2.2111", "2111.2.1111", "2111.1.1112", "2111.1.1111", "1111.1.1111", "NA"))
 text(a00, table(Time$sta.0), pos = 3, cex = 1, labels=as.character(table(Time$sta.0)))
 
+#mv with 0 mins
+options(digits=9)
+Time$mva.0 <- (Time$mvp4.*.0001 + Time$mvp3.*.001 + Time$mvp2.*.01 + Time$mvp1.*.1 + Time$mvz0*1 + Time$mvn1.*10 + Time$mvn2.*100 + Time$mvn3.*1000 + Time$mvn4.*10000)
+b0 <- barplot(table(Time$mva.0), ylim = c(0,100), las = 2, width = 0.1, main = "Vacuum & Music", col = "white", ylab = "Counts",
+              names = c("2222.2.2222", "2222.2.2111", "2222.2.1111", "2222.1.1111", "2221.2.2211", "2221.2.2111", "2221.2.1111", "2221.1.2111", "2221.1.1111", "2211.2.2211",
+                        "2211.2.2111", "2211.2.1112", "2211.2.1111", "2211.1.2211", "2211.1.1111", "2111.2.2111", "2111.2.1111", "2111.1.2111", "2111.1.1111", "1111.1.1111", "NA"))
+text(b0, table(Time$mva.0), pos = 3, cex = 1, labels=as.character(table(Time$mva.0)))
 
 
 
+par(mfrow = c(1,1))
 
 
 

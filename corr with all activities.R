@@ -135,20 +135,30 @@ biserial.cor(data$vw, data$v45, use = "complete.obs", level = 2)
 # res3
 
 # risk aversion positive activities
-aov(as.matrix(data$g45) ~ as.matrix(data$s45)) %>% anova_stats()
-aov(as.matrix(data$g45) ~ as.matrix(data$m45)) %>% anova_stats()
-aov(as.matrix(data$s45) ~ as.matrix(data$m45)) %>% anova_stats()
+gs45c <- aov(as.matrix(data$g45) ~ as.matrix(data$s45)) %>% anova_stats()
+sqrt(gs45c[1,8])
+gm45c <- aov(as.matrix(data$g45) ~ as.matrix(data$m45)) %>% anova_stats()
+sqrt(gm45c[1,8])
+sm45c <- aov(as.matrix(data$s45) ~ as.matrix(data$m45)) %>% anova_stats()
+sqrt(sm45c[1,8])
 
 # risk aversion negative activities
-aov(as.matrix(data$d45) ~ as.matrix(data$t45)) %>% anova_stats()
-aov(as.matrix(data$d45) ~ as.matrix(data$v45)) %>% anova_stats()
-aov(as.matrix(data$t45) ~ as.matrix(data$v45)) %>% anova_stats()
+dt45c <- aov(as.matrix(data$d45) ~ as.matrix(data$t45)) %>% anova_stats()
+sqrt(dt45c[1,8])
+dv45c <- aov(as.matrix(data$d45) ~ as.matrix(data$v45)) %>% anova_stats()
+sqrt(dv45c[1,8])
+tv45c <- aov(as.matrix(data$t45) ~ as.matrix(data$v45)) %>% anova_stats()
+sqrt(tv45c[1,8])
 
 
-# risk aversion negative activities
-aov(as.matrix(data$gd0) ~ as.matrix(data$st0)) %>% anova_stats()
-aov(as.matrix(data$gd0) ~ as.matrix(data$mv0)) %>% anova_stats()
-aov(as.matrix(data$st0) ~ as.matrix(data$mv0)) %>% anova_stats()
+# risk aversion mixed gamble activities
+gdst <- aov(as.matrix(data$gd0) ~ as.matrix(data$st0)) %>% anova_stats()
+sqrt(gdst[1,8])
+gdmv <- aov(as.matrix(data$gd0) ~ as.matrix(data$mv0)) %>% anova_stats()
+sqrt(gdmv[1,8])
+stmv <- aov(as.matrix(data$st0) ~ as.matrix(data$mv0)) %>% anova_stats()
+sqrt(stmv[1,8])
+
 
 # flattenCorrMatrix <- function(cormat, pmat) {
 #   ut <- upper.tri(cormat)

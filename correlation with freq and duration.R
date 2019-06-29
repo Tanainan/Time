@@ -365,6 +365,7 @@ for (i in 1:nrow(freqvhr)){
 # game
 ggame <- aov(freqg$g ~ freqg$game) %>% anova_stats()
 sqrt(ggame[1,8])
+summary(lm(freqg$g ~ freqg$game))
 summary(lm(freqg$g ~ freqg$game1 + freqg$game2 + freqg$game3 + freqg$game4 + freqg$game5 + freqg$game6 + freqg$game7))
 
 gg <- ggplot(freqg1, aes(x = game, y = g, group = game)) + 
@@ -379,6 +380,7 @@ gg <- ggplot(freqg1, aes(x = game, y = g, group = game)) +
 
 gwgame <- aov(freqg$gw ~ freqg$game) %>% anova_stats()
 sqrt(gwgame[1,8])
+summary(lm(freqg$gw ~ freqg$game))
 summary(lm(freqg$gw ~ freqg$game1 + freqg$game2 + freqg$game3 + freqg$game4 + freqg$game5 + freqg$game6 + freqg$game7))
 
 gwg <- ggplot(freqg1, aes(x = game, y = gw, group = game)) + 
@@ -393,6 +395,7 @@ gwg <- ggplot(freqg1, aes(x = game, y = gw, group = game)) +
 
 ggamehr <- aov(freqghr$g ~ freqghr$gamehr) %>% anova_stats()
 sqrt(ggamehr[1,8])
+summary(lm(freqghr$g ~ freqghr$gamehr))
 summary(lm(freqghr$g ~ freqghr$gamehr1 + freqghr$gamehr2 + freqghr$gamehr3 + freqghr$gamehr4 + freqghr$gamehr5 + freqgw$gamehr6))
 
 gghr <- ggplot(freqghr1, aes(x = gamehr, y = g, group = gamehr)) + 
@@ -407,6 +410,7 @@ gghr <- ggplot(freqghr1, aes(x = gamehr, y = g, group = gamehr)) +
 
 gwgamehr <- aov(freqghr$gw ~ freqghr$gamehr) %>% anova_stats()
 sqrt(gwgamehr[1,8])
+summary(lm(freqghr$gw ~ freqghr$gamehr))
 summary(lm(freqghr$gw ~ freqghr$gamehr1 + freqghr$gamehr2 + freqghr$gamehr3 + freqghr$gamehr4 + freqghr$gamehr5 + freqghr$gamehr6))
 
 gwghr <- ggplot(freqghr1, aes(x = gamehr, y = gw, group = gamehr)) + 
@@ -422,6 +426,7 @@ gwghr <- ggplot(freqghr1, aes(x = gamehr, y = gw, group = gamehr)) +
 # sports
 ssports <- aov(freqs$s ~ freqs$sports) %>% anova_stats()
 sqrt(ssports[1,8])
+summary(lm(freqs$s ~ freqs$sports))
 summary(lm(freqs$s ~ freqs$sports1 + freqs$sports2 + freqs$sports3 + freqs$sports4 + freqs$sports5 + freqs$sports6 + freqs$sports7))
 
 ss <- ggplot(freqs1, aes(x = sports, y = s, group = sports)) + 
@@ -436,6 +441,7 @@ ss <- ggplot(freqs1, aes(x = sports, y = s, group = sports)) +
 
 swsports <- aov(freqs$sw ~ freqs$sports) %>% anova_stats()
 sqrt(swsports[1,8])
+summary(lm(freqs$sw ~ freqs$sports))
 summary(lm(freqs$sw ~ freqs$sports1 + freqs$sports2 + freqs$sports3 + freqs$sports4 + freqs$sports5 + freqs$sports6 + freqs$sports7))
 
 sws <- ggplot(freqs1, aes(x = sports, y = sw, group = sports)) + 
@@ -450,6 +456,7 @@ sws <- ggplot(freqs1, aes(x = sports, y = sw, group = sports)) +
 
 ssportshr <- aov(freqshr$s ~ freqshr$sportshr) %>% anova_stats()
 sqrt(ssportshr[1,8])
+summary(lm(freqshr$s ~ freqshr$sportshr))
 summary(lm(freqshr$s ~ freqshr$sportshr1 + freqshr$sportshr2 + freqshr$sportshr3 + freqshr$sportshr4 + freqshr$sportshr5 + freqshr$sportshr6))
 
 sshr <- ggplot(freqshr1, aes(x = sportshr, y = s, group = sportshr)) + 
@@ -465,6 +472,7 @@ sshr <- ggplot(freqshr1, aes(x = sportshr, y = s, group = sportshr)) +
 
 swsportshr <- aov(freqshr$sw ~ freqshr$sportshr) %>% anova_stats()
 sqrt(swsportshr[1,8])
+summary(lm(freqshr$sw ~ freqshr$sportshr))
 summary(lm(freqshr$sw ~ freqshr$sportshr1 + freqshr$sportshr2 + freqshr$sportshr3 + freqshr$sportshr4 + freqshr$sportshr5 + freqshr$sportshr6))
 
 swshr <- ggplot(freqshr1, aes(x = sportshr, y = sw, group = sportshr)) + 
@@ -480,6 +488,7 @@ swshr <- ggplot(freqshr1, aes(x = sportshr, y = sw, group = sportshr)) +
 # music
 mmusic <- aov(freqm$m ~ freqm$music) %>% anova_stats()
 sqrt(mmusic[1,8])
+summary(lm(freqm$m ~ freqm$music))
 summary(lm(freqm$m ~ freqm$music1 + freqm$music2 + freqm$music3 + freqm$music4 + freqm$music5 + freqm$music6 + freqm$music7))
 
 mm <- ggplot(freqm1, aes(x = factor(music), y = m)) + 
@@ -497,6 +506,7 @@ mm <- ggplot(freqm1, aes(x = factor(music), y = m)) +
 
 mwmusic <- aov(freqm$mw ~ freqm$music) %>% anova_stats()
 sqrt(mwmusic[1,8])
+summary(lm(freqm$mw ~ freqm$music))
 summary(lm(freqm$mw ~ freqm$music1 + freqm$music2 + freqm$music3 + freqm$music4 + freqm$music5 + freqm$music6 + freqm$music7))
 
 mwm <- ggplot(freqm1, aes(x = factor(music), y = mw)) + 
@@ -513,6 +523,7 @@ mwm <- ggplot(freqm1, aes(x = factor(music), y = mw)) +
 
 mmusichr <- aov(freqmhr$m ~ freqmhr$musichr) %>% anova_stats()
 sqrt(mmusichr[1,8])
+summary(lm(freqmhr$m ~ freqmhr$musichr))
 summary(lm(freqmhr$m ~ freqmhr$musichr1 + freqmhr$musichr2 + freqmhr$musichr3 + freqmhr$musichr4 + freqmhr$musichr5 + freqmhr$musichr6))
 
 mmhr <- ggplot(freqmhr1, aes(x = musichr, y = m, group = musichr)) + 
@@ -528,6 +539,7 @@ mmhr <- ggplot(freqmhr1, aes(x = musichr, y = m, group = musichr)) +
 
 mwmusichr <- aov(freqmhr$mw ~ freqmhr$musichr) %>% anova_stats()
 sqrt(mwmusichr[1,8])
+summary(lm(freqmhr$mw ~ freqmhr$musichr))
 summary(lm(freqmhr$mw ~ freqmhr$musichr1 + freqmhr$musichr2 + freqmhr$musichr3 + freqmhr$musichr4 + freqmhr$musichr5 + freqmhr$musichr6)) # positive
 
 mwmhr <- ggplot(freqmhr1, aes(x = musichr, y = mw, group = musichr)) + 
@@ -544,6 +556,7 @@ mwmhr <- ggplot(freqmhr1, aes(x = musichr, y = mw, group = musichr)) +
 # dish
 ddish <- aov(freqd$d ~ freqd$dish) %>% anova_stats()
 sqrt(ddish[1,8])
+summary(lm(freqd$d ~ freqd$dish))
 summary(lm(freqd$d ~ freqd$dish1 + freqd$dish2 + freqd$dish3 + freqd$dish4 + freqd$dish5 + freqd$dish6 + freqd$dish7)) # positive
 
 dd <- ggplot(freqd1, aes(x = dish, y = d, group = dish)) + 
@@ -558,6 +571,7 @@ dd <- ggplot(freqd1, aes(x = dish, y = d, group = dish)) +
 
 dwdish <- aov(freqd$dw ~ freqd$dish) %>% anova_stats()
 sqrt(dwdish[1,8])
+summary(lm(freqd$dw ~ freqd$dish))
 summary(lm(freqd$dw ~ freqd$dish1 + freqd$dish2 + freqd$dish3 + freqd$dish4 + freqd$dish5 + freqd$dish6 + freqd$dish7)) # negative
 
 dwd <- ggplot(freqd1, aes(x = dish, y = dw, group = dish)) + 
@@ -572,6 +586,7 @@ dwd <- ggplot(freqd1, aes(x = dish, y = dw, group = dish)) +
 
 ddishhr <- aov(freqdhr$d ~ freqdhr$dishhr) %>% anova_stats()
 sqrt(ddishhr[1,8])
+summary(lm(freqdhr$d ~ freqdhr$dishhr))
 summary(lm(freqdhr$d ~ freqdhr$dishhr1 + freqdhr$dishhr2 + freqdhr$dishhr3 + freqdhr$dishhr4 + freqdhr$dishhr5 + freqdhr$dishhr6)) # positive
 
 ddhr <- ggplot(freqdhr1, aes(x = dishhr, y = d, group = dishhr)) + 
@@ -586,6 +601,7 @@ ddhr <- ggplot(freqdhr1, aes(x = dishhr, y = d, group = dishhr)) +
 
 dwdishhr <- aov(freqdhr$dw ~ freqdhr$dishhr) %>% anova_stats()
 sqrt(dwdishhr[1,8])
+summary(lm(freqdhr$dw ~ freqdhr$dishhr))
 summary(lm(freqdhr$dw ~ freqdhr$dishhr1 + freqdhr$dishhr2 + freqdhr$dishhr3 + freqdhr$dishhr4 + freqdhr$dishhr5 + freqdhr$dishhr6)) # positive
 
 dwdhr <- ggplot(freqdhr1, aes(x = dishhr, y = dw, group = dishhr)) + 
@@ -601,6 +617,7 @@ dwdhr <- ggplot(freqdhr1, aes(x = dishhr, y = dw, group = dishhr)) +
 # traffic
 ttraffic <- aov(freqt$t ~ freqt$traffic) %>% anova_stats()
 sqrt(ttraffic[1,8])
+summary(lm(freqt$t ~ freqt$traffic))
 summary(lm(freqt$t ~ freqt$traffic1 + freqt$traffic2 + freqt$traffic3 + freqt$traffic4 + freqt$traffic5 + freqt$traffic6 + freqt$traffic7)) # negative
 
 tt <- ggplot(freqt1, aes(x = traffic, y = t, group = traffic)) + 
@@ -615,6 +632,7 @@ tt <- ggplot(freqt1, aes(x = traffic, y = t, group = traffic)) +
 
 twtraffic <- aov(freqt$tw ~ freqt$traffic) %>% anova_stats()
 sqrt(twtraffic[1,8])
+summary(lm(freqt$tw ~ freqt$traffic))
 summary(lm(freqt$tw ~ freqt$traffic1 + freqt$traffic2 + freqt$traffic3 + freqt$traffic4 + freqt$traffic5 + freqt$traffic6 + freqt$traffic7)) # positive
 
 twt <- ggplot(freqt1, aes(x = traffic, y = tw, group = traffic)) + 
@@ -629,6 +647,7 @@ twt <- ggplot(freqt1, aes(x = traffic, y = tw, group = traffic)) +
 
 ttraffichr <- aov(freqthr$t ~ freqthr$traffichr) %>% anova_stats()
 sqrt(ttraffichr[1,8])
+summary(lm(freqthr$t ~ freqthr$traffichr))
 summary(lm(freqthr$t ~ freqthr$traffichr1 + freqthr$traffichr2 + freqthr$traffichr3 + freqthr$traffichr4 + freqthr$traffichr5 + freqthr$traffichr6)) # positive
 
 tthr <- ggplot(freqthr1, aes(x = traffichr, y = t, group = traffichr)) + 
@@ -643,6 +662,7 @@ tthr <- ggplot(freqthr1, aes(x = traffichr, y = t, group = traffichr)) +
 
 twtraffichr <- aov(freqthr$tw ~ freqthr$traffichr) %>% anova_stats()
 sqrt(twtraffichr[1,8])
+summary(lm(freqthr$tw ~ freqthr$traffichr))
 summary(lm(freqthr$tw ~ freqthr$traffichr1 + freqthr$traffichr2 + freqthr$traffichr3 + freqthr$traffichr4 + freqthr$traffichr5 + freqthr$traffichr6)) # positive
 
 twthr <- ggplot(freqthr1, aes(x = traffichr, y = tw, group = traffichr)) + 
@@ -658,6 +678,7 @@ twthr <- ggplot(freqthr1, aes(x = traffichr, y = tw, group = traffichr)) +
 # vacuum
 vvacuum <- aov(freqv$v ~ freqv$vacuum) %>% anova_stats()
 sqrt(vvacuum[1,8])
+summary(lm(freqv$v ~ freqv$vacuum))
 summary(lm(freqv$v ~ freqv$vacuum1 + freqv$vacuum2 + freqv$vacuum3 + freqv$vacuum4 + freqv$vacuum5 + freqv$vacuum6 + freqv$vacuum7)) # positive
 
 vv <- ggplot(freqv1, aes(x = vacuum, y = v, group = vacuum)) + 
@@ -673,6 +694,7 @@ vv <- ggplot(freqv1, aes(x = vacuum, y = v, group = vacuum)) +
 
 vwvacuum <- aov(freqv$vw ~ freqv$vacuum) %>% anova_stats()
 sqrt(vwvacuum[1,8])
+summary(lm(freqv$vw ~ freqv$vacuum))
 summary(lm(freqv$vw ~ freqv$vacuum1 + freqv$vacuum2 + freqv$vacuum3 + freqv$vacuum4 + freqv$vacuum5 + freqv$vacuum6 + freqv$vacuum7)) # negative
 
 vwv <- ggplot(freqv1, aes(x = vacuum, y = vw, group = vacuum)) + 
@@ -688,6 +710,7 @@ vwv <- ggplot(freqv1, aes(x = vacuum, y = vw, group = vacuum)) +
 
 vvacuumhr <- aov(freqvhr$v ~ freqvhr$vacuumhr) %>% anova_stats()
 sqrt(vvacuumhr[1,8])
+summary(lm(freqvhr$v ~ freqvhr$vacuumhr))
 summary(lm(freqvhr$v ~ freqvhr$vacuumhr1 + freqvhr$vacuumhr2 + freqvhr$vacuumhr3 + freqvhr$vacuumhr4 + freqvhr$vacuumhr5 + freqvhr$vacuumhr6)) # positive
 
 vvhr <- ggplot(freqvhr1, aes(x = factor(vacuumhr), y = v)) + 
@@ -703,6 +726,7 @@ vvhr <- ggplot(freqvhr1, aes(x = factor(vacuumhr), y = v)) +
 
 vwvacuumhr <- aov(freqvhr$vw ~ freqvhr$vacuumhr) %>% anova_stats()
 sqrt(vwvacuumhr[1,8])
+summary(lm(freqvhr$vw ~ freqvhr$vacuumhr))
 summary(lm(freqvhr$vw ~ freqvhr$vacuumhr1 + freqvhr$vacuumhr2 + freqvhr$vacuumhr3 + freqvhr$vacuumhr4 + freqvhr$vacuumhr5 + freqvhr$vacuumhr6)) # positive
 
 vwvhr <- ggplot(freqvhr1, aes(x = vacuumhr, y = vw, group = vacuumhr)) + 

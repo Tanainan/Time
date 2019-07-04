@@ -1,4 +1,4 @@
-setwd("~/Desktop/time 2")
+
 library(readr)
 Time <- read_csv("Time.csv", skip = 1)
 Time <- Time[-c(1),]
